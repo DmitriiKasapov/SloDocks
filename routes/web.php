@@ -16,6 +16,7 @@ Route::get('/', function () {
 
 // Service page - public description + paid content (with token)
 Route::get('/services/{slug}', [App\Http\Controllers\ServiceController::class, 'show'])
+    ->middleware(\App\Http\Middleware\CheckServiceAccess::class)
     ->name('services.show');
 
 /*
@@ -43,9 +44,8 @@ Route::get('/payment/cancel', [App\Http\Controllers\PaymentController::class, 'c
 */
 
 // Stripe webhook endpoint
-Route::post('/webhooks/stripe', function () {
-    return response()->json(['status' => 'ok']);
-})->name('webhooks.stripe');
+Route::post('/webhooks/stripe', [App\Http\Controllers\WebhookController::class, 'handleStripe'])
+    ->name('webhooks.stripe');
 
 /*
 |--------------------------------------------------------------------------
@@ -55,11 +55,11 @@ Route::post('/webhooks/stripe', function () {
 
 Route::get('/terms', function () {
     return view('legal.terms');
-})->name('legal.terms');
+})->name('terms');
 
 Route::get('/privacy', function () {
     return view('legal.privacy');
-})->name('legal.privacy');
+})->name('privacy');
 
 /*
 |--------------------------------------------------------------------------
