@@ -36,4 +36,16 @@ return [
     */
 
     'currency' => env('STRIPE_CURRENCY', 'EUR'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Mock Payment Mode
+    |--------------------------------------------------------------------------
+    |
+    | When enabled, Stripe API is bypassed and a local mock checkout page
+    | is used instead. Automatically disabled in production.
+    |
+    */
+
+    'mock' => env('PAYMENT_MOCK', false) && env('APP_ENV') !== 'production',
 ];

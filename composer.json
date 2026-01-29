@@ -7,9 +7,10 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "filament/filament": "^5.1",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
-        "stripe/stripe-php": "^19.2"
+        "stripe/stripe-php": "^19.3"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
@@ -21,6 +22,9 @@
         "phpunit/phpunit": "^11.5.3"
     },
     "autoload": {
+        "files": [
+            "app/helpers.php"
+        ],
         "psr-4": {
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
@@ -51,7 +55,8 @@
         ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
+            "@php artisan package:discover --ansi",
+            "@php artisan filament:upgrade"
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
@@ -82,7 +87,9 @@
             "php-http/discovery": true
         },
         "audit": {
-            "ignore": ["PKSA-z3gr-8qht-p93v"]
+            "ignore": [
+                "PKSA-z3gr-8qht-p93v"
+            ]
         }
     },
     "minimum-stability": "stable",

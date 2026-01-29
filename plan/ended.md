@@ -503,42 +503,152 @@ $access->save();
 
 ---
 
-## 📝 Следующий этап: Epic 4 — Админка
+## ✅ MOCK PAYMENT — ЗАВЕРШЁН
 
-### Осталось реализовать:
+Дата: 2026-01-29
 
-**Task 4.1: AdminAuth Middleware**
-- Базовая HTTP Auth или Laravel Auth
-- Защита /admin роутов
+### Что реализовано:
+Локальная имитация оплаты без Stripe API для разработки и тестирования.
 
-**Task 4.2-4.3: Admin\ServiceController**
-- CRUD услуг (index, create, edit, update, delete)
-- Форма редактирования контента
-- Управление is_active статусом
+**Управление:** `PAYMENT_MOCK=true` в `.env`, автоматически выключается в production.
 
-**Task 4.4: Admin\PurchaseController**
-- Список всех покупок
-- Фильтры по status, service
-- Просмотр деталей покупки
+**Файлы:**
+- `config/stripe.php` — добавлен ключ `mock` с production-guard
+- `app/Services/PaymentService.php` — рефакторинг: mock-ветка создаёт Purchase с `payment_provider=mock`, `payment_id=mock_{uuid}`
+- `app/Http/Controllers/PaymentController.php` — методы `mockCheckout()` и `mockPay()`
+- `routes/web.php` — маршруты GET/POST `/payment/mock/{purchase}`
+- `resources/views/payment/mock-checkout.blade.php` — страница-имитация Stripe Checkout
 
-**Task 4.5: Admin\AccessController**
-- Список всех доступов
-- Повторная отправка email
-- Деактивация доступа
-
-**Task 4.6: Admin Dashboard**
-- Базовая статистика (счётчики)
-- Графики (опционально)
+**Логика:** форма email → Purchase (pending) → mock-страница → кнопка «Оплатить» → Purchase (paid) → AccessGrantService → redirect с токеном
 
 ---
 
-## ✅ Текущий статус: Epic 1-3 ЗАВЕРШЕНЫ
+## ✅ EPIC 4: АДМИН-ПАНЕЛЬ (FILAMENT) — ЗАВЕРШЁН
+
+Дата: 2026-01-29
+
+### Архитектура:
+- **Filament v5.1.1** (актуальная версия для Laravel 12)
+- **Отдельная модель `AdminUser`** — не связана с пассивной моделью User
+- **Guard `admin`** — изолирован от web guard
+- **Путь:** `/admin` с встроенным login-экраном Filament
+
+### Реализованные задачи:
+
+#### Task 4.1: Установка и аутентификация ✅
+**Файлы:**
+- `app/Models/AdminUser.php` — модель для авторизации (implements FilamentUser)
+- `database/migrations/*_create_admin_users_table.php` — таблица admin_users
+- `config/auth.php` — guard `admin` + provider `admin_users`
+- `app/Providers/Filament/AdminPanelProvider.php` — `authGuard('admin')`, brandName "SloDocs Admin"
+- `database/seeders/AdminUserSeeder.php` — admin@slodocs.com / password
+
+#### Task 4.2: ServiceResource (полный CRUD) ✅
+**Файлы:**
+- `app/Filament/Resources/ServiceResource.php`
+- `app/Filament/Resources/ServiceResource/Pages/ListServices.php`
+- `app/Filament/Resources/ServiceResource/Pages/CreateService.php`
+- `app/Filament/Resources/ServiceResource/Pages/EditService.php`
+
+**Функционал:**
+- Форма: title, slug (auto-generate), description_public, price (центы), access_duration_days, is_active (toggle)
+- SEO-поля (необязательные, в свёрнутой секции)
+- Таблица: title, slug, цена (€), дни, активность, количество покупок, дата
+- Фильтр по is_active
+- activity_log при создании (`service_created`) и редактировании (`service_updated`)
+
+#### Task 4.3: PurchaseResource (только чтение) ✅
+**Файлы:**
+- `app/Filament/Resources/PurchaseResource.php`
+- `app/Filament/Resources/PurchaseResource/Pages/ListPurchases.php`
+- `app/Filament/Resources/PurchaseResource/Pages/ViewPurchase.php`
+
+**Функционал:**
+- Таблица: id, услуга, email, сумма (€), статус (цветной badge), провайдер, дата
+- Фильтры: статус (pending/paid/failed), услуга
+- Infolist для просмотра деталей
+- Создание/редактирование/удаление отключены
+
+#### Task 4.4: AccessResource (чтение + действия) ✅
+**Файлы:**
+- `app/Filament/Resources/AccessResource.php`
+- `app/Filament/Resources/AccessResource/Pages/ListAccesses.php`
+- `app/Filament/Resources/AccessResource/Pages/ViewAccess.php`
+
+**Функционал:**
+- Таблица: id, услуга, email, токен (truncated), начало, окончание, активен
+- Access token показан укороченно, без кнопки копирования
+- Фильтры: is_active, услуга
+- Действие «Отправить email» → dispatch SendAccessEmail + activity_log (`access_email_resent`)
+- Действие «Деактивировать» → is_active=false + activity_log (`access_deactivated`)
+- Оба действия с подтверждением
+
+#### Task 4.5: Dashboard виджет ✅
+**Файлы:**
+- `app/Filament/Widgets/StatsOverview.php`
+
+**Карточки:**
+- Оплаченные покупки (Purchase where status=paid)
+- Активные доступы (Access where is_active=true and expires_at > now)
+- Пользователи (User count)
+
+#### Task 4.6: Модели — связи и casts ✅
+**Обновлённые файлы:**
+- `app/Models/Service.php` — hasMany purchases/accesses, casts is_active/price/access_duration_days
+- `app/Models/Access.php` — belongsTo service/purchase
+- `app/Models/ActivityLog.php` — belongsTo service/purchase
+- `app/Models/User.php` — приведена в соответствие с миграцией (пассивная, без password)
+
+#### Task 4.7: Очистка ✅
+- Удалены stub-маршруты админки из `routes/web.php`
+- Удалён `resources/views/layouts/admin.blade.php`
+
+### ActivityLog — логируемые события:
+| event_type | Где |
+|---|---|
+| `service_created` | ServiceResource |
+| `service_updated` | ServiceResource |
+| `payment_success` | PaymentController |
+| `access_granted` | AccessGrantService |
+| `access_deactivated` | AccessResource |
+| `access_email_resent` | AccessResource |
+
+---
+
+## 📊 Текущая статистика
+
+### База данных (13 таблиц):
+**Доменные:**
+- services
+- purchases
+- accesses
+- users
+- activity_logs
+- admin_users
+
+**Инфраструктура:**
+- sessions, cache, cache_locks
+
+**Очереди:**
+- jobs, failed_jobs, job_batches
+
+**Laravel:**
+- migrations
+
+### Тестовые данные:
+- ✅ 1 активная услуга (school-enrollment, €29.00, 30 дней доступа)
+- ✅ 1 администратор (admin@slodocs.com / password)
+
+---
+
+## ✅ Текущий статус: Epic 1-4 ЗАВЕРШЕНЫ
 
 **Полностью работает:**
 - ✅ Главная страница
 - ✅ Страница услуги (публичная + платная версии)
 - ✅ Модальное окно оплаты + валидация
 - ✅ Stripe Checkout Session
+- ✅ Mock Payment (локальная имитация оплаты)
 - ✅ Success/Cancel страницы
 - ✅ Webhook обработка (signature verification, idempotency)
 - ✅ Выдача доступа (AccessGrantService)
@@ -547,12 +657,19 @@ $access->save();
 - ✅ Условный рендеринг контента
 - ✅ Обработка истечения срока
 - ✅ Юридические страницы
+- ✅ Админ-панель Filament (CRUD услуг, просмотр покупок, управление доступами, статистика)
 
 **Требуется для production:**
 - Stripe API keys (.env)
 - SMTP настройки для email
-- PHP 8.4+ (или понизить требования в composer.json)
 - Queue worker (systemd service)
 - Scheduler для автоматической деактивации истекших Access
+- Смена пароля администратора
 
-**Готово к Epic 4:** Да, можно разрабатывать админку
+---
+
+## ПЕРВЫЙ ЭТАП ЗАВЕРШЁН. ДАЛЬНЕЙШИЙ ПЛАН:
+
+1. **Тестирование и проверка** — проверка функционала, админки, полный user flow
+2. **Frontend + дизайн** — сборка фронтенда с Tailwind, вёрстка, UI/UX
+3. **SEO + подготовка к production** — мета-теги, schema.org, sitemap, финальные настройки

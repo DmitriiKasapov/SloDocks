@@ -14,7 +14,7 @@ class CheckServiceAccess
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $service = $request->route('service');
+        $slug = $request->route('slug');
         $token = $request->query('token');
 
         // If no token provided, continue (will show public version)
@@ -24,7 +24,7 @@ class CheckServiceAccess
 
         // Check access validity
         $accessService = app(AccessService::class);
-        $result = $accessService->check($service, $token);
+        $result = $accessService->check($slug, $token);
 
         // Add access result to request attributes
         if ($result->isValid()) {
@@ -37,7 +37,7 @@ class CheckServiceAccess
             $request->attributes->add([
                 'access' => null,
                 'has_access' => false,
-                'access_error' => $result->reason,
+                'access_error' => $result->status,
             ]);
         }
 

@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\ActivityLog;
 use App\Models\Purchase;
 use App\Models\Service;
+use Illuminate\Support\Str;
 use Stripe\Checkout\Session;
 use Stripe\Stripe;
 
@@ -12,26 +13,42 @@ class PaymentService
 {
     public function __construct()
     {
-        Stripe::setApiKey(config('stripe.secret'));
+        if (!config('stripe.mock')) {
+            Stripe::setApiKey(config('stripe.secret'));
+        }
     }
 
     /**
-     * Create Stripe Checkout Session for service purchase
+     * Create checkout session (Stripe or mock) for service purchase
      */
     public function createCheckoutSession(Service $service, string $email): string
     {
-        // 1. Create pending purchase
+        $purchase = $this->createPurchase($service, $email);
+
+        if (config('stripe.mock')) {
+            return $this->createMockCheckoutUrl($purchase);
+        }
+
+        return $this->createStripeCheckoutUrl($service, $email, $purchase);
+    }
+
+    /**
+     * Create pending purchase record and log event
+     */
+    private function createPurchase(Service $service, string $email): Purchase
+    {
+        $isMock = config('stripe.mock');
+
         $purchase = Purchase::create([
             'service_id' => $service->id,
             'email' => $email,
-            'payment_provider' => 'stripe',
-            'payment_id' => null, // Will be updated by webhook
+            'payment_provider' => $isMock ? 'mock' : 'stripe',
+            'payment_id' => $isMock ? 'mock_' . Str::uuid() : null,
             'amount' => $service->price,
             'currency' => config('stripe.currency', 'EUR'),
             'status' => 'pending',
         ]);
 
-        // 2. Log payment_started event
         ActivityLog::create([
             'event_type' => 'payment_started',
             'email' => $email,
@@ -40,10 +57,26 @@ class PaymentService
             'metadata' => [
                 'amount' => $service->price,
                 'currency' => config('stripe.currency', 'EUR'),
+                'mock' => $isMock,
             ],
         ]);
 
-        // 3. Create Stripe Checkout Session
+        return $purchase;
+    }
+
+    /**
+     * Return URL to local mock checkout page
+     */
+    private function createMockCheckoutUrl(Purchase $purchase): string
+    {
+        return route('payment.mock.checkout', $purchase);
+    }
+
+    /**
+     * Create Stripe Checkout Session and return its URL
+     */
+    private function createStripeCheckoutUrl(Service $service, string $email, Purchase $purchase): string
+    {
         $session = Session::create([
             'payment_method_types' => ['card'],
             'line_items' => [[
@@ -67,10 +100,7 @@ class PaymentService
             ],
         ]);
 
-        // 4. Update purchase with Stripe session ID (temporary tracking)
-        $purchase->update([
-            'payment_id' => $session->id,
-        ]);
+        $purchase->update(['payment_id' => $session->id]);
 
         return $session->url;
     }
