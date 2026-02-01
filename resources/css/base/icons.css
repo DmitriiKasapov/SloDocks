@@ -1,0 +1,84 @@
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'dc208-icons' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-arrow_circle_left:before {
+  content: "\e900";
+}
+.icon-arrow_circle_right:before {
+  content: "\e901";
+}
+.icon-arrow_right:before {
+  content: "\e902";
+}
+.icon-close_small:before {
+  content: "\e903";
+}
+.icon-fb:before {
+  content: "\e904";
+}
+.icon-hamburger:before {
+  content: "\e905";
+}
+.icon-ig:before {
+  content: "\e906";
+}
+.icon-ln:before {
+  content: "\e907";
+}
+.icon-menu_book:before {
+  content: "\e908";
+}
+.icon-vimeo:before {
+  content: "\e909";
+}
+.icon-hf:before {
+  content: "\e90a";
+}
+.icon-shopping_basket:before {
+  content: "\e90b";
+}
+.icon-ico-chevron-down:before {
+  content: "\e90c";
+}
+.icon-mail_outline:before {
+  content: "\e90d";
+}
+.icon-directions_bus:before {
+  content: "\e90e";
+}
+.icon-directions_car:before {
+  content: "\e90f";
+}
+.icon-local_grocery_store:before {
+  content: "\e910";
+}
+.icon-location_city:before {
+  content: "\e911";
+}
+.icon-school:before {
+  content: "\e912";
+}
+.icon-park:before {
+  content: "\e913";
+}
+.icon-child_care:before {
+  content: "\e914";
+}
+.icon-medical_services:before {
+  content: "\e915";
+}
+.icon-calc:before {
+  content: "\e916";
+}

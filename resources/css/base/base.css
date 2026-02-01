@@ -1,0 +1,19 @@
+@layer base {
+  html {
+    overflow-x: hidden;
+  }
+
+  a {
+    &:hover {
+      color: currentColor;
+    }
+  }
+
+  button {
+    @apply cursor-pointer;
+
+    &:disabled {
+      @apply cursor-auto;
+    }
+  }
+}

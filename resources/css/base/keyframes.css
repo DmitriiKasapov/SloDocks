@@ -1,0 +1,67 @@
+/* https://developer.mozilla.org/en-US/docs/Web/CSS/@keyframes */
+
+@keyframes translate {
+  0%, 100% {
+    --translate-x: 0%;
+    --translate-y: 0%;
+  }
+
+  16% {
+    --translate-x: 0.5%;
+    --translate-y: 1%;
+  }
+
+  28% {
+    --translate-x: -1%;
+    --translate-y: -1%;
+  }
+
+  50% {
+    --translate-x: 2%;
+    --translate-y: 0.5%;
+  }
+
+  76% {
+    --translate-x: 0.5%;
+    --translate-y: -1%;
+  }
+}
+
+@keyframes open-menu {
+  0%, 100% {
+    z-index: 9999;
+    pointer-events: auto;
+  }
+
+  0% {
+    translate: 100%;
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 100;
+    translate: 0%;
+    timing-function: var(--default-transition-timing-function);
+  }
+}
+
+@keyframes close-menu {
+  0% {
+    translate: 0;
+    opacity: 100;
+    z-index: 9999;
+    pointer-events: none;
+  }
+
+  99% {
+    z-index: 9999;
+  }
+
+  100% {
+    translate: 100%;
+    opacity: 0;
+    z-index: -1;
+    pointer-events: none;
+    timing-function: var(--default-transition-timing-function);
+  }
+}

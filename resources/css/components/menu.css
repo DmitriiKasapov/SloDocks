@@ -1,0 +1,12 @@
+@layer components {
+  .menu {
+    @apply animate-menu-close;
+    &.menu-is-active {
+      @apply animate-menu-open;
+    }
+
+    &:not(.menu-init) {
+      @apply invisible;
+    }
+  }
+}

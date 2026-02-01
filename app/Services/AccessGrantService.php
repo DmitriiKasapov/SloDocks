@@ -52,9 +52,8 @@ class AccessGrantService
             // Log activity
             activity_log('access_granted', $purchase->email, [
                 'access_id' => $access->id,
-                'service_id' => $service->id,
                 'expires_at' => $access->expires_at->toDateTimeString(),
-            ]);
+            ], serviceId: $service->id, purchaseId: $purchase->id);
 
             // Dispatch email job
             SendAccessEmail::dispatch($access);

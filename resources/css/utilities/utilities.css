@@ -1,0 +1,108 @@
+/* Underline. Add group class to the element you wish to animate this on */
+@utility animated-underline {
+  @apply
+    bg-(image:--animated-underline-background-image)
+    bg-size-(--animated-underline-size-initial)
+    bg-position-(--aniamted-underline-position)
+    bg-no-repeat
+    transition-[background-size]
+    duration-400
+    ease-out
+    delay-100
+    group-hover:bg-size-(--animated-underline-size-full)
+    group-hover:delay-0
+    group-hover:duration-500;
+
+  &.reverse {
+    @apply bg-position-(--aniamted-underline-position-reverse)
+  }
+}
+
+@utility animated-underline-* {
+  background-image: linear-gradient(
+      var(--color-transparent),
+      var(--color-transparent)
+    ),
+    linear-gradient(--value(--color-*), --value(--color-*));
+}
+
+/* Other */
+@utility flex-full {
+  flex: 0 1 100%;
+}
+
+@utility hide-scrollbar {
+  overflow: -moz-scrollbars-none;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    width: 0 !important;
+    display: none;
+  }
+}
+
+@utility custom-scrollbar-* {
+  &::-webkit-scrollbar {
+    width: 6px;
+    border-radius: 4px;
+    background-color: var(--color-transparent);
+    background-color: --modifier(--color-*);
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: --value(--color-*);
+  }
+  @supports not selector(::-webkit-scrollbar) {
+    scrollbar-width: thin;
+    scrollbar-color: --value(--color-*), var(--color-transparent);
+    scrollbar-color: --value(--color-*), --modifier(--color-*);
+  }
+}
+
+@utility visually-hidden {
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  clip-path: inset(100%);
+}
+
+@utility top-center {
+  top: 50%;
+  --translate-y: -50%;
+  transform: translate(var(--translate-x, 0%), var(--translate-y, -50%));
+}
+
+@utility left-center {
+  left: 50%;
+  --translate-x: -50%;
+  transform: translate(var(--translate-x, -50%), var(--translate-y, 0%));
+}
+
+@utility bottom-center {
+  bottom: 50%;
+  --translate-y: 50%;
+  transform: translate(var(--translate-x, 0%), var(--translate-y, 50%));
+}
+
+@utility right-center {
+  right: 50%;
+  --translate-x: 50%;
+  transform: translate(var(--translate-x, 50%), var(--translate-y, 0%));
+}
+
+@utility grid-auto-fill-* {
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(--value(--spacing-*, [length]), 1fr)
+  );
+}
+
+@utility grid-auto-fit-* {
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(--value(--spacing-*, [length]), 1fr)
+  );
+}

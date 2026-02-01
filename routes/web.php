@@ -10,14 +10,41 @@ use Illuminate\Support\Facades\Route;
 
 // Home page - list of services
 Route::get('/', function () {
+    $categories = \App\Models\Category::with(['services' => function ($query) {
+        $query->where('is_active', true);
+    }])
+    ->whereHas('services', function ($query) {
+        $query->where('is_active', true);
+    })
+    ->orderBy('order', 'asc')
+    ->get();
+
+    // Legacy variable for backward compatibility
     $services = \App\Models\Service::where('is_active', true)->get();
-    return view('home', compact('services'));
+
+    return view('pages.home', compact('categories', 'services'));
 })->name('home');
 
-// Service page - public description + paid content (with token)
+// Service page - public description
 Route::get('/services/{slug}', [App\Http\Controllers\ServiceController::class, 'show'])
-    ->middleware(\App\Http\Middleware\CheckServiceAccess::class)
     ->name('services.show');
+
+// TEMPORARY: Grant temporary access for frontend testing
+Route::post('/services/{slug}/grant-temp-access', [App\Http\Controllers\ServiceController::class, 'grantTempAccess'])
+    ->name('services.grant-temp-access');
+
+// TEMPORARY: Content page (will be protected by token later)
+Route::get('/services/{slug}/content', [App\Http\Controllers\ServiceController::class, 'showContent'])
+    ->name('services.content');
+
+// TEMPORARY: Revoke temporary access
+Route::post('/services/{slug}/revoke-temp-access', [App\Http\Controllers\ServiceController::class, 'revokeTempAccess'])
+    ->name('services.revoke-temp-access');
+
+// Protected file download (requires valid access token)
+Route::get('/services/{slug}/file/{field}', [App\Http\Controllers\FileController::class, 'download'])
+    ->middleware(\App\Http\Middleware\CheckServiceAccess::class)
+    ->name('services.file');
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +54,7 @@ Route::get('/services/{slug}', [App\Http\Controllers\ServiceController::class, '
 
 // Create Stripe Checkout Session
 Route::post('/payment/create', [App\Http\Controllers\PaymentController::class, 'create'])
+    ->middleware('throttle:5,1')
     ->name('payment.create');
 
 // Payment success callback
@@ -60,11 +88,11 @@ Route::post('/webhooks/stripe', [App\Http\Controllers\WebhookController::class, 
 */
 
 Route::get('/terms', function () {
-    return view('legal.terms');
+    return view('pages.legal.terms');
 })->name('legal.terms');
 
 Route::get('/privacy', function () {
-    return view('legal.privacy');
+    return view('pages.legal.privacy');
 })->name('legal.privacy');
 
 // Admin panel handled by Filament at /admin

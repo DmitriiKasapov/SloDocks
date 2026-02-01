@@ -1,0 +1,19 @@
+/* https://developer.mozilla.org/en-US/docs/Web/CSS/@property */
+
+@property --divider-left {
+  syntax: '<length> | <percentage>';
+  initial-value: 0px;
+  inherits: false;
+}
+
+@property --translate-x {
+  syntax: '<length> | <percentage>';
+  initial-value: 0px;
+  inherits: false;
+}
+
+@property --translate-y {
+  syntax: '<length> | <percentage>';
+  initial-value: 0px;
+  inherits: false;
+}

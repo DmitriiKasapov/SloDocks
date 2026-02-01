@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Models\ActivityLog;
 use App\Models\Purchase;
 use App\Models\Service;
 use Illuminate\Support\Str;
@@ -49,17 +48,11 @@ class PaymentService
             'status' => 'pending',
         ]);
 
-        ActivityLog::create([
-            'event_type' => 'payment_started',
-            'email' => $email,
-            'service_id' => $service->id,
-            'purchase_id' => $purchase->id,
-            'metadata' => [
-                'amount' => $service->price,
-                'currency' => config('stripe.currency', 'EUR'),
-                'mock' => $isMock,
-            ],
-        ]);
+        activity_log('payment_started', $email, [
+            'amount' => $service->price,
+            'currency' => config('stripe.currency', 'EUR'),
+            'mock' => $isMock,
+        ], serviceId: $service->id, purchaseId: $purchase->id);
 
         return $purchase;
     }

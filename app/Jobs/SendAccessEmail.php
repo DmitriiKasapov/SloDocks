@@ -38,8 +38,7 @@ class SendAccessEmail implements ShouldQueue
             // Log successful email send
             activity_log('access_email_sent', $this->access->email, [
                 'access_id' => $this->access->id,
-                'service_id' => $this->access->service_id,
-            ]);
+            ], serviceId: $this->access->service_id);
 
             Log::info('Access email sent successfully', [
                 'access_id' => $this->access->id,

@@ -137,8 +137,7 @@ class AccessResource extends Resource
 
                         activity_log('access_email_resent', $record->email, [
                             'access_id' => $record->id,
-                            'service_id' => $record->service_id,
-                        ]);
+                        ], serviceId: $record->service_id);
 
                         Notification::make()
                             ->title('Email поставлен в очередь')
@@ -159,8 +158,7 @@ class AccessResource extends Resource
 
                         activity_log('access_deactivated', $record->email, [
                             'access_id' => $record->id,
-                            'service_id' => $record->service_id,
-                        ]);
+                        ], serviceId: $record->service_id);
 
                         Notification::make()
                             ->title('Доступ деактивирован')

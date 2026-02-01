@@ -1,0 +1,108 @@
+@layer components {
+  .white_wrapper {
+    @apply @container px-4 py-5 sm:px-12.5 sm:py-10 -mt-12.5 sm:-mt-20 bg-white;
+  }
+
+  .navigation__index {
+    .nav-item {
+      @apply relative;
+      &:has(.active) {
+        &::before {
+          @apply content-[''] block absolute bottom-0 left-0 w-[3px] h-full bg-white;
+
+          @variant lg {
+            @apply w-full h-[3px];
+          }
+        }
+      }
+    }
+
+    @variant max-lg {
+      ul {
+        @apply flex-col;
+      }
+
+      .nav-item {
+        @apply pl-5;
+      }
+    }
+  }
+
+  .elements__tabs-list {
+    @apply flex gap-x-4 scroll-auto overflow-auto hide-scrollbar;
+
+    li {
+      @apply relative text-primary whitespace-nowrap px-1.25 pb-3.5;
+
+      &.active {
+        @apply text-basic-600;
+        @variant after {
+          @apply  absolute block bg-primary;
+        }
+      }
+    }
+
+    @variant max-md {
+      @apply snap-x snap-proximity *:snap-start;
+      li {
+        @apply first:ml-(--padding-px) last:mr-(--padding-px);
+
+        &.active {
+          @variant after {
+            @apply content-[''] bottom-0 left-0 right-0 h-0.75;
+          }
+        }
+      }
+    }
+
+    @variant md {
+      @apply flex-col divide-y divide-basic-200 border-t border-t-basic-200;
+      li {
+        @apply px-3.5 py-2.75;
+
+        &.active {
+          @variant after {
+            @apply content-[''] left-0 bottom-1/2 translate-y-1/2 h-[calc(100%-0.75rem)] w-0.75;
+          }
+        }
+      }
+    }
+  }
+
+  .block__floor-tabs {
+    .--tabs {
+      @apply col-span-full row-start-2;
+      @variant max-md {
+        @apply border-b border-basic-200;
+      }
+      @variant md {
+        @apply content-start-8/5 divide-y divide-basic-200 order-1;
+      }
+    }
+  }
+
+  swiper-slide {
+    &:has(.cards__apartment-thumb) {
+      @apply mb-3.5;
+    }
+
+    .cards__apartment-thumb {
+      @apply transition-colors cursor-pointer h-full px-4 py-5;
+
+      @variant after {
+        @apply content-[''] absolute right-1/2 top-[calc(100%-0.5px)] translate-x-1/2 block w-7 h-3.5 transition-colors;
+        clip-path: polygon(0 0, 100% 0, 50% 100%);
+      }
+    }
+
+    &.swiper-slide-thumb-active {
+      .cards__apartment-thumb {
+        @apply text-white bg-basic-500;
+
+        @variant after {
+          @apply bg-basic-500;
+        }
+      }
+    }
+  }
+}

@@ -11,50 +11,37 @@
     <meta name="description" content="@yield('meta_description', 'Информационный портал для русскоговорящих иностранцев в Словении')">
     @yield('meta')
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700&display=swap" rel="stylesheet" />
-
     <!-- Styles -->
-    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Instrument Sans', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="font-sans antialiased bg-gray-50">
-    <div class="min-h-screen">
+<body class="font-sans antialiased bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+    <div class="min-h-screen flex flex-col">
         <!-- Navigation -->
-        <nav class="bg-white border-b border-gray-200">
+        <nav class="bg-white/80 backdrop-blur-md border-b border-indigo-100 sticky top-0 z-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between h-16">
-                    <div class="flex">
-                        <!-- Logo -->
-                        <div class="shrink-0 flex items-center">
-                            <a href="{{ route('home') }}" class="text-2xl font-bold text-gray-900">
+                <div class="flex justify-between items-center h-16">
+                    <!-- Logo -->
+                    <div class="flex items-center">
+                        <a href="{{ route('home') }}" class="flex items-center space-x-2">
+                            <div class="w-8 h-8 bg-gradient-to-br from-amber-400 to-orange-500 rounded-lg flex items-center justify-center">
+                                <span class="text-white font-bold text-sm">SD</span>
+                            </div>
+                            <span class="text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
                                 SloDocs
-                            </a>
-                        </div>
+                            </span>
+                        </a>
                     </div>
 
                     <!-- Navigation Links -->
-                    <div class="hidden sm:flex sm:items-center sm:space-x-8">
-                        <a href="{{ route('home') }}" class="text-gray-700 hover:text-gray-900 px-3 py-2 text-sm font-medium">
+                    <div class="flex items-center space-x-1">
+                        <a href="{{ route('home') }}" class="px-4 py-2 text-sm font-medium text-gray-700 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-colors">
                             Услуги
                         </a>
-                        <a href="{{ route('legal.terms') }}" class="text-gray-500 hover:text-gray-700 px-3 py-2 text-sm">
-                            Условия
+                        <a href="#help" class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-colors">
+                            Помощь
                         </a>
-                        <a href="{{ route('legal.privacy') }}" class="text-gray-500 hover:text-gray-700 px-3 py-2 text-sm">
-                            Конфиденциальность
+                        <a href="#contact" class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-colors">
+                            Контакты
                         </a>
                     </div>
                 </div>
@@ -62,36 +49,66 @@
         </nav>
 
         <!-- Page Content -->
-        <main>
+        <main class="flex-grow">
             @yield('content')
         </main>
 
         <!-- Footer -->
-        <footer class="bg-white border-t border-gray-200 mt-12">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div>
-                        <h3 class="text-sm font-semibold text-gray-900 mb-3">SloDocs</h3>
-                        <p class="text-sm text-gray-600">
-                            Информационный портал для русскоговорящих иностранцев в Словении.
+        <footer class="bg-gradient-to-br from-gray-900 to-gray-800 text-gray-300 mt-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                    <!-- Brand -->
+                    <div class="md:col-span-1">
+                        <div class="flex items-center space-x-2 mb-4">
+                            <div class="w-8 h-8 bg-gradient-to-br from-amber-400 to-orange-500 rounded-lg flex items-center justify-center">
+                                <span class="text-white font-bold text-sm">SD</span>
+                            </div>
+                            <span class="text-xl font-bold text-white">SloDocs</span>
+                        </div>
+                        <p class="text-sm text-gray-400 leading-relaxed">
+                            Информационный портал для русскоговорящих иностранцев в Словении
                         </p>
                     </div>
+
+                    <!-- Quick Links -->
                     <div>
-                        <h3 class="text-sm font-semibold text-gray-900 mb-3">Информация</h3>
+                        <h3 class="text-sm font-semibold text-white mb-4">Навигация</h3>
                         <ul class="space-y-2 text-sm">
-                            <li><a href="{{ route('legal.terms') }}" class="text-gray-600 hover:text-gray-900">Условия использования</a></li>
-                            <li><a href="{{ route('legal.privacy') }}" class="text-gray-600 hover:text-gray-900">Политика конфиденциальности</a></li>
+                            <li><a href="{{ route('home') }}" class="text-gray-400 hover:text-amber-400 transition-colors">Главная</a></li>
+                            <li><a href="{{ route('home') }}#services" class="text-gray-400 hover:text-amber-400 transition-colors">Услуги</a></li>
+                            <li><a href="#help" class="text-gray-400 hover:text-amber-400 transition-colors">Помощь</a></li>
                         </ul>
                     </div>
+
+                    <!-- Legal -->
                     <div>
-                        <h3 class="text-sm font-semibold text-gray-900 mb-3">Важно</h3>
-                        <p class="text-xs text-gray-600">
-                            Материалы носят информационный характер и предназначены для самостоятельного использования.
-                        </p>
+                        <h3 class="text-sm font-semibold text-white mb-4">Документы</h3>
+                        <ul class="space-y-2 text-sm">
+                            <li><a href="{{ route('legal.terms') }}" class="text-gray-400 hover:text-amber-400 transition-colors">Условия использования</a></li>
+                            <li><a href="{{ route('legal.privacy') }}" class="text-gray-400 hover:text-amber-400 transition-colors">Политика конфиденциальности</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Contact -->
+                    <div>
+                        <h3 class="text-sm font-semibold text-white mb-4">Контакты</h3>
+                        <ul class="space-y-2 text-sm text-gray-400">
+                            <li>Email: info@slodocs.si</li>
+                            <li>Словения, Любляна</li>
+                        </ul>
                     </div>
                 </div>
-                <div class="mt-8 pt-8 border-t border-gray-200 text-center text-sm text-gray-500">
-                    &copy; {{ date('Y') }} SloDocs. Все права защищены.
+
+                <!-- Bottom Bar -->
+                <div class="pt-8 border-t border-gray-700">
+                    <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                        <p class="text-sm text-gray-400">
+                            &copy; {{ date('Y') }} SloDocs. Все права защищены.
+                        </p>
+                        <p class="text-xs text-gray-500 max-w-md text-center md:text-right">
+                            ⚠️ Материалы носят информационный характер и не являются юридическими услугами
+                        </p>
+                    </div>
                 </div>
             </div>
         </footer>

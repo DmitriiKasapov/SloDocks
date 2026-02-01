@@ -12,8 +12,7 @@ class CreateService extends CreateRecord
     protected function afterCreate(): void
     {
         activity_log('service_created', null, [
-            'service_id' => $this->record->id,
             'title' => $this->record->title,
-        ]);
+        ], serviceId: $this->record->id);
     }
 }

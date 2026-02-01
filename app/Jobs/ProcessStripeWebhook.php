@@ -46,46 +46,13 @@ class ProcessStripeWebhook implements ShouldQueue
     }
 
     /**
-     * Handle successful payment
+     * Handle successful payment intent (logging only).
+     * Access granting happens in handleCheckoutCompleted.
      */
     private function handlePaymentSucceeded(): void
     {
-        $paymentIntentId = $this->eventData['id'];
-
-        // Find purchase by payment_id
-        $purchase = Purchase::where('payment_id', $paymentIntentId)->first();
-
-        if (!$purchase) {
-            Log::warning('Purchase not found for payment intent', [
-                'payment_intent_id' => $paymentIntentId,
-            ]);
-            return;
-        }
-
-        // Check if already processed (idempotency)
-        if ($purchase->status === 'paid') {
-            Log::info('Purchase already marked as paid', ['purchase_id' => $purchase->id]);
-            return;
-        }
-
-        // Update purchase status
-        $purchase->update(['status' => 'paid']);
-
-        // Log activity
-        activity_log('payment_success', $purchase->email, [
-            'purchase_id' => $purchase->id,
-            'service_id' => $purchase->service_id,
-            'amount' => $purchase->amount,
-            'payment_id' => $paymentIntentId,
-        ]);
-
-        // Grant access
-        $accessGrantService = app(AccessGrantService::class);
-        $accessGrantService->grantAccess($purchase);
-
-        Log::info('Payment processed successfully', [
-            'purchase_id' => $purchase->id,
-            'email' => $purchase->email,
+        Log::info('Payment intent succeeded', [
+            'payment_intent_id' => $this->eventData['id'],
         ]);
     }
 
@@ -110,11 +77,9 @@ class ProcessStripeWebhook implements ShouldQueue
 
         // Log activity
         activity_log('payment_failed', $purchase->email, [
-            'purchase_id' => $purchase->id,
-            'service_id' => $purchase->service_id,
             'payment_id' => $paymentIntentId,
             'error' => $this->eventData['last_payment_error'] ?? null,
-        ]);
+        ], serviceId: $purchase->service_id, purchaseId: $purchase->id);
 
         Log::info('Payment failed', [
             'purchase_id' => $purchase->id,
@@ -123,19 +88,40 @@ class ProcessStripeWebhook implements ShouldQueue
     }
 
     /**
-     * Handle checkout session completed
+     * Handle checkout session completed — primary event for granting access.
+     * Session ID matches the payment_id stored in Purchase.
      */
     private function handleCheckoutCompleted(): void
     {
         $sessionId = $this->eventData['id'];
-        $paymentIntentId = $this->eventData['payment_intent'] ?? null;
 
-        Log::info('Checkout session completed', [
+        $purchase = Purchase::where('payment_id', $sessionId)->first();
+
+        if (!$purchase) {
+            Log::warning('Purchase not found for checkout session', [
+                'session_id' => $sessionId,
+            ]);
+            return;
+        }
+
+        if ($purchase->status === 'paid') {
+            Log::info('Purchase already processed', ['purchase_id' => $purchase->id]);
+            return;
+        }
+
+        $purchase->update(['status' => 'paid']);
+
+        activity_log('payment_success', $purchase->email, [
+            'amount' => $purchase->amount,
             'session_id' => $sessionId,
-            'payment_intent_id' => $paymentIntentId,
-        ]);
+        ], serviceId: $purchase->service_id, purchaseId: $purchase->id);
 
-        // The actual payment processing happens in payment_intent.succeeded
-        // This event is logged for tracking purposes
+        $accessGrantService = app(AccessGrantService::class);
+        $accessGrantService->grantAccess($purchase);
+
+        Log::info('Checkout completed, access granted', [
+            'purchase_id' => $purchase->id,
+            'email' => $purchase->email,
+        ]);
     }
 }

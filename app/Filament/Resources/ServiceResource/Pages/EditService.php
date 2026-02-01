@@ -20,8 +20,7 @@ class EditService extends EditRecord
     protected function afterSave(): void
     {
         activity_log('service_updated', null, [
-            'service_id' => $this->record->id,
             'title' => $this->record->title,
-        ]);
+        ], serviceId: $this->record->id);
     }
 }

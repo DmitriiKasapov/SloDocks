@@ -1,0 +1,66 @@
+@layer components {
+  /* Checkbox component */
+  .checkbox-input {
+    @apply relative cursor-pointer;
+
+    /* Hide native checkbox */
+    input[type="checkbox"] {
+      @apply absolute opacity-0 w-0 h-0;
+    }
+
+    /* Custom checkbox icon */
+    .clip-path {
+      @apply absolute left-0 top-0 w-5 h-5 border-2 border-gray-300 bg-white transition-all duration-200;
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+
+      /* Checkmark */
+      &::after {
+        content: '';
+        @apply absolute left-[5px] top-[2px] w-[6px] h-[10px] border-white border-r-2 border-b-2 opacity-0 transition-opacity duration-200;
+        transform: rotate(45deg);
+      }
+    }
+
+    /* Rounded checkbox */
+    .clip-path.rounded {
+      @apply rounded-full;
+    }
+
+    /* Checked state */
+    input[type="checkbox"]:checked + .clip-path {
+      @apply bg-gradient-to-br from-amber-500 to-orange-500 border-amber-500;
+
+      &::after {
+        @apply opacity-100;
+      }
+    }
+
+    /* Focus state */
+    input[type="checkbox"]:focus + .clip-path {
+      @apply ring-2 ring-amber-300 ring-offset-1;
+    }
+
+    /* Disabled state */
+    input[type="checkbox"]:disabled ~ .clip-path {
+      @apply bg-gray-100 border-gray-300 cursor-not-allowed opacity-60;
+    }
+
+    input[type="checkbox"]:disabled ~ .checkbox-text {
+      @apply text-gray-400 cursor-not-allowed;
+    }
+
+    /* Error state */
+    .clip-path._danger {
+      @apply border-red-500;
+    }
+
+    input[type="checkbox"]:checked + .clip-path._danger {
+      @apply bg-gradient-to-br from-red-500 to-red-600 border-red-500;
+    }
+
+    /* Checkbox text */
+    .checkbox-text {
+      @apply text-gray-700 text-base leading-normal;
+    }
+  }
+}

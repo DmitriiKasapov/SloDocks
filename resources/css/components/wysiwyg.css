@@ -1,0 +1,57 @@
+.wysiwyg {
+  @apply @container;
+
+  > *:not(:last-child) {
+    @apply mb-5;
+  }
+
+  h2 {
+    @apply text-flash not-first:mt-10;
+  }
+
+  ul {
+    @apply list-disc pl-6;
+  }
+
+  a {
+    @apply text-primary no-underline hover:underline;
+  }
+
+  table {
+    @apply w-full border-collapse text-[16px] leading-[1.2];
+    thead {
+      @apply text-xs;
+      th {
+        @apply uppercase whitespace-nowrap;
+      }
+    }
+    tbody {
+      @apply w-full;
+    }
+    tr {
+      th, td {
+        @apply text-left align-top border-b p-2.5 border-basic-200;
+      }
+    }
+    @variant @max-[520px] {
+      @apply flex;
+      tr {
+        @apply flex flex-col border-t border-primary not-last:mb-5;
+        th, td {
+          @apply flex flex-col !w-full;
+          &:before {
+            @apply content-[attr(data-th)] h-5 block text-xs font-bold mb-1 uppercase;
+          }
+        }
+      }
+      thead th {
+        @apply hidden;
+      }
+    }
+  }
+
+  .cookies-table tr *:nth-child(1) { width: 200px; }
+  .cookies-table tr *:nth-child(2) { width: 120px; }
+  .cookies-table tr *:nth-child(3) { width: auto; }
+
+}

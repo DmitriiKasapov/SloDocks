@@ -1,0 +1,26 @@
+/* Solution to flickering on safari */
+.swiper-slide {
+  -webkit-transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+}
+
+.slider-dividers {
+  swiper-slide {
+    position: relative;
+    &::before {
+      content: "";
+      position: absolute;
+      display: block;
+      border-left: var(--divider-width) var(--divider-style)
+        var(--divider-color);
+      left: calc((var(--divider-left) + var(--divider-width)) / -2);
+      top: 0;
+      height: 100%;
+      width: 0;
+    }
+  }
+}
+
+swiper-slide {
+  @apply w-auto h-auto;
+}

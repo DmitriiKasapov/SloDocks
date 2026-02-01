@@ -1,0 +1,160 @@
+@layer components {
+  /* Form base styles */
+
+  /* Visually hidden */
+  .visually-hidden {
+    @apply absolute w-px h-px p-0 m-[-1px] overflow-hidden whitespace-nowrap border-0;
+    clip: rect(0, 0, 0, 0);
+  }
+
+  /* Labels */
+  .form-item label.black {
+    @apply block text-sm font-semibold text-gray-900 mb-2;
+  }
+
+  /* Text inputs */
+  .form-item input.bb-black,
+  .form-item textarea.bb-black {
+    @apply w-full px-4 py-3 border-2 border-gray-200 rounded-xl bg-white text-gray-900 text-base transition-all duration-200;
+    @apply focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent;
+    @apply placeholder:text-gray-400;
+
+    &.error {
+      @apply border-red-500 focus:ring-red-500;
+    }
+
+    &:disabled {
+      @apply bg-gray-100 text-gray-500 cursor-not-allowed;
+    }
+  }
+
+  .form-item textarea.bb-black {
+    @apply min-h-[120px] resize-y;
+  }
+
+  /* Radio button */
+  .form-item.radio {
+    .faux-radio {
+      @apply relative w-5 h-5 border-2 border-gray-300 rounded-full bg-white transition-all duration-200;
+
+      &::after {
+        content: '';
+        @apply absolute top-1/2 left-1/2 w-2.5 h-2.5 bg-gradient-to-br from-amber-500 to-orange-500 rounded-full opacity-0 transition-opacity duration-200;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    input[type="radio"]:checked + label .faux-radio {
+      @apply border-amber-500;
+
+      &::after {
+        @apply opacity-100;
+      }
+    }
+
+    input[type="radio"]:focus + label .faux-radio {
+      @apply ring-2 ring-amber-300 ring-offset-1;
+    }
+
+    input[type="radio"]:disabled + label .faux-radio {
+      @apply bg-gray-100 border-gray-300 cursor-not-allowed opacity-60;
+    }
+
+    label {
+      @apply cursor-pointer text-gray-700 text-base;
+    }
+
+    input[type="radio"]:disabled + label {
+      @apply text-gray-400 cursor-not-allowed;
+    }
+  }
+
+  /* Select */
+  .form-item.select {
+    .select-button {
+      @apply px-4 py-3 border-2 border-gray-200 rounded-xl bg-white text-gray-900 text-base text-left transition-all duration-200;
+      @apply hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent;
+
+      .selected-value {
+        @apply flex-1;
+      }
+
+      [class^="icon-"] {
+        @apply text-gray-400 transition-transform duration-200;
+      }
+    }
+
+    &[aria-expanded="true"] .select-button {
+      @apply border-amber-500 ring-2 ring-amber-500;
+
+      [class^="icon-"] {
+        @apply rotate-180;
+      }
+    }
+
+    &[data-disabled] .select-button {
+      @apply bg-gray-100 text-gray-500 cursor-not-allowed;
+    }
+
+    ul {
+      @apply mt-2 max-h-60 overflow-y-auto border border-gray-200 rounded-xl shadow-lg z-10;
+
+      li {
+        @apply px-4 py-2 hover:bg-gray-50 cursor-pointer text-gray-700 transition-colors;
+
+        &[aria-selected="true"] {
+          @apply bg-gradient-to-r from-amber-50 to-orange-50 text-amber-900 font-semibold;
+        }
+      }
+    }
+  }
+
+  /* Range input */
+  .form-item {
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      @apply w-full bg-transparent cursor-pointer;
+    }
+
+    input[type="range"]:focus {
+      outline: none;
+    }
+
+    /* Chrome, Safari, Opera, Edge */
+    input[type="range"]::-webkit-slider-runnable-track {
+      @apply h-0 bg-transparent;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      @apply w-5 h-5 rounded-full bg-gradient-to-br from-amber-500 to-orange-500 relative z-[2] -mt-[5px];
+    }
+
+    /* Firefox */
+    input[type="range"]::-moz-range-track {
+      @apply h-0 bg-transparent;
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      @apply w-5 h-5 rounded-full bg-gradient-to-br from-amber-500 to-orange-500 relative z-[2] -mt-[5px] border-0;
+    }
+  }
+
+  /* Error message */
+  .text-danger {
+    @apply text-red-600;
+  }
+
+  /* Search input on hero section */
+  .search-input.search-hero {
+    input {
+      @apply shadow-2xl;
+    }
+
+    p {
+      @apply text-blue-200;
+    }
+  }
+}

@@ -11,7 +11,11 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->validateCsrfTokens(except: [
+            'webhooks/stripe',
+        ]);
+
+        $middleware->appendToGroup('web', \App\Http\Middleware\SetReferrerPolicy::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

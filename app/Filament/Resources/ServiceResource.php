@@ -4,11 +4,15 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ServiceResource\Pages;
 use App\Models\Service;
-use Filament\Forms\Components\Section;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -52,10 +56,47 @@ class ServiceResource extends Resource
                             ->maxLength(255)
                             ->unique(ignoreRecord: true),
 
+                        Select::make('category_id')
+                            ->label('Категория')
+                            ->relationship('category', 'name')
+                            ->required()
+                            ->searchable()
+                            ->preload()
+                            ->createOptionForm([
+                                TextInput::make('name')
+                                    ->label('Название')
+                                    ->required()
+                                    ->maxLength(255)
+                                    ->live(onBlur: true)
+                                    ->afterStateUpdated(function (string $state, callable $set) {
+                                        $set('slug', Str::slug($state));
+                                    }),
+                                TextInput::make('slug')
+                                    ->label('URL slug')
+                                    ->required()
+                                    ->maxLength(255),
+                                TextInput::make('order')
+                                    ->label('Порядок')
+                                    ->numeric()
+                                    ->default(0),
+                            ])
+                            ->helperText('Выберите из списка или создайте новую категорию'),
+
                         Textarea::make('description_public')
-                            ->label('Публичное описание')
+                            ->label('Краткое описание')
                             ->required()
                             ->rows(4)
+                            ->columnSpanFull(),
+
+                        RichEditor::make('content')
+                            ->label('Текст страницы')
+                            ->columnSpanFull(),
+
+                        FileUpload::make('image')
+                            ->label('Изображение')
+                            ->image()
+                            ->disk('public')
+                            ->directory('services')
                             ->columnSpanFull(),
 
                         TextInput::make('price')
@@ -91,6 +132,51 @@ class ServiceResource extends Resource
                             ->rows(2)
                             ->helperText('Если пусто — используется публичное описание'),
                     ]),
+
+                Section::make('Скрытый контент')
+                    ->description('Доступен после оплаты')
+                    ->collapsed()
+                    ->schema([
+                        RichEditor::make('hidden_text_1')
+                            ->label('Инструкция'),
+
+                        FileUpload::make('hidden_file_path_1')
+                            ->label('Документ PDF (1)')
+                            ->acceptedFileTypes(['application/pdf'])
+                            ->disk('local')
+                            ->directory('services/hidden'),
+
+                        FileUpload::make('hidden_file_path_2')
+                            ->label('Документ PDF (2)')
+                            ->acceptedFileTypes(['application/pdf'])
+                            ->disk('local')
+                            ->directory('services/hidden'),
+
+                        Repeater::make('hidden_links')
+                            ->label('Список ссылок')
+                            ->schema([
+                                TextInput::make('title')
+                                    ->label('Название')
+                                    ->required(),
+                                TextInput::make('url')
+                                    ->label('URL')
+                                    ->url()
+                                    ->required(),
+                            ])
+                            ->columns(2)
+                            ->defaultItems(0)
+                            ->collapsible()
+                            ->itemLabel(fn (array $state): ?string => $state['title'] ?? null),
+
+                        RichEditor::make('hidden_text_2')
+                            ->label('Практические советы'),
+
+                        FileUpload::make('hidden_image')
+                            ->label('Изображение (скрытое)')
+                            ->image()
+                            ->disk('local')
+                            ->directory('services/hidden'),
+                    ]),
             ]);
     }
 
@@ -103,9 +189,17 @@ class ServiceResource extends Resource
                     ->searchable()
                     ->sortable(),
 
+                TextColumn::make('category.name')
+                    ->label('Категория')
+                    ->searchable()
+                    ->sortable()
+                    ->badge()
+                    ->default('—'),
+
                 TextColumn::make('slug')
                     ->label('Slug')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('price')
                     ->label('Цена')

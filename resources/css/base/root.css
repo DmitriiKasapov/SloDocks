@@ -1,0 +1,37 @@
+/* Breakpoint variables */
+:root {
+  --animated-underline-thickness: min(0.1em, 1px);
+  --animated-underline-size-initial: 100% var(--animated-underline-thickness), 0 var(--animated-underline-thickness);
+  --animated-underline-size-full: 0 var(--animated-underline-thickness), 100% var(--animated-underline-thickness);
+  --aniamted-underline-position: 100% calc(100% - 1px), 0 calc(100% - 1px);
+  --animated-underline-position-reverse: 0 calc(100% - 1px), 100% calc(100% - 1px);
+  --animated-underline-background-image: linear-gradient(
+      var(--color-transparent),
+      var(--color-transparent)
+    ),
+    linear-gradient(currentColor, currentColor);
+
+  @media (width >= theme(--breakpoint-xs)) {
+    --padding-px: var(--padding-xs)
+  }
+  @media (width >= theme(--breakpoint-sm)) {
+    --padding-px: var(--padding-sm)
+  }
+  @media (width >= theme(--breakpoint-md)) {
+    --gap: var(--gap-md);
+    --padding-px: var(--padding-md)
+  }
+  @media (width >= theme(--breakpoint-lg)) {
+    --padding-px: var(--padding-lg)
+  }
+  @media (width >= theme(--breakpoint-xl)) {
+    --gap: var(--gap-xl);
+    --padding-px: var(--padding-xl)
+  }
+  @media (width >= theme(--breakpoint-2xl)) {
+    --padding-px: var(--padding-2xl)
+  }
+  @media (width >= theme(--breakpoint-3xl)) {
+    --padding-px: var(--padding-3xl)
+  }
+}

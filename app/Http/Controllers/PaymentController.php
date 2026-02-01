@@ -54,7 +54,7 @@ class PaymentController extends Controller
 
         $service = $purchase->service;
 
-        return view('payment.mock-checkout', compact('purchase', 'service'));
+        return view('pages.payment.mock-checkout', compact('purchase', 'service'));
     }
 
     /**
@@ -68,11 +68,9 @@ class PaymentController extends Controller
         $purchase->update(['status' => 'paid']);
 
         activity_log('payment_success', $purchase->email, [
-            'purchase_id' => $purchase->id,
-            'service_id' => $purchase->service_id,
             'amount' => $purchase->amount,
             'mock' => true,
-        ]);
+        ], serviceId: $purchase->service_id, purchaseId: $purchase->id);
 
         $access = $accessGrantService->grantAccess($purchase);
 
@@ -89,7 +87,7 @@ class PaymentController extends Controller
     {
         $sessionId = $request->query('session_id');
 
-        return view('payment.success', [
+        return view('pages.payment.success', [
             'sessionId' => $sessionId,
         ]);
     }
@@ -99,6 +97,6 @@ class PaymentController extends Controller
      */
     public function cancel()
     {
-        return view('payment.cancel');
+        return view('pages.payment.cancel');
     }
 }
