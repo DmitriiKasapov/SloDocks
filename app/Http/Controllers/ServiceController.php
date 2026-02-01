@@ -9,7 +9,8 @@ class ServiceController extends Controller
 {
     public function show(Request $request, string $slug)
     {
-        $service = Service::where('slug', $slug)
+        $service = Service::with('serviceContent')
+            ->where('slug', $slug)
             ->where('is_active', true)
             ->firstOrFail();
 
@@ -36,7 +37,8 @@ class ServiceController extends Controller
     // TEMPORARY: Show content page (will be protected by token later)
     public function showContent(Request $request, string $slug)
     {
-        $service = Service::where('slug', $slug)
+        $service = Service::with(['serviceContent', 'contentBlocks'])
+            ->where('slug', $slug)
             ->where('is_active', true)
             ->firstOrFail();
 
@@ -49,6 +51,12 @@ class ServiceController extends Controller
                 ->with('error', 'Доступ к материалам закрыт');
         }
 
+        // If service has blocks (new system), show them
+        if ($service->contentBlocks->isNotEmpty()) {
+            return view('pages.services.content-blocks', compact('service'));
+        }
+
+        // Otherwise show old ServiceContent
         return view('pages.services.content', compact('service'));
     }
 

@@ -1,6 +1,7 @@
 @layer base {
   html {
     overflow-x: hidden;
+    scroll-behavior: smooth;
   }
 
   a {
@@ -15,5 +16,10 @@
     &:disabled {
       @apply cursor-auto;
     }
+  }
+
+  /* Offset for fixed header when scrolling to anchors */
+  [id^="step-"] {
+    scroll-margin-top: 125px;
   }
 }
