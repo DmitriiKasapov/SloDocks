@@ -2,19 +2,21 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Service extends Model
 {
+    use HasFactory;
     protected $fillable = [
         'slug',
         'title',
         'category_id',
         'description_public',
+        'materials_included',
         'price',
         'access_duration_days',
         'seo_title',
@@ -26,21 +28,12 @@ class Service extends Model
         'is_active' => 'boolean',
         'price' => 'integer',
         'access_duration_days' => 'integer',
+        'materials_included' => 'array',
     ];
 
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
-    }
-
-    public function serviceContent(): HasOne
-    {
-        return $this->hasOne(ServiceContent::class);
-    }
-
-    public function material(): HasOne
-    {
-        return $this->hasOne(Material::class);
     }
 
     public function contentBlocks(): HasMany

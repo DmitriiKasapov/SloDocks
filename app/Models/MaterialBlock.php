@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class MaterialBlock extends Model
 {
     protected $fillable = [
-        'material_id',
         'service_id',
         'type',
         'title',
@@ -23,18 +22,13 @@ class MaterialBlock extends Model
         'order' => 'integer',
     ];
 
-    public function material(): BelongsTo
-    {
-        return $this->belongsTo(Material::class);
-    }
-
     public function service(): BelongsTo
     {
         return $this->belongsTo(Service::class);
     }
 
     // Block type constants
-    public const TYPE_INTRO = 'intro';
+    public const TYPE_TEXT = 'text';
     public const TYPE_PROCESS_OVERVIEW = 'process_overview';
     public const TYPE_STEPS = 'steps';
     public const TYPE_TIP = 'tip';
@@ -46,14 +40,14 @@ class MaterialBlock extends Model
     public static function getTypes(): array
     {
         return [
-            self::TYPE_INTRO => 'Intro',
-            self::TYPE_PROCESS_OVERVIEW => 'Process Overview',
-            self::TYPE_STEPS => 'Steps',
-            self::TYPE_TIP => 'Tip',
-            self::TYPE_DOWNLOADS => 'Downloads',
-            self::TYPE_EXAMPLES => 'Examples',
-            self::TYPE_FAQ => 'FAQ',
-            self::TYPE_HELP_CTA => 'Help CTA',
+            self::TYPE_TEXT => 'Текст',
+            self::TYPE_PROCESS_OVERVIEW => 'Обзор шагов',
+            self::TYPE_STEPS => 'Шаг',
+            self::TYPE_TIP => 'Совет',
+            self::TYPE_DOWNLOADS => 'Файлы для скачивания',
+            self::TYPE_EXAMPLES => 'Образцы',
+            self::TYPE_FAQ => 'Вопросы и ответы',
+            self::TYPE_HELP_CTA => 'Блок помощи',
         ];
     }
 }

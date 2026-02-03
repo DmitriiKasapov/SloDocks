@@ -114,6 +114,33 @@ class ServiceResource extends Resource
                                             ->rows(4)
                                             ->columnSpanFull(),
 
+                                        Section::make('Что входит в материалы')
+                                            ->description('Отметьте элементы, которые включены в эту услугу')
+                                            ->collapsed()
+                                            ->schema([
+                                                Toggle::make('materials_included.step_by_step')
+                                                    ->label('Пошаговая инструкция')
+                                                    ->default(true)
+                                                    ->inline(false),
+                                                Toggle::make('materials_included.documents_list')
+                                                    ->label('Список документов')
+                                                    ->default(true)
+                                                    ->inline(false),
+                                                Toggle::make('materials_included.filled_examples')
+                                                    ->label('Заполненные образцы')
+                                                    ->default(true)
+                                                    ->inline(false),
+                                                Toggle::make('materials_included.practical_tips')
+                                                    ->label('Практические советы')
+                                                    ->default(true)
+                                                    ->inline(false),
+                                                Toggle::make('materials_included.detailed_info')
+                                                    ->label('Детальная информация')
+                                                    ->default(false)
+                                                    ->inline(false),
+                                            ])
+                                            ->columnSpanFull(),
+
                                         TextInput::make('price')
                                             ->label('Цена (центы)')
                                             ->required()
@@ -157,9 +184,19 @@ class ServiceResource extends Resource
                                         Builder::make('content_blocks')
                                             ->label('')
                                             ->blocks([
+                                                // Text block
+                                                Builder\Block::make('text')
+                                                    ->label('Текст')
+                                                    ->icon('heroicon-o-document-text')
+                                                    ->schema([
+                                                        RichEditor::make('content')
+                                                            ->label('Содержание')
+                                                            ->required(),
+                                                    ]),
+
                                                 // Intro block
                                                 Builder\Block::make('intro')
-                                                    ->label('Intro — вводный блок')
+                                                    ->label('Вводный блок')
                                                     ->icon('heroicon-o-star')
                                                     ->schema([
                                                         TextInput::make('text')
@@ -174,7 +211,7 @@ class ServiceResource extends Resource
 
                                                 // Process Overview block
                                                 Builder\Block::make('process_overview')
-                                                    ->label('Process Overview — краткий обзор')
+                                                    ->label('Обзор шагов')
                                                     ->icon('heroicon-o-list-bullet')
                                                     ->schema([
                                                         Repeater::make('steps')
@@ -191,7 +228,7 @@ class ServiceResource extends Resource
 
                                                 // Steps block
                                                 Builder\Block::make('steps')
-                                                    ->label('Пошаговая инструкция/step')
+                                                    ->label('Шаг')
                                                     ->icon('heroicon-o-numbered-list')
                                                     ->schema([
                                                         Repeater::make('steps')
@@ -205,16 +242,9 @@ class ServiceResource extends Resource
                                                                     ->label('Заголовок')
                                                                     ->required(),
                                                                 RichEditor::make('description')
-                                                                    ->label('Описание'),
-                                                                Repeater::make('items')
-                                                                    ->label('Элементы списка')
-                                                                    ->schema([
-                                                                        TextInput::make('item')
-                                                                            ->label('Элемент')
-                                                                            ->required(),
-                                                                    ])
-                                                                    ->defaultItems(1)
-                                                                    ->collapsible(),
+                                                                    ->label('Содержание')
+                                                                    ->helperText('Используйте списки, ссылки, выделение текста через редактор')
+                                                                    ->required(),
                                                             ])
                                                             ->defaultItems(1)
                                                             ->collapsible()
@@ -244,7 +274,7 @@ class ServiceResource extends Resource
 
                                                 // Downloads block
                                                 Builder\Block::make('downloads')
-                                                    ->label('Downloads — бланки для скачивания')
+                                                    ->label('Файлы для скачивания')
                                                     ->icon('heroicon-o-arrow-down-tray')
                                                     ->schema([
                                                         Repeater::make('files')
@@ -267,7 +297,7 @@ class ServiceResource extends Resource
 
                                                 // Examples block
                                                 Builder\Block::make('examples')
-                                                    ->label('Examples — образцы заполнения')
+                                                    ->label('Образцы')
                                                     ->icon('heroicon-o-document-duplicate')
                                                     ->schema([
                                                         Repeater::make('examples')
@@ -290,7 +320,7 @@ class ServiceResource extends Resource
 
                                                 // FAQ block
                                                 Builder\Block::make('faq')
-                                                    ->label('FAQ — часто задаваемые вопросы')
+                                                    ->label('Вопросы и ответы')
                                                     ->icon('heroicon-o-question-mark-circle')
                                                     ->schema([
                                                         Repeater::make('items')
@@ -311,7 +341,7 @@ class ServiceResource extends Resource
 
                                                 // Help CTA block
                                                 Builder\Block::make('help_cta')
-                                                    ->label('Help CTA — блок помощи')
+                                                    ->label('Блок помощи')
                                                     ->icon('heroicon-o-chat-bubble-left-right')
                                                     ->schema([
                                                         RichEditor::make('text')

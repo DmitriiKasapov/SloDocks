@@ -42,7 +42,7 @@ Route::post('/services/{slug}/revoke-temp-access', [App\Http\Controllers\Service
     ->name('services.revoke-temp-access');
 
 // Protected file download (requires valid access token)
-Route::get('/services/{slug}/file/{field}', [App\Http\Controllers\FileController::class, 'download'])
+Route::get('/services/{slug}/file/{blockId}/{fileIndex}', [App\Http\Controllers\FileController::class, 'download'])
     ->middleware(\App\Http\Middleware\CheckServiceAccess::class)
     ->name('services.file');
 
@@ -54,7 +54,7 @@ Route::get('/services/{slug}/file/{field}', [App\Http\Controllers\FileController
 
 // Create Stripe Checkout Session
 Route::post('/payment/create', [App\Http\Controllers\PaymentController::class, 'create'])
-    ->middleware('throttle:5,1')
+    ->middleware('throttle:10,1')
     ->name('payment.create');
 
 // Payment success callback
@@ -94,5 +94,14 @@ Route::get('/terms', function () {
 Route::get('/privacy', function () {
     return view('pages.legal.privacy');
 })->name('legal.privacy');
+
+/*
+|--------------------------------------------------------------------------
+| SEO Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/sitemap.xml', [App\Http\Controllers\SitemapController::class, 'index'])
+    ->name('sitemap');
 
 // Admin panel handled by Filament at /admin

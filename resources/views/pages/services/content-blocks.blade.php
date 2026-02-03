@@ -58,7 +58,13 @@
         </div>
     </div>
 
+    <!-- Access Timer -->
+    @isset($access)
+        <x-access-timer :access="$access" />
+    @endisset
+
     {{-- TEMPORARY: Revoke access button for testing --}}
+    @if(app()->isLocal())
     <div class="mb-8">
         <form action="{{ route('services.revoke-temp-access', $service->slug) }}" method="POST" class="inline-block">
             @csrf
@@ -73,6 +79,7 @@
             </button>
         </form>
     </div>
+    @endif
 
     <!-- Content Blocks -->
     @foreach($service->contentBlocks as $block)

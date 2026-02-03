@@ -18,6 +18,7 @@ class SendAccessEmail implements ShouldQueue
 
     public $tries = 3;
     public $timeout = 30;
+    public $backoff = [5, 15, 30]; // Retry after 5s, 15s, 30s
 
     /**
      * Create a new job instance.

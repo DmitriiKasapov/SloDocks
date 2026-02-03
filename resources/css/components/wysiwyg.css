@@ -6,7 +6,11 @@
   }
 
   h2 {
-    @apply text-flash not-first:mt-10;
+    @apply text-gray-900 font-bold text-2xl;
+
+    &:not(:first-child) {
+      @apply mt-10;
+    }
   }
 
   ul {
@@ -30,13 +34,18 @@
     }
     tr {
       th, td {
-        @apply text-left align-top border-b p-2.5 border-basic-200;
+        @apply text-left align-top border-b p-2.5 border-gray-200;
       }
     }
-    @variant @max-[520px] {
+    @media (max-width: 520px) {
       @apply flex;
       tr {
-        @apply flex flex-col border-t border-primary not-last:mb-5;
+        @apply flex flex-col border-t border-amber-500;
+
+        &:not(:last-child) {
+          @apply mb-5;
+        }
+
         th, td {
           @apply flex flex-col !w-full;
           &:before {
@@ -54,4 +63,75 @@
   .cookies-table tr *:nth-child(2) { width: 120px; }
   .cookies-table tr *:nth-child(3) { width: auto; }
 
+}
+
+/* Rich text content styles for step blocks */
+.step-description {
+  @apply text-gray-700 leading-relaxed;
+
+  /* Paragraphs */
+  > p {
+    @apply mb-4;
+  }
+
+  /* Unordered lists with custom checkmark bullets */
+  > ul {
+    @apply space-y-3 mb-6 list-none pl-0;
+
+    > li {
+      @apply flex items-start gap-2 pl-0;
+
+      &::before {
+        content: '';
+        @apply flex-shrink-0 w-5 h-5 mt-1 bg-emerald-500 rounded-full;
+        mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor'%3E%3Cpath fill-rule='evenodd' d='M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z' clip-rule='evenodd'/%3E%3C/svg%3E");
+        -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor'%3E%3Cpath fill-rule='evenodd' d='M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z' clip-rule='evenodd'/%3E%3C/svg%3E");
+      }
+    }
+  }
+
+  /* Ordered lists with custom numbered bullets */
+  > ol {
+    @apply space-y-3 mb-6 list-none pl-0;
+    counter-reset: step-counter;
+
+    > li {
+      @apply flex items-start gap-3;
+      counter-increment: step-counter;
+
+      &::before {
+        content: counter(step-counter) '.';
+        @apply flex-shrink-0 font-bold text-indigo-600 min-w-[1.5rem];
+      }
+    }
+  }
+
+  /* Links */
+  a {
+    @apply text-indigo-600 hover:text-indigo-700 underline transition-colors;
+  }
+
+  /* Bold text */
+  strong {
+    @apply font-bold text-gray-900;
+  }
+
+  /* Italic text */
+  em {
+    @apply italic;
+  }
+
+  /* Inline code */
+  code {
+    @apply bg-gray-100 text-gray-800 px-1.5 py-0.5 rounded text-sm font-mono;
+  }
+
+  /* Headings inside content */
+  h4 {
+    @apply text-lg font-bold text-gray-900 mt-6 mb-3;
+  }
+
+  h5 {
+    @apply text-base font-bold text-gray-900 mt-4 mb-2;
+  }
 }

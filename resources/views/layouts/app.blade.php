@@ -9,7 +9,20 @@
 
     <!-- SEO Meta Tags -->
     <meta name="description" content="@yield('meta_description', 'Информационный портал для русскоговорящих иностранцев в Словении')">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="@yield('og_title', config('app.name', 'SloDocs'))">
+    <meta property="og:description" content="@yield('og_description', 'Информационный портал для русскоговорящих иностранцев в Словении')">
+    <meta property="og:type" content="@yield('og_type', 'website')">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:site_name" content="SloDocs">
+    <meta property="og:locale" content="ru_RU">
+    @yield('og_image')
+
     @yield('meta')
+
+    <!-- Schema.org JSON-LD -->
+    @yield('schema')
 
     <!-- Styles -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])

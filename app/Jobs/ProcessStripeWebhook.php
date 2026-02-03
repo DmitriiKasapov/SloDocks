@@ -17,6 +17,7 @@ class ProcessStripeWebhook implements ShouldQueue
 
     public $tries = 3;
     public $timeout = 60;
+    public $backoff = [10, 30, 60]; // Retry after 10s, 30s, 60s
 
     /**
      * Create a new job instance.
@@ -106,6 +107,29 @@ class ProcessStripeWebhook implements ShouldQueue
 
         if ($purchase->status === 'paid') {
             Log::info('Purchase already processed', ['purchase_id' => $purchase->id]);
+            return;
+        }
+
+        // Verify payment amount matches expected amount
+        $amountPaid = $this->eventData['amount_total'] ?? 0; // in cents
+        $expectedAmount = $purchase->amount;
+
+        if ($amountPaid !== $expectedAmount) {
+            Log::error('Payment amount mismatch!', [
+                'purchase_id' => $purchase->id,
+                'expected_amount' => $expectedAmount,
+                'paid_amount' => $amountPaid,
+                'session_id' => $sessionId,
+            ]);
+
+            activity_log('payment_amount_mismatch', $purchase->email, [
+                'expected' => $expectedAmount,
+                'paid' => $amountPaid,
+                'session_id' => $sessionId,
+            ], serviceId: $purchase->service_id, purchaseId: $purchase->id);
+
+            // Mark as failed to prevent access grant
+            $purchase->update(['status' => 'failed']);
             return;
         }
 

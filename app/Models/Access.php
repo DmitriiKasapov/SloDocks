@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Access extends Model
 {
+    use HasFactory;
     protected $fillable = [
         'service_id',
         'purchase_id',
@@ -31,5 +33,39 @@ class Access extends Model
     public function purchase(): BelongsTo
     {
         return $this->belongsTo(Purchase::class);
+    }
+
+    /**
+     * Get the number of days remaining until access expires
+     */
+    public function daysRemaining(): int
+    {
+        return max(0, now()->diffInDays($this->expires_at, false));
+    }
+
+    /**
+     * Check if access is expiring soon (within 7 days)
+     */
+    public function isExpiringSoon(): bool
+    {
+        return $this->daysRemaining() <= 7 && $this->daysRemaining() > 0;
+    }
+
+    /**
+     * Get a human-readable time remaining message
+     */
+    public function getTimeRemainingMessage(): string
+    {
+        $days = $this->daysRemaining();
+
+        if ($days === 0) {
+            return 'Доступ истекает сегодня';
+        } elseif ($days === 1) {
+            return 'Остался 1 день';
+        } elseif ($days >= 2 && $days <= 4) {
+            return "Осталось {$days} дня";
+        } else {
+            return "Осталось {$days} дней";
+        }
     }
 }

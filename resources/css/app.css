@@ -13,6 +13,7 @@
 @import "./components/buttons.css";
 @import "./components/checkbox.css";
 @import "./components/form_base.css";
+@import "./components/wysiwyg.css";
 
 /* Legacy components - disabled */
 /* @import "./components/expandable.css"; */
@@ -21,7 +22,6 @@
 /* @import "./components/menu.css"; */
 /* @import "./components/modals.css"; */
 /* @import "./components/swiper.css"; */
-/* @import "./components/wysiwyg.css"; */
 
 /* Legacy utilities - disabled */
 /* @import "./utilities/containerGrid.css"; */

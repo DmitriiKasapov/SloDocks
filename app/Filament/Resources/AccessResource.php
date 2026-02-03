@@ -133,6 +133,20 @@ class AccessResource extends Resource
                     ->modalDescription('Отправить email с данными доступа повторно?')
                     ->visible(fn (Access $record): bool => $record->is_active)
                     ->action(function (Access $record) {
+                        // Rate limiting: 1 request per 5 minutes per access
+                        $cacheKey = "email_resend_limit_{$record->id}";
+
+                        if (cache()->has($cacheKey)) {
+                            Notification::make()
+                                ->title('Email уже был отправлен недавно')
+                                ->body('Подождите 5 минут перед повторной отправкой.')
+                                ->warning()
+                                ->send();
+                            return;
+                        }
+
+                        cache()->put($cacheKey, true, now()->addMinutes(5));
+
                         SendAccessEmail::dispatch($record);
 
                         activity_log('access_email_resent', $record->email, [

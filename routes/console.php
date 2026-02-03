@@ -8,4 +8,5 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
 
-Schedule::command('access:deactivate-expired')->daily();
+// Schedule: Deactivate expired accesses daily at 00:00
+Schedule::command('access:expire')->daily();
