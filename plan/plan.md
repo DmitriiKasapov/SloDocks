@@ -68,7 +68,7 @@
   ---
   C) EXECUTION PLAN
 
-  C1) QUICK WINS (1-2 дня)
+  C1) QUICK WINS (1-2 дня) ✅ ЗАВЕРШЕНО
 
   ✅ 1. Установка и настройка Stripe SDK
 
@@ -108,29 +108,29 @@
   ---
   C2) CORE ROADMAP (1-2 недели)
 
-  EPIC 1: Публичная часть (4-5 дней)
+  EPIC 1: Публичная часть (4-5 дней) ✅ ЗАВЕРШЕНО
 
-  Task 1.1: Главная страница
+  Task 1.1: Главная страница ✅
   - Создать HomeController
   - View: resources/views/home.blade.php
   - Вывод списка активных услуг (Service::where('is_active', true))
   - Tailwind карточки услуг с SEO titles
   - Критерий: Открывается главная, видны услуги
 
-  Task 1.2: Страница услуги (публичная версия)
+  Task 1.2: Страница услуги (публичная версия) ✅
   - ServiceController@show
   - View: resources/views/services/show.blade.php
   - Публичное описание, цена, CTA кнопка "Получить доступ"
   - Schema.org разметка (Service type)
   - Критерий: Открывается /services/school-enrollment, видно описание
 
-  Task 1.3: Форма запроса email
+  Task 1.3: Форма запроса email ✅
   - Модальное окно / inline форма для ввода email
   - Валидация email (Laravel FormRequest)
   - Сохранение email в session перед редиректом на Stripe
   - Критерий: Пользователь может ввести email
 
-  Task 1.4: PaymentService — создание Stripe Checkout
+  Task 1.4: PaymentService — создание Stripe Checkout ✅
   // app/Services/PaymentService.php
   public function createCheckoutSession(Service $service, string $email): string
   {
@@ -143,15 +143,15 @@
   - Тесты: tests/Unit/PaymentServiceTest.php
   - Критерий: Создаётся Checkout Session, пользователь перенаправляется
 
-  Task 1.5: Success/Cancel callbacks
+  Task 1.5: Success/Cancel callbacks ✅
   - PaymentController@success — отображение "Проверяем оплату..."
   - PaymentController@cancel — "Оплата отменена"
   - Критерий: После оплаты пользователь видит корректные сообщения
 
   ---
-  EPIC 2: Stripe Webhooks + выдача доступа (3 дня)
+  EPIC 2: Stripe Webhooks + выдача доступа (3 дня) ✅ ЗАВЕРШЕНО
 
-  Task 2.1: WebhookController
+  Task 2.1: WebhookController ✅
   // app/Http/Controllers/WebhookController.php
   public function handleStripe(Request $request)
   {
@@ -163,7 +163,7 @@
   - Файлы: app/Http/Controllers/WebhookController.php, app/Http/Middleware/VerifyCsrfToken.php
   - Критерий: Webhook принимается, проверяется signature
 
-  Task 2.2: ProcessStripeWebhook Job
+  Task 2.2: ProcessStripeWebhook Job ✅
   // app/Jobs/ProcessStripeWebhook.php
   public function handle()
   {
@@ -180,7 +180,7 @@
   - Тесты: tests/Feature/StripeWebhookTest.php
   - Критерий: Webhook обрабатывается асинхронно
 
-  Task 2.3: AccessGrantService
+  Task 2.3: AccessGrantService ✅
   // app/Services/AccessGrantService.php
   public function grantAccess(Purchase $purchase): Access
   {
@@ -195,7 +195,7 @@
   - Тесты: tests/Unit/AccessGrantServiceTest.php
   - Критерий: После оплаты создаётся Access с токеном
 
-  Task 2.4: SendAccessEmail Job
+  Task 2.4: SendAccessEmail Job ✅
   // app/Jobs/SendAccessEmail.php
   // app/Mail/AccessGrantedMail.php
   - Mailable с ссылкой: /services/{slug}?token={access_token}
@@ -204,9 +204,9 @@
   - Критерий: Email отправляется с рабочей ссылкой
 
   ---
-  EPIC 3: Платный контент + middleware (2 дня)
+  EPIC 3: Платный контент + middleware (2 дня) ✅ ЗАВЕРШЕНО
 
-  Task 3.1: CheckServiceAccess Middleware
+  Task 3.1: CheckServiceAccess Middleware ✅
   // app/Http/Middleware/CheckServiceAccess.php
   public function handle(Request $request, Closure $next)
   {
@@ -218,14 +218,14 @@
       if (!$result->isValid()) {
           // Вернуть публичную версию или ошибку
       }
-      
+
       $request->attributes->add(['access' => $result->access]);
       return $next($request);
   }
   - Файлы: app/Http/Middleware/CheckServiceAccess.php, app/Http/Kernel.php
   - Критерий: Без токена/с неверным токеном доступ закрыт
 
-  Task 3.2: Условный рендеринг в ServiceController
+  Task 3.2: Условный рендеринг в ServiceController ✅
   public function show(Request $request, string $slug)
   {
       $service = Service::where('slug', $slug)->firstOrFail();
@@ -237,90 +237,84 @@
   - Файлы: app/Http/Controllers/ServiceController.php, resources/views/services/show.blade.php
   - Критерий: С токеном виден платный контент
 
-  Task 3.3: Страница платного контента
+  Task 3.3: Страница платного контента ✅
   - Структура: инструкции, чеклисты, ссылки на файлы
   - Дизайн: читаемый Tailwind layout
   - Файлы: resources/views/services/paid-content.blade.php (или секции в show.blade.php)
   - Критерий: Платный контент структурирован и читаем
 
-  Task 3.4: Обработка истечения срока
+  Task 3.4: Обработка истечения срока ✅
   - Если expires_at < now() → показать "Срок доступа истёк"
   - Логировать access_expired (при первом обращении после истечения)
   - Критерий: Истекший токен не даёт доступ
 
   ---
-  EPIC 4: Админка (3-4 дня)
+  EPIC 4: Админка (3-4 дня) ✅ ЗАВЕРШЕНО (Filament)
 
-  Task 4.1: AdminAuth Middleware
+  Task 4.1: AdminAuth Middleware ✅
   - Базовая HTTP Auth или Laravel Auth (без User registration)
   - Создать админ-пользователя через tinker/seeder
-  - Файлы: app/Http/Middleware/AdminAuth.php, database/seeders/AdminSeeder.php
-  - Команда: php artisan db:seed --class=AdminSeeder
-  - Критерий: /admin доступен только авторизованным
+  - Файлы: app/Models/AdminUser.php, database/seeders/AdminUserSeeder.php
+  - Команда: php artisan db:seed
+  - Критерий: /admin доступен только авторизованным (Filament auth)
 
-  Task 4.2: Admin Routes
-  // routes/web.php
-  Route::prefix('admin')->middleware('admin')->group(function () {
-      Route::resource('services', Admin\ServiceController::class);
-      Route::get('purchases', [Admin\PurchaseController::class, 'index']);
-      Route::get('accesses', [Admin\AccessController::class, 'index']);
-      Route::post('accesses/{access}/resend-email', [Admin\AccessController::class, 'resendEmail']);
-      Route::post('accesses/{access}/deactivate', [Admin\AccessController::class, 'deactivate']);
-  });
-  - Файлы: routes/web.php
+  Task 4.2: Admin Routes ✅
+  - Filament автоматически регистрирует роуты для админ-панели
+  - Файлы: app/Providers/Filament/AdminPanelProvider.php
   - Результат: Роуты админки готовы
 
-  Task 4.3: Admin\ServiceController — CRUD услуг
-  - Индекс: таблица услуг (DataTable или простая таблица)
+  Task 4.3: ServiceResource — CRUD услуг ✅
+  - Индекс: таблица услуг с фильтрами
   - Create/Edit: форма (title, slug, description_public, price, access_duration_days, seo_*, is_active)
   - Update: редактирование контента услуги
-  - Файлы: app/Http/Controllers/Admin/ServiceController.php, resources/views/admin/services/*.blade.php
+  - Файлы: app/Filament/Resources/ServiceResource.php
   - Критерий: Админ может создать/редактировать услугу
 
-  Task 4.4: Admin\PurchaseController — список покупок
+  Task 4.4: PurchaseResource — список покупок ✅
   - Таблица: email, service, amount, status, created_at
   - Фильтры: по status, по service
-  - Файлы: app/Http/Controllers/Admin/PurchaseController.php, resources/views/admin/purchases/index.blade.php
+  - Файлы: app/Filament/Resources/PurchaseResource.php
   - Критерий: Админ видит историю покупок
 
-  Task 4.5: Admin\AccessController — управление доступами
+  Task 4.5: AccessResource — управление доступами ✅
   - Таблица: email, service, expires_at, is_active
   - Действия: resend email, deactivate
-  - Файлы: app/Http/Controllers/Admin/AccessController.php, resources/views/admin/accesses/index.blade.php
+  - Файлы: app/Filament/Resources/AccessResource.php
   - Критерий: Админ может деактивировать доступ и переотправить email
 
-  Task 4.6: Admin Dashboard (базовая статистика)
-  - Счётчики: всего покупок, активных доступов, пользователей
-  - Файлы: app/Http/Controllers/Admin/DashboardController.php, resources/views/admin/dashboard.blade.php
+  Task 4.6: Admin Dashboard (базовая статистика) ✅
+  - Счётчики: оплаченные покупки, активные доступы, пользователи
+  - Файлы: app/Filament/Widgets/StatsOverview.php
   - Критерий: Админ видит общую статистику
 
   ---
-  EPIC 5: SEO, юридические страницы, robots/sitemap (1-2 дня)
+  EPIC 5: SEO, юридические страницы, robots/sitemap (1-2 дня) ✅ ЗАВЕРШЕНО
 
-  Task 5.1: SEO метатеги
+  Task 5.1: SEO метатеги ✅
   - Динамические title/description из Service модели
   - Schema.org разметка (WebSite, Service, Organization)
+  - Open Graph метатеги для социальных сетей
   - Файлы: resources/views/layouts/app.blade.php (секция @section('meta'))
   - Критерий: View Source показывает корректные метатеги
 
-  Task 5.2: Юридические страницы
+  Task 5.2: Юридические страницы ✅
   - /terms — Условия использования
   - /privacy — Политика конфиденциальности
   - Статичные Blade views
   - Файлы: routes/web.php, resources/views/legal/*.blade.php
   - Критерий: Страницы доступны и читаемы
 
-  Task 5.3: robots.txt и sitemap.xml
-  - robots.txt: запретить /admin, /payment, allow /services
-  - sitemap.xml: главная, список услуг, юридические страницы
+  Task 5.3: robots.txt и sitemap.xml ✅
+  - robots.txt: запретить /admin, /payment, /webhooks, allow /services
+  - sitemap.xml: главная, список услуг, юридические страницы (динамическая генерация)
   - Файлы: public/robots.txt, app/Http/Controllers/SitemapController.php
   - Команда: php artisan route:list | grep sitemap
   - Критерий: robots.txt настроен, sitemap генерируется
 
   ---
-  EPIC 6: Testing (2-3 дня)
+  EPIC 6: Testing (2-3 дня) ✅ ЗАВЕРШЕНО (49 тестов: 21 Unit + 28 Feature)
 
-  Task 6.1: Feature Tests
+  Task 6.1: Feature Tests ✅
   - UserFlowTest: главная → страница услуги → оплата → webhook → доступ
   - PaymentTest: создание Checkout Session, обработка webhooks
   - AccessTest: проверка токена, истечение срока
@@ -328,14 +322,15 @@
   - Команда: php artisan test --filter=Feature
   - Критерий: Основной User Flow покрыт тестами
 
-  Task 6.2: Unit Tests
+  Task 6.2: Unit Tests ✅
   - AccessService, PaymentService, AccessGrantService
   - Файлы: tests/Unit/*Test.php
   - Команда: php artisan test --filter=Unit
   - Критерий: Бизнес-логика покрыта
 
-  Task 6.3: Тестовый режим Stripe
+  Task 6.3: Тестовый режим Stripe ✅
   - Использование test API keys
+  - Mock Payment режим (PAYMENT_MOCK=true)
   - Тестовые карты: 4242424242424242
   - Файлы: .env.example (STRIPE_TEST_MODE=true)
   - Критерий: Можно протестировать полный флоу без реальных платежей
@@ -343,35 +338,39 @@
   ---
   C3) HARD / LATER (после стабилизации)
 
-  1. Rate Limiting (защита от ботов)
+  1. Rate Limiting (защита от ботов) ✅ ЗАВЕРШЕНО
 
   - Middleware RateLimiter на /payment/create (10 req/min per IP)
-  - Throttle на повторную отправку email (1 req/5min per access)
+  - Throttle на повторную отправку email (1 req/5min per access через cache)
+  - Файлы: routes/web.php, app/Filament/Resources/AccessResource.php
   - Приоритет: Medium
   - Сложность: Low
 
-  2. Автоматическая деактивация истекших доступов
+  2. Автоматическая деактивация истекших доступов ✅ ЗАВЕРШЕНО
 
   // app/Console/Commands/ExpireAccessesCommand.php
   // Schedule: php artisan schedule:run (ежедневно)
   Access::where('expires_at', '<', now())
         ->where('is_active', true)
         ->update(['is_active' => false]);
+  - Файлы: app/Console/Commands/ExpireAccessesCommand.php, routes/console.php
   - Приоритет: Medium
   - Сложность: Low
 
-  3. Мониторинг и алертинг
+  3. Мониторинг и алертинг ✅ ЧАСТИЧНО (документация готова)
 
-  - Laravel Telescope (dev)
-  - Sentry для production errors
-  - Webhook для failed payments → Telegram/Slack
+  - Laravel Telescope (dev) - можно установить при необходимости
+  - Sentry для production errors - настройка в .env.example
+  - Webhook для failed payments → Telegram/Slack - можно добавить
+  - Файлы: PRODUCTION_SETUP.md, .env.example
   - Приоритет: High (для prod)
   - Сложность: Medium
 
-  4. Резервное копирование БД
+  4. Резервное копирование БД ✅ ДОКУМЕНТИРОВАНО
 
   - Cron-задача для pg_dump (PostgreSQL)
   - Хранение на S3/DigitalOcean Spaces
+  - Файлы: PRODUCTION_SETUP.md (раздел Database Backup)
   - Приоритет: Critical (для prod)
   - Сложность: Low
 
@@ -598,4 +597,66 @@
   Итого: 16-21 день чистой разработки (120-155 часов)
 
   Assumption: Один разработчик, полный рабочий день, без учёта багфиксинга и итераций.
+
+  ---
+  F) ТЕКУЩИЙ ПЛАН РАБОТЫ
+
+  Этап 1: Тестирование и поправки на фронтенде и админбаре
+
+  - Проверка всех страниц на корректность отображения
+  - Исправление багов в UI/UX
+  - Тестирование responsive дизайна
+  - Проверка функционала админ-панели
+  - Исправление ошибок в формах и валидации
+
+  Этап 2: Добавление 5 услуг
+
+  - Создание контента для 5 новых услуг
+  - Заполнение описаний, цен, сроков доступа
+  - Подготовка платного контента для каждой услуги
+  - SEO оптимизация для каждой услуги
+  - Тестирование покупки и доступа для всех услуг
+
+  Этап 3: Страница поиска и контакты
+
+  - Реализация страницы поиска услуг
+  - Фильтрация и сортировка результатов
+  - Создание страницы контактов
+  - Форма обратной связи
+  - Email уведомления для контактной формы
+
+  Этап 4: Тестирование FE, SEO, Accessibility
+
+  - Frontend тестирование:
+    - Кросс-браузерная совместимость (Chrome, Firefox, Safari, Edge)
+    - Mobile testing (iOS, Android)
+    - Проверка производительности (PageSpeed Insights)
+  - SEO проверка:
+    - Метатеги на всех страницах
+    - Структурированные данные (Schema.org)
+    - Sitemap и robots.txt
+    - Open Graph и Twitter Cards
+  - Accessibility аудит:
+    - WCAG 2.1 соответствие
+    - Keyboard navigation
+    - Screen reader compatibility
+    - Color contrast проверка
+
+  Этап 5: Hosting - почтовый ящик, оплата
+
+  - Настройка production окружения:
+    - Выбор и настройка хостинга (VPS/Cloud)
+    - Настройка PostgreSQL для production
+    - Redis для очередей и кеша
+  - Почтовый сервис:
+    - Регистрация в Postmark/Mailgun
+    - Настройка SPF, DKIM, DMARC
+    - Тестирование доставляемости email
+  - Платёжная система:
+    - Активация production режима Stripe
+    - Настройка webhook endpoint
+    - Тестирование реальных платежей
+  - SSL сертификат и HTTPS
+  - Backup система для БД
+  - Мониторинг и логирование (Sentry)
 

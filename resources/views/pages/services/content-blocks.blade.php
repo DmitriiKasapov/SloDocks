@@ -82,7 +82,44 @@
     @endif
 
     <!-- Content Blocks -->
+    @php
+        // Collect all steps blocks for auto-generated process overview
+        $stepsBlocks = $service->contentBlocks->filter(function($block) {
+            return $block->type === 'steps';
+        });
+
+        // Flatten all steps from all steps blocks
+        $allSteps = $stepsBlocks->flatMap(function($block) {
+            return $block->content['steps'] ?? [];
+        })->sortBy('number')->values();
+    @endphp
+
+    {{-- Auto-generated Process Overview (if there are any steps blocks) --}}
+    @if($allSteps->isNotEmpty())
+        <div class="mb-10">
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-6">Идём по шагам</h2>
+            <div class="flex flex-wrap gap-3">
+                @foreach($allSteps as $step)
+                    <a href="#step-{{ $step['number'] }}" class="w-full sm:w-auto inline-flex items-center gap-2 px-4 py-2.5 bg-white rounded-full shadow-sm border border-gray-200 hover:shadow-md hover:border-indigo-400 hover:bg-indigo-50 transition-all cursor-pointer group">
+                        <span class="flex-shrink-0 w-6 h-6 bg-gradient-to-br from-indigo-400 to-purple-500 rounded-full flex items-center justify-center text-white text-sm font-bold group-hover:scale-110 transition-transform">
+                            {{ $step['number'] }}
+                        </span>
+                        <span class="text-gray-700 text-sm font-medium group-hover:text-indigo-700 transition-colors">
+                            {{ $step['title'] }}
+                        </span>
+                    </a>
+                @endforeach
+            </div>
+        </div>
+    @endif
+
+    {{-- Render all content blocks --}}
     @foreach($service->contentBlocks as $block)
+        {{-- Skip deprecated blocks (auto-generated or removed from admin) --}}
+        @if(in_array($block->type, ['process_overview', 'intro']))
+            @continue
+        @endif
+
         @php
             $componentName = 'material-blocks.' . str_replace('_', '-', $block->type);
         @endphp

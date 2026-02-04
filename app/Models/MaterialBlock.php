@@ -29,7 +29,7 @@ class MaterialBlock extends Model
 
     // Block type constants
     public const TYPE_TEXT = 'text';
-    public const TYPE_PROCESS_OVERVIEW = 'process_overview';
+    public const TYPE_PROCESS_OVERVIEW = 'process_overview'; // Deprecated: auto-generated on frontend
     public const TYPE_STEPS = 'steps';
     public const TYPE_TIP = 'tip';
     public const TYPE_DOWNLOADS = 'downloads';
@@ -41,7 +41,7 @@ class MaterialBlock extends Model
     {
         return [
             self::TYPE_TEXT => 'Текст',
-            self::TYPE_PROCESS_OVERVIEW => 'Обзор шагов',
+            // self::TYPE_PROCESS_OVERVIEW => 'Обзор шагов', // Auto-generated on frontend
             self::TYPE_STEPS => 'Шаг',
             self::TYPE_TIP => 'Совет',
             self::TYPE_DOWNLOADS => 'Файлы для скачивания',

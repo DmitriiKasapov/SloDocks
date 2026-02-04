@@ -25,6 +25,10 @@ Route::get('/', function () {
     return view('pages.home', compact('categories', 'services'));
 })->name('home');
 
+// Search page
+Route::get('/search', [App\Http\Controllers\SearchController::class, 'index'])
+    ->name('search');
+
 // Service page - public description
 Route::get('/services/{slug}', [App\Http\Controllers\ServiceController::class, 'show'])
     ->name('services.show');

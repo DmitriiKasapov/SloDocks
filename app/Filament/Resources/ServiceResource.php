@@ -194,39 +194,7 @@ class ServiceResource extends Resource
                                                             ->required(),
                                                     ]),
 
-                                                // Intro block
-                                                Builder\Block::make('intro')
-                                                    ->label('Вводный блок')
-                                                    ->icon('heroicon-o-star')
-                                                    ->schema([
-                                                        TextInput::make('text')
-                                                            ->label('Текст')
-                                                            ->required()
-                                                            ->maxLength(255),
-                                                        TextInput::make('badge')
-                                                            ->label('Бейдж')
-                                                            ->maxLength(100)
-                                                            ->placeholder('Актуально на 2026'),
-                                                    ]),
-
-                                                // Process Overview block
-                                                Builder\Block::make('process_overview')
-                                                    ->label('Обзор шагов')
-                                                    ->icon('heroicon-o-list-bullet')
-                                                    ->schema([
-                                                        Repeater::make('steps')
-                                                            ->label('Шаги')
-                                                            ->schema([
-                                                                TextInput::make('step')
-                                                                    ->label('Шаг')
-                                                                    ->required(),
-                                                            ])
-                                                            ->defaultItems(3)
-                                                            ->collapsible()
-                                                            ->itemLabel(fn (array $state): ?string => $state['step'] ?? null),
-                                                    ]),
-
-                                                // Steps block
+                                                // Steps block (Process Overview is auto-generated on frontend)
                                                 Builder\Block::make('steps')
                                                     ->label('Шаг')
                                                     ->icon('heroicon-o-numbered-list')

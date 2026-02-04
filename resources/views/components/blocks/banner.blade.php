@@ -81,7 +81,6 @@
         <!-- Search Bar -->
         <div class="max-w-2xl mx-auto">
           <x-elements.form-items.search-input
-            name="search"
             :placeholder="$searchPlaceholder"
             class="search-hero"
           >
