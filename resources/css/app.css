@@ -23,7 +23,9 @@
 /* @import "./components/modals.css"; */
 /* @import "./components/swiper.css"; */
 
+/* Utilities */
+@import "./utilities/containerGrid.css";
+
 /* Legacy utilities - disabled */
-/* @import "./utilities/containerGrid.css"; */
 /* @import "./utilities/utilities.css"; */
 
