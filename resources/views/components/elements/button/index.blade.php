@@ -38,11 +38,11 @@
 @endphp
 
 @if ($link)
-  <a href="{{ $link }}" class="{{ $classes }}">
+  <a href="{{ $link }}" class="{{ $classes }} ">
     {{ $slot }}
   </a>
 @else
-  <button type="{{ $submit ? 'submit' : 'button' }}" class="{{ $classes }}">
+  <button type="{{ $submit ? 'submit' : 'button' }}" class="{{ $classes }} ">
     {{ $slot }}
   </button>
 @endif

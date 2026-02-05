@@ -151,16 +151,16 @@
         <div class="bg-gray-50 rounded-xl p-6 text-left">
           <h3 class="font-semibold text-gray-900 mb-3">Примеры запросов:</h3>
           <div class="flex flex-wrap gap-2">
-            <a href="{{ route('search') }}?q=школа" class="inline-block px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-700 text-sm hover:border-amber-400 hover:text-amber-600 transition-colors">
+            <a href="{{ route('search') }}?q=школа" class="inline-block px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-700 text-sm hover:border-amber-400 hover:text-amber-600 transition-colors ">
               школа
             </a>
-            <a href="{{ route('search') }}?q=вид на жительство" class="inline-block px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-700 text-sm hover:border-amber-400 hover:text-amber-600 transition-colors">
+            <a href="{{ route('search') }}?q=вид на жительство" class="inline-block px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-700 text-sm hover:border-amber-400 hover:text-amber-600 transition-colors ">
               вид на жительство
             </a>
-            <a href="{{ route('search') }}?q=документы" class="inline-block px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-700 text-sm hover:border-amber-400 hover:text-amber-600 transition-colors">
+            <a href="{{ route('search') }}?q=документы" class="inline-block px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-700 text-sm hover:border-amber-400 hover:text-amber-600 transition-colors ">
               документы
             </a>
-            <a href="{{ route('search') }}?q=налоги" class="inline-block px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-700 text-sm hover:border-amber-400 hover:text-amber-600 transition-colors">
+            <a href="{{ route('search') }}?q=налоги" class="inline-block px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-700 text-sm hover:border-amber-400 hover:text-amber-600 transition-colors ">
               налоги
             </a>
           </div>

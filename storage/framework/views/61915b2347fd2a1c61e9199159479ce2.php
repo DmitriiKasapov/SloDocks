@@ -25,20 +25,16 @@
     
     <ul class="hidden md:flex items-center space-x-1 list-none m-0 p-0">
         <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__currentLoopData = $navItems; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoop($loop->index); ?><?php endif; ?>
-            <li>
+            <li itemscope itemtype="http://schema.org/SiteNavigationElement">
                 <a
+                    itemprop="url"
                     href="<?php echo e(isset($item['route']) ? route($item['route']) : ($item['url'] ?? '#')); ?>"
-                    class="<?php echo \Illuminate\Support\Arr::toCssClasses([
-                        'block px-4 py-2 text-sm font-medium transition-colors border-b-2',
-                        'text-amber-600 border-amber-600' => $item['active'],
-                        'text-gray-700 border-transparent hover:text-amber-600' => !$item['active'],
-                    ]); ?>"
+                    class="block px-4 py-2 text-sm font-medium transition-colors border-b-2  <?php echo e($item['active'] ? 'text-amber-600 border-amber-600' : 'text-gray-700 border-transparent hover:text-amber-600'); ?>"
                     <?php if($item['active']): ?>
                         aria-current="page"
                     <?php endif; ?>
                 >
-                    <?php echo e($item['label']); ?>
-
+                    <span itemprop="name"><?php echo e($item['label']); ?></span>
                 </a>
             </li>
         <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
@@ -49,8 +45,7 @@
         <button
             @click="mobileMenuOpen = !mobileMenuOpen"
             type="button"
-            class="inline-flex items-center justify-center p-2 rounded-lg text-gray-700 hover:text-amber-600 hover:bg-amber-50 transition-colors"
-            :class="{ 'focus:outline-none focus:ring-2 focus:ring-amber-600 focus:ring-offset-2': mobileMenuOpen, 'focus:outline-none': !mobileMenuOpen }"
+            class="inline-flex items-center justify-center p-2 rounded-lg text-gray-700 hover:text-amber-600 hover:bg-amber-50 transition-colors "
             :aria-expanded="mobileMenuOpen"
             aria-label="Открыть меню"
         >
@@ -96,21 +91,17 @@
     >
         <ul class="list-none m-0 p-5">
             <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__currentLoopData = $navItems; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoop($loop->index); ?><?php endif; ?>
-                <li>
+                <li itemscope itemtype="http://schema.org/SiteNavigationElement">
                     <a
+                        itemprop="url"
                         href="<?php echo e(isset($item['route']) ? route($item['route']) : ($item['url'] ?? '#')); ?>"
-                        class="<?php echo \Illuminate\Support\Arr::toCssClasses([
-                            'block px-5 py-3 text-sm font-medium transition-colors border-l-4',
-                            'text-amber-600 border-amber-600 bg-amber-50' => $item['active'],
-                            'text-gray-700 border-transparent hover:bg-amber-50 hover:text-amber-600' => !$item['active'],
-                        ]); ?>"
+                        class="block px-5 py-3 text-sm font-medium transition-colors border-l-4 <?php echo e($item['active'] ? 'text-amber-600 border-amber-600 bg-amber-50' : 'text-gray-700 border-transparent hover:bg-amber-50 hover:text-amber-600'); ?>"
                         <?php if($item['active']): ?>
                             aria-current="page"
                         <?php endif; ?>
                         @click="mobileMenuOpen = false"
                     >
-                        <?php echo e($item['label']); ?>
-
+                        <span itemprop="name"><?php echo e($item['label']); ?></span>
                     </a>
                 </li>
             <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>

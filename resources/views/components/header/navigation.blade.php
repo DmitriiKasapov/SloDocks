@@ -39,19 +39,16 @@
     {{-- Desktop Navigation --}}
     <ul class="hidden md:flex items-center space-x-1 list-none m-0 p-0">
         @foreach($navItems as $item)
-            <li>
+            <li itemscope itemtype="http://schema.org/SiteNavigationElement">
                 <a
+                    itemprop="url"
                     href="{{ isset($item['route']) ? route($item['route']) : ($item['url'] ?? '#') }}"
-                    @class([
-                        'block px-4 py-2 text-sm font-medium transition-colors border-b-2',
-                        'text-amber-600 border-amber-600' => $item['active'],
-                        'text-gray-700 border-transparent hover:text-amber-600' => !$item['active'],
-                    ])
+                    class="block px-4 py-2 text-sm font-medium transition-colors border-b-2  {{ $item['active'] ? 'text-amber-600 border-amber-600' : 'text-gray-700 border-transparent hover:text-amber-600' }}"
                     @if($item['active'])
                         aria-current="page"
                     @endif
                 >
-                    {{ $item['label'] }}
+                    <span itemprop="name">{{ $item['label'] }}</span>
                 </a>
             </li>
         @endforeach
@@ -62,8 +59,7 @@
         <button
             @click="mobileMenuOpen = !mobileMenuOpen"
             type="button"
-            class="inline-flex items-center justify-center p-2 rounded-lg text-gray-700 hover:text-amber-600 hover:bg-amber-50 transition-colors"
-            :class="{ 'focus:outline-none focus:ring-2 focus:ring-amber-600 focus:ring-offset-2': mobileMenuOpen, 'focus:outline-none': !mobileMenuOpen }"
+            class="inline-flex items-center justify-center p-2 rounded-lg text-gray-700 hover:text-amber-600 hover:bg-amber-50 transition-colors "
             :aria-expanded="mobileMenuOpen"
             aria-label="Открыть меню"
         >
@@ -109,20 +105,17 @@
     >
         <ul class="list-none m-0 p-5">
             @foreach($navItems as $item)
-                <li>
+                <li itemscope itemtype="http://schema.org/SiteNavigationElement">
                     <a
+                        itemprop="url"
                         href="{{ isset($item['route']) ? route($item['route']) : ($item['url'] ?? '#') }}"
-                        @class([
-                            'block px-5 py-3 text-sm font-medium transition-colors border-l-4',
-                            'text-amber-600 border-amber-600 bg-amber-50' => $item['active'],
-                            'text-gray-700 border-transparent hover:bg-amber-50 hover:text-amber-600' => !$item['active'],
-                        ])
+                        class="block px-5 py-3 text-sm font-medium transition-colors border-l-4 {{ $item['active'] ? 'text-amber-600 border-amber-600 bg-amber-50' : 'text-gray-700 border-transparent hover:bg-amber-50 hover:text-amber-600' }}"
                         @if($item['active'])
                             aria-current="page"
                         @endif
                         @click="mobileMenuOpen = false"
                     >
-                        {{ $item['label'] }}
+                        <span itemprop="name">{{ $item['label'] }}</span>
                     </a>
                 </li>
             @endforeach

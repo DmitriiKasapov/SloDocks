@@ -27,12 +27,12 @@
     <!-- Styles -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="font-sans antialiased bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+<body class="font-sans antialiased bg-linear-to-br from-slate-50 via-blue-50 to-indigo-50">
     <div class="min-h-screen flex flex-col">
         <x-header />
 
         <!-- Page Content -->
-        <main class="flex-grow">
+        <main class="grow">
             @yield('content')
         </main>
 

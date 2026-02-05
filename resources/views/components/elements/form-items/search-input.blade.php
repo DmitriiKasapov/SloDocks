@@ -35,24 +35,26 @@
 @endphp
 
 <div class="search-input {{ $class }}">
-  <form method="GET" action="{{ $actionUrl }}">
+  <form method="GET" action="{{ $actionUrl }}" role="search">
     <div class="relative">
       <input
-        type="text"
+        type="search"
         id="{{ $inputId }}"
         name="{{ $name }}"
         @if($value) value="{{ $value }}" @endif
         placeholder="{{ $placeholder }}"
         @if($disabled) disabled @endif
-        class="w-full px-6 py-4 pr-14 rounded-xl border-2 border-gray-200 text-gray-900 placeholder-gray-500 text-lg bg-white shadow-md transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-amber-300 focus:border-amber-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+        aria-label="Поиск услуг"
+        class="w-full pl-4 py-3 pr-15 rounded-xl border-2 border-gray-200 text-gray-900 placeholder-gray-500 text-lg bg-white shadow-md transition-all duration-200  disabled:bg-gray-100 disabled:cursor-not-allowed"
       >
 
       <button
         type="submit"
         @if($disabled) disabled @endif
-        class="absolute right-2 top-1/2 -translate-y-1/2 btn-primary p-3 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+        aria-label="Искать"
+        class="absolute right-2 top-1/2 -translate-y-1/2 btn-primary p-3 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed "
       >
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
         </svg>
       </button>

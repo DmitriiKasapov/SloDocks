@@ -57,7 +57,7 @@
           <li>
             <a
               href="{{ route('services.show', $service->slug) }}"
-              class="group flex items-center justify-between p-3 rounded-lg hover:bg-gradient-to-r hover:from-amber-50 hover:to-orange-50 transition-all"
+              class="group flex items-center justify-between p-3 rounded-lg hover:bg-gradient-to-r hover:from-amber-50 hover:to-orange-50 transition-all "
             >
               <span class="text-gray-700 group-hover:text-amber-900 font-medium transition-colors">
                 {{ $service->title }}

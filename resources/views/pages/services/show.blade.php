@@ -9,7 +9,7 @@
     <nav class="mb-6">
         <ol class="flex items-center space-x-2 text-sm">
             <li>
-                <a href="{{ route('home') }}" class="text-gray-600 hover:text-amber-600 transition-colors">
+                <a href="{{ route('home') }}" class="text-gray-600 hover:text-amber-600 transition-colors ">
                     Главная
                 </a>
             </li>

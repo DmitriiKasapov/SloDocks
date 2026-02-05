@@ -8,7 +8,8 @@ $__propNames = \Illuminate\View\ComponentAttributeBag::extractPropNames(([
   'highlight' => '',
   'subtitle' => '',
   'search' => true,
-  'searchPlaceholder' => 'Что вы ищете? Например: вид на жительство, школа, налоги...',
+  'searchPlaceholder' => 'Поиск услуг...',
+  'searchPlaceholderFull' => 'Что вы ищете? Например: вид на жительство, школа, налоги...',
   'searchHint' => '',
   'gradient' => 'blue',
   'class' => '',
@@ -32,7 +33,8 @@ foreach (array_filter(([
   'highlight' => '',
   'subtitle' => '',
   'search' => true,
-  'searchPlaceholder' => 'Что вы ищете? Например: вид на жительство, школа, налоги...',
+  'searchPlaceholder' => 'Поиск услуг...',
+  'searchPlaceholderFull' => 'Что вы ищете? Например: вид на жительство, школа, налоги...',
   'searchHint' => '',
   'gradient' => 'blue',
   'class' => '',
@@ -57,12 +59,12 @@ unset($__defined_vars, $__key, $__value); ?>
   };
 ?>
 
-<section class="relative bg-gradient-to-br <?php echo e($gradientClasses); ?> overflow-hidden <?php echo e($class); ?>">
+<section class="relative bg-gradient-to-br <?php echo e($gradientClasses); ?> overflow-hidden <?php echo e($class); ?>" aria-label="Главный баннер">
   <!-- Decorative pattern background -->
-  <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE2YzAgMi4yMTItMS43OSA0LTQgNHMtNC0xLjc4OC00LTQgMS43OS00IDQtNCA0IDEuNzg4IDQgNHoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-40"></div>
+  <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE2YzAgMi4yMTItMS43OSA0LTQgNHMtNC0xLjc4OC00LTQgMS43OS00IDQtNCA0IDEuNzg4IDQgNHoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-40" aria-hidden="true"></div>
 
-  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
-    <div class="text-center max-w-4xl mx-auto">
+  <div class="relative container-grid py-20 md:py-28">
+    <div class="content text-center max-w-4xl mx-auto">
       <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($title || $slot->isNotEmpty()): ?>
         <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
           <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($slot->isNotEmpty()): ?>
@@ -88,17 +90,17 @@ unset($__defined_vars, $__key, $__value); ?>
 
       <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($search): ?>
         <!-- Search Bar -->
-        <div class="max-w-2xl mx-auto">
+        <div class="max-w-2xl mx-auto" x-data="{ isMobile: window.innerWidth < 640 }" x-init="window.addEventListener('resize', () => isMobile = window.innerWidth < 640)">
           <?php if (isset($component)) { $__componentOriginal933f42a71e38baa72f68c88c0100dc0d = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal933f42a71e38baa72f68c88c0100dc0d = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.elements.form-items.search-input','data' => ['placeholder' => $searchPlaceholder,'class' => 'search-hero']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.elements.form-items.search-input','data' => ['xBind:placeholder' => 'isMobile ? \''.e($searchPlaceholder).'\' : \''.e($searchPlaceholderFull).'\'','class' => 'search-hero']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('elements.form-items.search-input'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['placeholder' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($searchPlaceholder),'class' => 'search-hero']); ?>
+<?php $component->withAttributes(['x-bind:placeholder' => 'isMobile ? \''.e($searchPlaceholder).'\' : \''.e($searchPlaceholderFull).'\'','class' => 'search-hero']); ?>
 <?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::processComponentKey($component); ?>
 
             <?php echo e($searchHint); ?>

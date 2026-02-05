@@ -14,7 +14,7 @@
     <nav class="mb-6">
         <ol class="flex items-center space-x-2 text-sm">
             <li>
-                <a href="{{ route('home') }}" class="text-gray-600 hover:text-amber-600 transition-colors">
+                <a href="{{ route('home') }}" class="text-gray-600 hover:text-amber-600 transition-colors ">
                     Главная
                 </a>
             </li>
@@ -24,7 +24,7 @@
                 </svg>
             </li>
             <li>
-                <a href="{{ route('services.show', $service->slug) }}" class="text-gray-600 hover:text-amber-600 transition-colors">
+                <a href="{{ route('services.show', $service->slug) }}" class="text-gray-600 hover:text-amber-600 transition-colors ">
                     {{ $service->title }}
                 </a>
             </li>
@@ -100,7 +100,7 @@
             <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-6">Идём по шагам</h2>
             <div class="flex flex-wrap gap-3">
                 @foreach($allSteps as $step)
-                    <a href="#step-{{ $step['number'] }}" class="w-full sm:w-auto inline-flex items-center gap-2 px-4 py-2.5 bg-white rounded-full shadow-sm border border-gray-200 hover:shadow-md hover:border-indigo-400 hover:bg-indigo-50 transition-all cursor-pointer group">
+                    <a href="#step-{{ $step['number'] }}" class="w-full sm:w-auto inline-flex items-center gap-2 px-4 py-2.5 bg-white rounded-full shadow-sm border border-gray-200 hover:shadow-md hover:border-indigo-400 hover:bg-indigo-50 transition-all cursor-pointer group ">
                         <span class="flex-shrink-0 w-6 h-6 bg-gradient-to-br from-indigo-400 to-purple-500 rounded-full flex items-center justify-center text-white text-sm font-bold group-hover:scale-110 transition-transform">
                             {{ $step['number'] }}
                         </span>

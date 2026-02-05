@@ -1,6 +1,6 @@
 
 
-<footer class="bg-gradient-to-br from-gray-900 to-gray-800 text-gray-300 mt-20" role="contentinfo" aria-label="Основная информация сайта">
+<footer class="bg-linear-to-br from-gray-900 to-gray-800 text-gray-300 mt-20" role="contentinfo" aria-label="Основная информация сайта">
     <div class="container-grid py-12">
         <div class="content">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
@@ -8,10 +8,10 @@
                 <div class="md:col-span-1">
                     <a
                         href="<?php echo e(route('home')); ?>"
-                        class="flex items-center space-x-2 mb-4 w-fit focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded"
+                        class="flex items-center space-x-2 mb-4 w-fit "
                         aria-label="SloDocs - Главная страница"
                     >
-                        <div class="w-8 h-8 bg-gradient-to-br from-amber-400 to-orange-500 rounded-lg flex items-center justify-center" aria-hidden="true">
+                        <div class="w-8 h-8 bg-linear-to-br from-amber-400 to-orange-500 rounded-lg flex items-center justify-center" aria-hidden="true">
                             <span class="text-white font-bold text-sm">SD</span>
                         </div>
                         <span class="text-xl font-bold text-white">SloDocs</span>
@@ -28,7 +28,7 @@
                         <li>
                             <a
                                 href="<?php echo e(route('home')); ?>"
-                                class="text-gray-400 hover:text-amber-400 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded inline-block"
+                                class="text-gray-400 hover:text-amber-400 transition-colors  inline-block"
                             >
                                 Главная
                             </a>
@@ -36,7 +36,7 @@
                         <li>
                             <a
                                 href="<?php echo e(route('home')); ?>#services"
-                                class="text-gray-400 hover:text-amber-400 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded inline-block"
+                                class="text-gray-400 hover:text-amber-400 transition-colors  inline-block"
                             >
                                 Услуги
                             </a>
@@ -44,7 +44,7 @@
                         <li>
                             <a
                                 href="#help"
-                                class="text-gray-400 hover:text-amber-400 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded inline-block"
+                                class="text-gray-400 hover:text-amber-400 transition-colors  inline-block"
                             >
                                 Помощь
                             </a>
@@ -59,7 +59,7 @@
                         <li>
                             <a
                                 href="<?php echo e(route('legal.terms')); ?>"
-                                class="text-gray-400 hover:text-amber-400 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded inline-block"
+                                class="text-gray-400 hover:text-amber-400 transition-colors  inline-block"
                             >
                                 Условия использования
                             </a>
@@ -67,7 +67,7 @@
                         <li>
                             <a
                                 href="<?php echo e(route('legal.privacy')); ?>"
-                                class="text-gray-400 hover:text-amber-400 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded inline-block"
+                                class="text-gray-400 hover:text-amber-400 transition-colors  inline-block"
                             >
                                 Политика конфиденциальности
                             </a>
@@ -82,7 +82,7 @@
                         <li>
                             Email: <a
                                 href="mailto:info@slodocs.si"
-                                class="text-gray-400 hover:text-amber-400 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded inline-block"
+                                class="text-gray-400 hover:text-amber-400 transition-colors  inline-block"
                             >info@slodocs.si</a>
                         </li>
                         <li>Словения, Любляна</li>

@@ -25,6 +25,7 @@
 
 /* Utilities */
 @import "./utilities/containerGrid.css";
+@import "./utilities/focus.css";
 
 /* Legacy utilities - disabled */
 /* @import "./utilities/utilities.css"; */

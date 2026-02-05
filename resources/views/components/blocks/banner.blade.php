@@ -36,7 +36,8 @@
   'highlight' => '',
   'subtitle' => '',
   'search' => true,
-  'searchPlaceholder' => 'Что вы ищете? Например: вид на жительство, школа, налоги...',
+  'searchPlaceholder' => 'Поиск услуг...',
+  'searchPlaceholderFull' => 'Что вы ищете? Например: вид на жительство, школа, налоги...',
   'searchHint' => '',
   'gradient' => 'blue',
   'class' => '',
@@ -51,12 +52,12 @@
   };
 @endphp
 
-<section class="relative bg-gradient-to-br {{ $gradientClasses }} overflow-hidden {{ $class }}">
+<section class="relative bg-gradient-to-br {{ $gradientClasses }} overflow-hidden {{ $class }}" aria-label="Главный баннер">
   <!-- Decorative pattern background -->
-  <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE2YzAgMi4yMTItMS43OSA0LTQgNHMtNC0xLjc4OC00LTQgMS43OS00IDQtNCA0IDEuNzg4IDQgNHoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-40"></div>
+  <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE2YzAgMi4yMTItMS43OSA0LTQgNHMtNC0xLjc4OC00LTQgMS43OS00IDQtNCA0IDEuNzg4IDQgNHoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-40" aria-hidden="true"></div>
 
-  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
-    <div class="text-center max-w-4xl mx-auto">
+  <div class="relative container-grid py-20 md:py-28">
+    <div class="content text-center max-w-4xl mx-auto">
       @if($title || $slot->isNotEmpty())
         <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
           @if($slot->isNotEmpty())
@@ -79,9 +80,9 @@
 
       @if($search)
         <!-- Search Bar -->
-        <div class="max-w-2xl mx-auto">
+        <div class="max-w-2xl mx-auto" x-data="{ isMobile: window.innerWidth < 640 }" x-init="window.addEventListener('resize', () => isMobile = window.innerWidth < 640)">
           <x-elements.form-items.search-input
-            :placeholder="$searchPlaceholder"
+            x-bind:placeholder="isMobile ? '{{ $searchPlaceholder }}' : '{{ $searchPlaceholderFull }}'"
             class="search-hero"
           >
             {{ $searchHint }}
