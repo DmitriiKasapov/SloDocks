@@ -43,7 +43,7 @@ unset($__defined_vars, $__key, $__value); ?>
 
             </div>
             <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(isset($content['link'])): ?>
-                <a href="<?php echo e($content['link']); ?>" class="inline-flex items-center gap-2 mt-4 text-emerald-700 hover:text-emerald-900 font-medium transition-colors">
+                <a href="<?php echo e($content['link']); ?>" class="inline-flex items-center gap-2 mt-4 text-emerald-700 hover:text-emerald-900 font-medium transition-colors ">
                     Связаться с нами
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>

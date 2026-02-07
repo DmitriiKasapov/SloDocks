@@ -12,7 +12,7 @@
     <nav class="mb-6">
         <ol class="flex items-center space-x-2 text-sm">
             <li>
-                <a href="<?php echo e(route('home')); ?>" class="text-gray-600 hover:text-amber-600 transition-colors">
+                <a href="<?php echo e(route('home')); ?>" class="text-gray-600 hover:text-amber-600 transition-colors ">
                     Главная
                 </a>
             </li>
@@ -22,7 +22,7 @@
                 </svg>
             </li>
             <li>
-                <a href="<?php echo e(route('services.show', $service->slug)); ?>" class="text-gray-600 hover:text-amber-600 transition-colors">
+                <a href="<?php echo e(route('services.show', $service->slug)); ?>" class="text-gray-600 hover:text-amber-600 transition-colors ">
                     <?php echo e($service->title); ?>
 
                 </a>
@@ -121,7 +121,7 @@
             <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-6">Идём по шагам</h2>
             <div class="flex flex-wrap gap-3">
                 <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__currentLoopData = $allSteps; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $step): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoop($loop->index); ?><?php endif; ?>
-                    <a href="#step-<?php echo e($step['number']); ?>" class="w-full sm:w-auto inline-flex items-center gap-2 px-4 py-2.5 bg-white rounded-full shadow-sm border border-gray-200 hover:shadow-md hover:border-indigo-400 hover:bg-indigo-50 transition-all cursor-pointer group">
+                    <a href="#step-<?php echo e($step['number']); ?>" class="w-full sm:w-auto inline-flex items-center gap-2 px-4 py-2.5 bg-white rounded-full shadow-sm border border-gray-200 hover:shadow-md hover:border-indigo-400 hover:bg-indigo-50 transition-all cursor-pointer group ">
                         <span class="flex-shrink-0 w-6 h-6 bg-gradient-to-br from-indigo-400 to-purple-500 rounded-full flex items-center justify-center text-white text-sm font-bold group-hover:scale-110 transition-transform">
                             <?php echo e($step['number']); ?>
 

@@ -1,21 +1,16 @@
 @layer components {
-  /* Base button */
+  /* Base button - improved for Russian language */
   .btn {
-    @apply inline-flex items-center justify-center gap-2 px-6 py-3 font-bold uppercase tracking-wide rounded-xl transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed relative overflow-hidden;
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 font-semibold tracking-normal rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-xl;
   }
 
-  /* Primary button - orange gradient with darkening on hover */
+  /* Primary button - orange gradient, lighter on hover */
   .btn-primary {
     @apply bg-gradient-to-r from-orange-500 to-orange-600 text-white;
   }
 
-  .btn-primary::after {
-    content: '';
-    @apply absolute inset-0 bg-black opacity-0 transition-opacity duration-200;
-  }
-
-  .btn-primary:hover::after {
-    @apply opacity-20;
+  .btn-primary:hover {
+    @apply from-amber-500 to-orange-600;
   }
 
   /* Secondary button - white with border */
@@ -30,5 +25,20 @@
 
   .btn-lg {
     @apply px-8 py-4 text-lg;
+  }
+
+  /* Arrow icon with smooth movement on hover */
+  .btn-arrow {
+    @apply transition-transform duration-200;
+  }
+
+  /* Arrow right moves right on hover */
+  .btn:hover .btn-arrow-right {
+    @apply translate-x-1;
+  }
+
+  /* Arrow left moves left on hover */
+  .btn:hover .btn-arrow-left {
+    @apply -translate-x-1;
   }
 }

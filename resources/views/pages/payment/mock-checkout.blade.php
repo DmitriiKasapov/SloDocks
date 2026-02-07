@@ -39,15 +39,19 @@
         <div class="px-6 pb-6 space-y-3">
             <form action="{{ route('payment.mock.pay', $purchase) }}" method="POST">
                 @csrf
-                <button type="submit" class="btn btn-primary btn-block bg-green-600 hover:bg-green-700">
+                <x-elements.button.index
+                    variant="primary"
+                    submit="true"
+                    class="w-full"
+                >
                     Оплатить (тест)
-                </button>
+                </x-elements.button.index>
             </form>
 
             <x-elements.button.index
                 variant="secondary"
-                :link="route('payment.cancel')"
-                class="w-full text-center"
+                href="{{ route('payment.cancel') }}"
+                class="w-full"
             >
                 Отменить
             </x-elements.button.index>

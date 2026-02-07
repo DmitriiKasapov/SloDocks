@@ -116,15 +116,12 @@
         </div>
 
         <!-- Action Button -->
-        <a
+        <x-elements.button.index
           href="{{ route('home') }}"
-          class="inline-flex items-center gap-2 bg-gradient-to-br from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-semibold px-8 py-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-200"
+          arrow="left"
         >
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-          </svg>
           На главную
-        </a>
+        </x-elements.button.index>
       </div>
     @endif
 

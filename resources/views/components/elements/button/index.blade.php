@@ -1,24 +1,28 @@
 {{--
-  Button Component
+  Universal Button Component
 
-  @param string $variant - Вариант: 'primary', 'secondary'
-  @param string $size - Размер: 'sm', '', 'lg'
-  @param string $link - URL если кнопка - ссылка
-  @param bool $submit - Если true, type="submit"
-  @param string $class - Дополнительные CSS классы
+  @param string $variant - Variant: 'primary', 'secondary' (default: 'primary')
+  @param string $size - Size: 'sm', '', 'lg' (default: '')
+  @param string $href - URL if button is a link (if provided, renders <a>, otherwise <button>)
+  @param bool $submit - If true, type="submit" (only for <button>)
+  @param string $arrow - Arrow direction: 'left', 'right', or empty (default: '')
+  @param string $class - Additional CSS classes
 
-  Примеры:
-  <x-elements.button.index>Купить</x-elements.button.index>
-  <x-elements.button.index variant="secondary">Отменить</x-elements.button.index>
-  <x-elements.button.index link="/">Перейти</x-elements.button.index>
-  <x-elements.button.index submit="true">Отправить</x-elements.button.index>
+  Examples:
+  <x-elements.button.index>Buy</x-elements.button.index>
+  <x-elements.button.index variant="secondary">Cancel</x-elements.button.index>
+  <x-elements.button.index href="/">Go to home</x-elements.button.index>
+  <x-elements.button.index submit="true">Submit</x-elements.button.index>
+  <x-elements.button.index href="/" arrow="right">Continue</x-elements.button.index>
+  <x-elements.button.index href="/" arrow="left">Back</x-elements.button.index>
 --}}
 
 @props([
   'variant' => 'primary',
-  'size' => '',
-  'link' => '',
+  'size' => 'lg',
+  'href' => '',
   'submit' => false,
+  'arrow' => '',
   'class' => '',
 ])
 
@@ -35,14 +39,37 @@
     default => '',
   };
   $classes = trim("{$baseClasses} {$variantClasses} {$sizeClasses} {$class}");
+
+  // Arrow size depends on button size
+  $arrowSize = match($size) {
+    'sm' => 'w-4 h-4',
+    'lg' => 'w-6 h-6',
+    default => 'w-5 h-5',
+  };
+
+  // Arrow SVG - base arrow is left, right arrow is rotated 180deg
+  $arrowLeft = '<svg class="' . $arrowSize . ' btn-arrow btn-arrow-left" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>';
+  $arrowRight = '<svg class="' . $arrowSize . ' btn-arrow btn-arrow-right rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>';
 @endphp
 
-@if ($link)
-  <a href="{{ $link }}" class="{{ $classes }} ">
-    {{ $slot }}
+@if ($href)
+  <a href="{{ $href }}" class="{{ $classes }}">
+    @if($arrow === 'left')
+      {!! $arrowLeft !!}
+    @endif
+    <span>{{ $slot }}</span>
+    @if($arrow === 'right')
+      {!! $arrowRight !!}
+    @endif
   </a>
 @else
-  <button type="{{ $submit ? 'submit' : 'button' }}" class="{{ $classes }} ">
-    {{ $slot }}
+  <button type="{{ $submit ? 'submit' : 'button' }}" class="{{ $classes }}">
+    @if($arrow === 'left')
+      {!! $arrowLeft !!}
+    @endif
+    <span>{{ $slot }}</span>
+    @if($arrow === 'right')
+      {!! $arrowRight !!}
+    @endif
   </button>
 @endif

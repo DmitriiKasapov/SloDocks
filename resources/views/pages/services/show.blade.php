@@ -77,15 +77,11 @@
                         </button>
                     </form>
                     <x-elements.button.index
-                        variant="primary"
-                        size="lg"
-                        link="{{ route('services.content', $service->slug) }}"
+                        href="{{ route('services.content', $service->slug) }}"
+                        arrow="right"
                         class="w-full sm:w-auto"
                     >
                         Перейти к материалам
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-                        </svg>
                     </x-elements.button.index>
                 </div>
             </div>
@@ -107,15 +103,11 @@
                     <form action="{{ route('services.grant-temp-access', $service->slug) }}" method="POST">
                         @csrf
                         <x-elements.button.index
-                            variant="primary"
-                            size="lg"
                             submit="true"
+                            arrow="right"
                             class="w-full lg:w-auto"
                         >
                             Получить
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-                            </svg>
                         </x-elements.button.index>
                     </form>
                 </div>

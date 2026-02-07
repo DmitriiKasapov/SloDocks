@@ -137,15 +137,29 @@
         </div>
 
         <!-- Action Button -->
-        <a
-          href="<?php echo e(route('home')); ?>"
-          class="inline-flex items-center gap-2 bg-gradient-to-br from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-semibold px-8 py-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-200"
-        >
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-          </svg>
+        <?php if (isset($component)) { $__componentOriginaldcb3663c16b8b77a072c1ccc9d7eb8ee = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginaldcb3663c16b8b77a072c1ccc9d7eb8ee = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.elements.button.index','data' => ['href' => ''.e(route('home')).'','arrow' => 'left']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('elements.button.index'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['href' => ''.e(route('home')).'','arrow' => 'left']); ?>
+<?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::processComponentKey($component); ?>
+
           На главную
-        </a>
+         <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginaldcb3663c16b8b77a072c1ccc9d7eb8ee)): ?>
+<?php $attributes = $__attributesOriginaldcb3663c16b8b77a072c1ccc9d7eb8ee; ?>
+<?php unset($__attributesOriginaldcb3663c16b8b77a072c1ccc9d7eb8ee); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginaldcb3663c16b8b77a072c1ccc9d7eb8ee)): ?>
+<?php $component = $__componentOriginaldcb3663c16b8b77a072c1ccc9d7eb8ee; ?>
+<?php unset($__componentOriginaldcb3663c16b8b77a072c1ccc9d7eb8ee); ?>
+<?php endif; ?>
       </div>
     <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
 
@@ -172,16 +186,16 @@
         <div class="bg-gray-50 rounded-xl p-6 text-left">
           <h3 class="font-semibold text-gray-900 mb-3">Примеры запросов:</h3>
           <div class="flex flex-wrap gap-2">
-            <a href="<?php echo e(route('search')); ?>?q=школа" class="inline-block px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-700 text-sm hover:border-amber-400 hover:text-amber-600 transition-colors">
+            <a href="<?php echo e(route('search')); ?>?q=школа" class="inline-block px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-700 text-sm hover:border-amber-400 hover:text-amber-600 transition-colors ">
               школа
             </a>
-            <a href="<?php echo e(route('search')); ?>?q=вид на жительство" class="inline-block px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-700 text-sm hover:border-amber-400 hover:text-amber-600 transition-colors">
+            <a href="<?php echo e(route('search')); ?>?q=вид на жительство" class="inline-block px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-700 text-sm hover:border-amber-400 hover:text-amber-600 transition-colors ">
               вид на жительство
             </a>
-            <a href="<?php echo e(route('search')); ?>?q=документы" class="inline-block px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-700 text-sm hover:border-amber-400 hover:text-amber-600 transition-colors">
+            <a href="<?php echo e(route('search')); ?>?q=документы" class="inline-block px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-700 text-sm hover:border-amber-400 hover:text-amber-600 transition-colors ">
               документы
             </a>
-            <a href="<?php echo e(route('search')); ?>?q=налоги" class="inline-block px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-700 text-sm hover:border-amber-400 hover:text-amber-600 transition-colors">
+            <a href="<?php echo e(route('search')); ?>?q=налоги" class="inline-block px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-700 text-sm hover:border-amber-400 hover:text-amber-600 transition-colors ">
               налоги
             </a>
           </div>

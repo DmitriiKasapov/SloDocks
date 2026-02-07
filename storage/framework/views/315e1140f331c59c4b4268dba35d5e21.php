@@ -7,12 +7,21 @@
 
     <title><?php echo $__env->yieldContent('title', config('app.name', 'SloDocs')); ?></title>
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="<?php echo e(asset('favicon.svg')); ?>">
+    <link rel="icon" type="image/x-icon" href="<?php echo e(asset('favicon.ico')); ?>">
+    <link rel="icon" type="image/png" sizes="32x32" href="<?php echo e(asset('favicon-32x32.png')); ?>">
+    <link rel="icon" type="image/png" sizes="16x16" href="<?php echo e(asset('favicon-16x16.png')); ?>">
+    <link rel="apple-touch-icon" sizes="180x180" href="<?php echo e(asset('apple-touch-icon.png')); ?>">
+    <link rel="manifest" href="<?php echo e(asset('site.webmanifest')); ?>">
+    <meta name="theme-color" content="#f97316">
+
     <!-- SEO Meta Tags -->
-    <meta name="description" content="<?php echo $__env->yieldContent('meta_description', 'Информационный портал для русскоговорящих иностранцев в Словении'); ?>">
+    <meta name="description" content="<?php echo $__env->yieldContent('meta_description', 'Информационный портал для иностранцев в Словении'); ?>">
 
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="<?php echo $__env->yieldContent('og_title', config('app.name', 'SloDocs')); ?>">
-    <meta property="og:description" content="<?php echo $__env->yieldContent('og_description', 'Информационный портал для русскоговорящих иностранцев в Словении'); ?>">
+    <meta property="og:description" content="<?php echo $__env->yieldContent('og_description', 'Информационный портал для иностранцев в Словении'); ?>">
     <meta property="og:type" content="<?php echo $__env->yieldContent('og_type', 'website'); ?>">
     <meta property="og:url" content="<?php echo e(url()->current()); ?>">
     <meta property="og:site_name" content="SloDocs">

@@ -25,7 +25,7 @@
                         <span class="text-xl font-bold text-white">SloDocs</span>
                     </a>
                     <p class="text-sm text-gray-400 leading-relaxed">
-                        Информационный портал для русскоговорящих иностранцев в Словении
+                        Информационный портал для иностранцев в Словении
                     </p>
                 </div>
 

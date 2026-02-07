@@ -29,17 +29,14 @@
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
             <x-elements.button.index
                 variant="secondary"
-                :link="route('home')"
+                href="{{ route('home') }}"
+                arrow="left"
             >
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-                </svg>
                 Вернуться на главную
             </x-elements.button.index>
             <x-elements.button.index
                 variant="primary"
-                link="javascript:history.back()"
-                class="bg-gray-900 hover:bg-gray-800"
+                href="javascript:history.back()"
             >
                 Попробовать снова
             </x-elements.button.index>

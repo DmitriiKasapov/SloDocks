@@ -99,6 +99,11 @@ Route::get('/privacy', function () {
     return view('pages.legal.privacy');
 })->name('legal.privacy');
 
+// Test page for button comparison
+Route::get('/test', function () {
+    return view('pages.test');
+})->name('test');
+
 /*
 |--------------------------------------------------------------------------
 | SEO Routes
