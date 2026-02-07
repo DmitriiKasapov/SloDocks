@@ -1,4 +1,6 @@
 {{--
+  elements__button__index
+
   Universal Button Component
 
   @param string $variant - Variant: 'primary', 'secondary' (default: 'primary')

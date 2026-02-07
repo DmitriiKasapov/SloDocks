@@ -1,6 +1,14 @@
+{{--
+  material-blocks__help-cta
+
+  Help CTA Block Component
+
+  Call-to-action block for help and support
+--}}
+
 @props(['content'])
 
-<div class="bg-gradient-to-r from-emerald-50 to-teal-50 border-l-4 border-emerald-500 rounded-xl p-6 mb-10 shadow-sm">
+<div class="gradient-tip-success border-l-4 border-emerald-500 rounded-xl p-6 mb-10 shadow-sm">
     <div class="flex items-start gap-4">
         <div class="flex-shrink-0">
             <div class="w-10 h-10 bg-emerald-500 rounded-full flex items-center justify-center">

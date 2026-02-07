@@ -1,4 +1,6 @@
 {{--
+  header__index
+
   Header Component
 
   Main header wrapper with sticky positioning and backdrop blur effect.
@@ -14,10 +16,10 @@
             {{-- Logo --}}
             <div class="flex items-center">
                 <a href="{{ route('home') }}" class="flex items-center space-x-2" aria-label="SloDocs - Главная страница">
-                    <div class="w-8 h-8 bg-gradient-to-br from-amber-400 to-orange-500 rounded-lg flex items-center justify-center" aria-hidden="true">
+                    <div class="w-8 h-8 gradient-brand-icon rounded-lg flex items-center justify-center" aria-hidden="true">
                         <span class="text-white font-bold text-sm">SD</span>
                     </div>
-                    <span class="text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+                    <span class="text-xl font-bold gradient-text-gray">
                         SloDocs
                     </span>
                 </a>

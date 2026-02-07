@@ -1,6 +1,6 @@
 
 
-<footer class="bg-linear-to-br from-gray-900 to-gray-800 text-gray-300 mt-20" role="contentinfo" aria-label="Основная информация сайта">
+<footer class="gradient-bg-gray-dark text-gray-300 mt-20" role="contentinfo" aria-label="Основная информация сайта">
     <div class="container-grid py-12">
         <div class="content">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
@@ -11,7 +11,7 @@
                         class="flex items-center space-x-2 mb-4 w-fit "
                         aria-label="SloDocs - Главная страница"
                     >
-                        <div class="w-8 h-8 bg-linear-to-br from-amber-400 to-orange-500 rounded-lg flex items-center justify-center" aria-hidden="true">
+                        <div class="w-8 h-8 gradient-brand-icon rounded-lg flex items-center justify-center" aria-hidden="true">
                             <span class="text-white font-bold text-sm">SD</span>
                         </div>
                         <span class="text-xl font-bold text-white">SloDocs</span>
@@ -35,18 +35,18 @@
                         </li>
                         <li>
                             <a
-                                href="<?php echo e(route('home')); ?>#services"
+                                href="<?php echo e(route('test')); ?>"
                                 class="text-gray-400 hover:text-amber-400 transition-colors  inline-block"
                             >
-                                Услуги
+                                Test
                             </a>
                         </li>
                         <li>
                             <a
-                                href="#help"
+                                href="#contact"
                                 class="text-gray-400 hover:text-amber-400 transition-colors  inline-block"
                             >
-                                Помощь
+                                Контакты
                             </a>
                         </li>
                     </ul>

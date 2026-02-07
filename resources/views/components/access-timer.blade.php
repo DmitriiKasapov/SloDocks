@@ -1,3 +1,11 @@
+{{--
+  access-timer
+
+  Access Timer Component
+
+  Displays remaining access time with color-coded status
+--}}
+
 @props(['access'])
 
 @php

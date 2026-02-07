@@ -52,14 +52,14 @@ unset($__defined_vars, $__key, $__value); ?>
 
 <?php
   $gradientClasses = match($gradient) {
-    'blue' => 'from-blue-600 via-indigo-600 to-violet-700',
-    'purple' => 'from-purple-600 via-violet-600 to-indigo-700',
-    'green' => 'from-emerald-600 via-teal-600 to-cyan-700',
-    default => 'from-blue-600 via-indigo-600 to-violet-700',
+    'blue' => 'gradient-banner-primary',
+    'purple' => 'gradient-banner-secondary',
+    'green' => 'gradient-banner-tertiary',
+    default => 'gradient-banner-primary',
   };
 ?>
 
-<section class="relative bg-gradient-to-br <?php echo e($gradientClasses); ?> overflow-hidden <?php echo e($class); ?>" aria-label="Главный баннер">
+<section class="relative <?php echo e($gradientClasses); ?> overflow-hidden <?php echo e($class); ?>" aria-label="Главный баннер">
   <!-- Decorative pattern background -->
   <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE2YzAgMi4yMTItMS43OSA0LTQgNHMtNC0xLjc4OC00LTQgMS43OS00IDQtNCA0IDEuNzg4IDQgNHoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-40" aria-hidden="true"></div>
 

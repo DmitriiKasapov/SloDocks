@@ -36,7 +36,7 @@
     <!-- Styles -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="font-sans antialiased bg-linear-to-br from-slate-50 via-blue-50 to-indigo-50">
+<body class="font-sans antialiased gradient-bg-body">
     <div class="min-h-screen flex flex-col">
         <x-header />
 

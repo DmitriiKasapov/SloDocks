@@ -6,11 +6,11 @@
 
   /* Primary button - orange gradient, lighter on hover */
   .btn-primary {
-    @apply bg-gradient-to-r from-orange-500 to-orange-600 text-white;
+    @apply gradient-button-primary text-white;
   }
 
   .btn-primary:hover {
-    @apply from-amber-500 to-orange-600;
+    @apply gradient-brand-primary;
   }
 
   /* Secondary button - white with border */

@@ -1,3 +1,11 @@
+{{--
+  material-blocks__faq
+
+  FAQ Block Component
+
+  Frequently asked questions with answers
+--}}
+
 @props(['content'])
 
 <div class="mb-10">

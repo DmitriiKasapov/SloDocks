@@ -13,8 +13,48 @@
     }
   }
 
+  h3 {
+    @apply text-gray-900 font-bold text-xl mt-8 mb-4;
+  }
+
+  p {
+    @apply mb-6 text-gray-700 leading-relaxed;
+  }
+
+  /* Unordered lists with checkmark icons */
   ul {
-    @apply list-disc pl-6;
+    @apply list-none pl-0 space-y-2;
+
+    > li {
+      @apply flex items-start gap-2;
+
+      &::before {
+        content: '';
+        @apply shrink-0 w-6 h-6 mt-0.5 bg-emerald-500 rounded-full;
+        mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor'%3E%3Cpath fill-rule='evenodd' d='M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z' clip-rule='evenodd'/%3E%3C/svg%3E");
+        -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor'%3E%3Cpath fill-rule='evenodd' d='M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z' clip-rule='evenodd'/%3E%3C/svg%3E");
+      }
+    }
+  }
+
+  /* Ordered lists with custom numbered bullets */
+  ol {
+    @apply list-none pl-0 space-y-3;
+    counter-reset: list-counter;
+
+    > li {
+      @apply flex items-start gap-3;
+      counter-increment: list-counter;
+
+      &::before {
+        content: counter(list-counter);
+        @apply shrink-0 w-7 h-7 gradient-brand-icon text-white rounded-full flex items-center justify-center font-bold text-sm mt-0.5;
+      }
+    }
+  }
+
+  strong, b {
+    @apply font-bold;
   }
 
   a {

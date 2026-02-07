@@ -36,7 +36,7 @@
     <!-- Styles -->
     <?php echo app('Illuminate\Foundation\Vite')(['resources/css/app.css', 'resources/js/app.js']); ?>
 </head>
-<body class="font-sans antialiased bg-linear-to-br from-slate-50 via-blue-50 to-indigo-50">
+<body class="font-sans antialiased gradient-bg-body">
     <div class="min-h-screen flex flex-col">
         <?php if (isset($component)) { $__componentOriginalfd1f218809a441e923395fcbf03e4272 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalfd1f218809a441e923395fcbf03e4272 = $attributes; } ?>

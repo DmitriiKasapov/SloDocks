@@ -1,14 +1,15 @@
 {{--
+  header__navigation
+
   Navigation Component
 
-  Responsive navigation menu with Alpine.js for mobile toggle.
-  Combines desktop horizontal menu and mobile slide-out menu in one component.
+  Simple navigation with items: Home, Test, and Contacts.
+  On mobile displays icons, on desktop displays text labels.
 
   Features:
   - Active state detection via request()->routeIs()
   - ARIA attributes for accessibility
-  - Alpine.js mobile menu toggle
-  - Focus management
+  - Responsive icon/text display
 
   Usage:
   <x-header.navigation />
@@ -20,112 +21,58 @@
         [
             'label' => 'Главная',
             'route' => 'home',
+            'icon' => 'home',
             'active' => request()->routeIs('home'),
         ],
         [
-            'label' => 'Помощь',
-            'url' => '#help',
-            'active' => false,
+            'label' => 'Test',
+            'route' => 'test',
+            'icon' => 'test',
+            'active' => request()->routeIs('test'),
         ],
         [
             'label' => 'Контакты',
             'url' => '#contact',
+            'icon' => 'phone',
             'active' => false,
         ],
     ];
 @endphp
 
-<nav x-data="{ mobileMenuOpen: false }" class="flex items-center" role="navigation" aria-label="Основная навигация">
-    {{-- Desktop Navigation --}}
-    <ul class="hidden md:flex items-center space-x-1 list-none m-0 p-0">
+<nav class="flex items-center" role="navigation" aria-label="Основная навигация">
+    <ul class="flex items-center space-x-1 list-none m-0 p-0">
         @foreach($navItems as $item)
             <li itemscope itemtype="http://schema.org/SiteNavigationElement">
                 <a
                     itemprop="url"
                     href="{{ isset($item['route']) ? route($item['route']) : ($item['url'] ?? '#') }}"
-                    class="block px-4 py-2 text-sm font-medium transition-colors border-b-2  {{ $item['active'] ? 'text-amber-600 border-amber-600' : 'text-gray-700 border-transparent hover:text-amber-600' }}"
+                    class="flex items-center justify-center md:px-4 px-2.5 py-2 font-medium transition-colors border-b-2 {{ $item['active'] ? 'text-amber-600 border-amber-600' : 'text-gray-700 border-transparent hover:text-amber-600' }}"
                     @if($item['active'])
                         aria-current="page"
                     @endif
+                    aria-label="{{ $item['label'] }}"
                 >
-                    <span itemprop="name">{{ $item['label'] }}</span>
+                    @if($item['icon'] === 'home')
+                        {{-- Home icon --}}
+                        <svg class="h-7 w-7 md:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l9-9 9 9M5 10v10a1 1 0 001 1h3a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1V10" />
+                        </svg>
+                    @elseif($item['icon'] === 'test')
+                        {{-- Test icon (beaker/flask) --}}
+                        <svg class="h-7 w-7 md:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                        </svg>
+                    @elseif($item['icon'] === 'phone')
+                        {{-- Email/contact icon (envelope with @) --}}
+                        <svg class="h-7 w-7 md:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            <circle cx="12" cy="12" r="3" stroke-width="1.5"/>
+                            <path d="M14.5 11.5c0-.8-.7-1.5-1.5-1.5s-1.5.7-1.5 1.5.2 1 .5 1.3" stroke-width="1.5"/>
+                        </svg>
+                    @endif
+                    <span itemprop="name" class="hidden md:inline">{{ $item['label'] }}</span>
                 </a>
             </li>
         @endforeach
     </ul>
-
-    {{-- Mobile Menu Button --}}
-    <div class="md:hidden">
-        <button
-            @click="mobileMenuOpen = !mobileMenuOpen"
-            type="button"
-            class="inline-flex items-center justify-center p-2 rounded-lg text-gray-700 hover:text-amber-600 hover:bg-amber-50 transition-colors "
-            :aria-expanded="mobileMenuOpen"
-            aria-label="Открыть меню"
-        >
-            {{-- Hamburger icon --}}
-            <svg
-                x-show="!mobileMenuOpen"
-                class="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                aria-hidden="true"
-            >
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-
-            {{-- Close icon --}}
-            <svg
-                x-show="mobileMenuOpen"
-                x-cloak
-                class="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                aria-hidden="true"
-            >
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-        </button>
-    </div>
-
-    {{-- Mobile Menu Panel --}}
-    <div
-        x-show="mobileMenuOpen"
-        x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0 scale-95"
-        x-transition:enter-end="opacity-100 scale-100"
-        x-transition:leave="transition ease-in duration-150"
-        x-transition:leave-start="opacity-100 scale-100"
-        x-transition:leave-end="opacity-0 scale-95"
-        @click.away="mobileMenuOpen = false"
-        x-cloak
-        class="absolute top-16 right-4 left-4 md:hidden bg-white rounded-lg shadow-lg border border-gray-200 z-50"
-    >
-        <ul class="list-none m-0 p-5">
-            @foreach($navItems as $item)
-                <li itemscope itemtype="http://schema.org/SiteNavigationElement">
-                    <a
-                        itemprop="url"
-                        href="{{ isset($item['route']) ? route($item['route']) : ($item['url'] ?? '#') }}"
-                        class="block px-5 py-3 text-sm font-medium transition-colors border-l-4 {{ $item['active'] ? 'text-amber-600 border-amber-600 bg-amber-50' : 'text-gray-700 border-transparent hover:bg-amber-50 hover:text-amber-600' }}"
-                        @if($item['active'])
-                            aria-current="page"
-                        @endif
-                        @click="mobileMenuOpen = false"
-                    >
-                        <span itemprop="name">{{ $item['label'] }}</span>
-                    </a>
-                </li>
-            @endforeach
-        </ul>
-    </div>
 </nav>
-
-{{-- Alpine.js cloaking styles --}}
-<style>
-    [x-cloak] {
-        display: none !important;
-    }
-</style>

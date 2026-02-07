@@ -39,7 +39,7 @@
 
       &::after {
         content: '';
-        @apply absolute top-1/2 left-1/2 w-2.5 h-2.5 bg-gradient-to-br from-amber-500 to-orange-500 rounded-full opacity-0 transition-opacity duration-200;
+        @apply absolute top-1/2 left-1/2 w-2.5 h-2.5 gradient-brand-icon rounded-full opacity-0 transition-opacity duration-200;
         transform: translate(-50%, -50%);
       }
     }
@@ -103,7 +103,7 @@
         @apply px-4 py-2 hover:bg-gray-50 cursor-pointer text-gray-700 transition-colors;
 
         &[aria-selected="true"] {
-          @apply bg-gradient-to-r from-amber-50 to-orange-50 text-amber-900 font-semibold;
+          @apply gradient-brand-light text-amber-900 font-semibold;
         }
       }
     }
@@ -129,7 +129,7 @@
     input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none;
       appearance: none;
-      @apply w-5 h-5 rounded-full bg-gradient-to-br from-amber-500 to-orange-500 relative z-[2] -mt-[5px];
+      @apply w-5 h-5 rounded-full gradient-brand-icon relative z-[2] -mt-[5px];
     }
 
     /* Firefox */

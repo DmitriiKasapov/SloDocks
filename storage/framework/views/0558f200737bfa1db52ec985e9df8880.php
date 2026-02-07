@@ -201,41 +201,30 @@
             </div>
         </div>
     </div>
-
-    <!-- Important Info -->
-    <div class="bg-gradient-to-r from-amber-50 to-yellow-50 border-l-4 border-amber-400 rounded-xl p-6 mb-10 shadow-sm">
-        <div class="flex items-start gap-4">
-            <div class="flex-shrink-0">
-                <div class="w-10 h-10 bg-amber-400 rounded-full flex items-center justify-center">
-                    <span class="text-xl">⚠️</span>
-                </div>
-            </div>
-            <div>
-                <h3 class="font-bold text-amber-900 mb-3 text-lg">Важно знать</h3>
-                <ul class="space-y-2 text-amber-800">
-                    <li class="flex items-start gap-2">
-                        <svg class="w-5 h-5 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                        </svg>
-                        <span>Материалы носят информационный характер</span>
-                    </li>
-                    <li class="flex items-start gap-2">
-                        <svg class="w-5 h-5 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                        </svg>
-                        <span>Предназначены для самостоятельного использования</span>
-                    </li>
-                    <li class="flex items-start gap-2">
-                        <svg class="w-5 h-5 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                        </svg>
-                        <span>Не включают персональные консультации и юридические услуги</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
 </div>
+
+<?php if (isset($component)) { $__componentOriginal322274d2d69814555f084d6e7eb2a4be = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal322274d2d69814555f084d6e7eb2a4be = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.blocks.warning','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('blocks.warning'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes([]); ?>
+<?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::processComponentKey($component); ?>
+
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal322274d2d69814555f084d6e7eb2a4be)): ?>
+<?php $attributes = $__attributesOriginal322274d2d69814555f084d6e7eb2a4be; ?>
+<?php unset($__attributesOriginal322274d2d69814555f084d6e7eb2a4be); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal322274d2d69814555f084d6e7eb2a4be)): ?>
+<?php $component = $__componentOriginal322274d2d69814555f084d6e7eb2a4be; ?>
+<?php unset($__componentOriginal322274d2d69814555f084d6e7eb2a4be); ?>
+<?php endif; ?>
 
 <?php $__env->stopSection(); ?>
 

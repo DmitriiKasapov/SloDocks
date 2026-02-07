@@ -38,7 +38,7 @@
     </nav>
 
     <!-- Page Header -->
-    <div class="bg-gradient-to-br from-indigo-500 via-purple-500 to-violet-600 rounded-3xl p-8 md:p-12 mb-8 text-white shadow-xl">
+    <div class="gradient-header-purple rounded-3xl p-8 md:p-12 mb-8 text-white shadow-xl">
         <div class="flex items-start gap-6">
             <div class="flex-shrink-0">
                 <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center">
@@ -101,7 +101,7 @@
             <div class="flex flex-wrap gap-3">
                 @foreach($allSteps as $step)
                     <a href="#step-{{ $step['number'] }}" class="w-full sm:w-auto inline-flex items-center gap-2 px-4 py-2.5 bg-white rounded-full shadow-sm border border-gray-200 hover:shadow-md hover:border-indigo-400 hover:bg-indigo-50 transition-all cursor-pointer group ">
-                        <span class="flex-shrink-0 w-6 h-6 bg-gradient-to-br from-indigo-400 to-purple-500 rounded-full flex items-center justify-center text-white text-sm font-bold group-hover:scale-110 transition-transform">
+                        <span class="flex-shrink-0 w-6 h-6 gradient-icon-indigo rounded-full flex items-center justify-center text-white text-sm font-bold group-hover:scale-110 transition-transform">
                             {{ $step['number'] }}
                         </span>
                         <span class="text-gray-700 text-sm font-medium group-hover:text-indigo-700 transition-colors">
@@ -149,4 +149,7 @@
         </a>
     </div>
 </div>
+
+<x-blocks.warning />
+
 @endsection

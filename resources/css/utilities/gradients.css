@@ -1,0 +1,198 @@
+/**
+ * Gradient Utilities
+ * Reusable gradient classes to reduce code duplication
+ */
+
+@layer utilities {
+  /* ============================================
+     BRAND GRADIENTS (Orange/Amber)
+     ============================================ */
+
+  /* Primary brand gradient - used for icons, accents */
+  .gradient-brand-icon {
+    @apply bg-gradient-to-br from-amber-400 to-orange-500;
+  }
+
+  /* Primary brand gradient - used for buttons, text */
+  .gradient-brand-primary {
+    @apply bg-gradient-to-r from-amber-500 to-orange-600;
+  }
+
+  /* Button gradient - slightly different shade */
+  .gradient-button-primary {
+    @apply bg-gradient-to-r from-orange-500 to-orange-600;
+  }
+
+  /* Button gradient hover - darker */
+  .gradient-button-primary-hover {
+    @apply bg-gradient-to-br from-amber-600 to-orange-700;
+  }
+
+  /* Light brand background */
+  .gradient-brand-light {
+    @apply bg-gradient-to-r from-amber-50 to-orange-50;
+  }
+
+  /* Extra light brand icon background */
+  .gradient-brand-icon-light {
+    @apply bg-gradient-to-br from-amber-100 to-orange-100;
+  }
+
+  /* Extra light brand background with yellow accent */
+  .gradient-brand-lightest {
+    @apply bg-gradient-to-r from-amber-50 via-orange-50 to-amber-100;
+  }
+
+  /* Hero/search background - vibrant */
+  .gradient-brand-vibrant {
+    @apply bg-gradient-to-br from-amber-400 via-orange-400 to-amber-500;
+  }
+
+  /* ============================================
+     DECORATIVE GRADIENTS (Blur effects)
+     ============================================ */
+
+  /* Decorative blur - light amber */
+  .gradient-blur-amber-light {
+    @apply bg-gradient-to-br from-amber-200/40 to-orange-300/40;
+  }
+
+  /* Decorative blur - light orange */
+  .gradient-blur-orange-light {
+    @apply bg-gradient-to-br from-orange-200/30 to-amber-300/30;
+  }
+
+  /* Decorative blur - extra light */
+  .gradient-blur-amber-subtle {
+    @apply bg-gradient-to-br from-amber-300/25 to-orange-200/25;
+  }
+
+  /* ============================================
+     HEADER/BANNER GRADIENTS (Blue/Purple)
+     ============================================ */
+
+  /* Primary banner gradient - blue to violet */
+  .gradient-banner-primary {
+    @apply bg-gradient-to-br from-blue-600 via-indigo-600 to-violet-700;
+  }
+
+  /* Secondary banner gradient - purple to violet */
+  .gradient-banner-secondary {
+    @apply bg-gradient-to-br from-purple-600 via-violet-600 to-indigo-700;
+  }
+
+  /* Tertiary banner gradient - emerald to cyan */
+  .gradient-banner-tertiary {
+    @apply bg-gradient-to-br from-emerald-600 via-teal-600 to-cyan-700;
+  }
+
+  /* Content header gradient - indigo/purple */
+  .gradient-header-purple {
+    @apply bg-gradient-to-br from-indigo-500 via-purple-500 to-violet-600;
+  }
+
+  /* ============================================
+     LIGHT BACKGROUNDS
+     ============================================ */
+
+  /* Blue/Cyan light background */
+  .gradient-bg-blue-light {
+    @apply bg-gradient-to-br from-indigo-50 via-blue-50 to-cyan-50;
+  }
+
+  /* Body background gradient */
+  .gradient-bg-body {
+    @apply bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50;
+  }
+
+  /* Emerald/Teal light background */
+  .gradient-bg-emerald-light {
+    @apply bg-gradient-to-br from-emerald-50 to-teal-50;
+  }
+
+  /* ============================================
+     ICON GRADIENTS (Colored)
+     ============================================ */
+
+  /* Emerald icon gradient */
+  .gradient-icon-emerald {
+    @apply bg-gradient-to-br from-emerald-400 to-teal-500;
+  }
+
+  /* Blue icon gradient */
+  .gradient-icon-blue {
+    @apply bg-gradient-to-br from-blue-400 to-indigo-500;
+  }
+
+  /* Indigo icon gradient */
+  .gradient-icon-indigo {
+    @apply bg-gradient-to-br from-indigo-400 to-purple-500;
+  }
+
+  /* Violet icon gradient */
+  .gradient-icon-violet {
+    @apply bg-gradient-to-br from-violet-400 to-purple-500;
+  }
+
+  /* Pink icon gradient */
+  .gradient-icon-pink {
+    @apply bg-gradient-to-br from-pink-400 to-rose-500;
+  }
+
+  /* Red icon gradient */
+  .gradient-icon-red {
+    @apply bg-gradient-to-br from-red-400 to-pink-500;
+  }
+
+  /* Error/danger gradient */
+  .gradient-danger {
+    @apply bg-gradient-to-br from-red-500 to-red-600;
+  }
+
+  /* ============================================
+     GRAY BACKGROUNDS
+     ============================================ */
+
+  /* Light gray background */
+  .gradient-bg-gray-light {
+    @apply bg-gradient-to-br from-gray-50 to-gray-100;
+  }
+
+  /* Dark gray background (footer) */
+  .gradient-bg-gray-dark {
+    @apply bg-gradient-to-br from-gray-900 to-gray-800;
+  }
+
+  /* Dark gray text gradient */
+  .gradient-text-gray {
+    @apply bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent;
+  }
+
+  /* ============================================
+     INFO/ALERT BACKGROUNDS
+     ============================================ */
+
+  /* Info tip - blue/cyan */
+  .gradient-tip-info {
+    @apply bg-gradient-to-r from-blue-50 to-cyan-50;
+  }
+
+  /* Warning tip - amber/yellow */
+  .gradient-tip-warning {
+    @apply bg-gradient-to-r from-amber-50 to-yellow-50;
+  }
+
+  /* Success tip - emerald/teal */
+  .gradient-tip-success {
+    @apply bg-gradient-to-r from-emerald-50 to-teal-50;
+  }
+
+  /* ============================================
+     HOVER STATES
+     ============================================ */
+
+  /* Hover state for brand-colored items */
+  .gradient-hover-brand {
+    @apply hover:bg-gradient-to-r hover:from-amber-50 hover:to-orange-50;
+  }
+}

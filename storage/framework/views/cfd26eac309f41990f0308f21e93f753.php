@@ -6,9 +6,9 @@
 
     
     <div class="absolute inset-0 pointer-events-none overflow-hidden">
-        <div class="absolute top-20 left-[10%] w-32 h-32 bg-gradient-to-br from-amber-200/40 to-orange-300/40 rounded-full blur-3xl animate-float-slow"></div>
-        <div class="absolute bottom-32 right-[15%] w-40 h-40 bg-gradient-to-br from-orange-200/30 to-amber-300/30 rounded-full blur-3xl animate-float-slower"></div>
-        <div class="absolute top-1/3 right-[8%] w-24 h-24 bg-gradient-to-br from-amber-300/25 to-orange-200/25 rounded-full blur-2xl animate-float"></div>
+        <div class="absolute top-20 left-[10%] w-32 h-32 gradient-blur-amber-light rounded-full blur-3xl animate-float-slow"></div>
+        <div class="absolute bottom-32 right-[15%] w-40 h-40 gradient-blur-orange-light rounded-full blur-3xl animate-float-slower"></div>
+        <div class="absolute top-1/3 right-[8%] w-24 h-24 gradient-blur-amber-subtle rounded-full blur-2xl animate-float"></div>
     </div>
 
     <div class="relative max-w-4xl mx-auto text-center z-10">
@@ -17,7 +17,7 @@
         <div class="mb-12 relative">
             <div class="inline-flex items-center justify-center gap-3 relative">
                 
-                <div style="font-size: 120px;" class="font-bold leading-none tracking-tight bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent select-none">
+                <div style="font-size: 120px;" class="font-bold leading-none tracking-tight gradient-brand-primary bg-clip-text text-transparent select-none">
                     404
                 </div>
             </div>
@@ -63,79 +63,6 @@
     </div>
 </div>
 
-
-<style>
-    @keyframes float {
-        0%, 100% {
-            transform: translateY(0px) translateX(0px);
-        }
-        33% {
-            transform: translateY(-20px) translateX(10px);
-        }
-        66% {
-            transform: translateY(10px) translateX(-10px);
-        }
-    }
-
-    @keyframes float-slow {
-        0%, 100% {
-            transform: translateY(0px) translateX(0px) scale(1);
-        }
-        50% {
-            transform: translateY(-30px) translateX(20px) scale(1.1);
-        }
-    }
-
-    @keyframes float-slower {
-        0%, 100% {
-            transform: translateY(0px) translateX(0px) rotate(0deg);
-        }
-        50% {
-            transform: translateY(20px) translateX(-15px) rotate(5deg);
-        }
-    }
-
-    @keyframes gradient-shift {
-        0%, 100% {
-            background-position: 0% 50%;
-        }
-        50% {
-            background-position: 100% 50%;
-        }
-    }
-
-    @keyframes fade-in-up {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    .animate-float {
-        animation: float 8s ease-in-out infinite;
-    }
-
-    .animate-float-slow {
-        animation: float-slow 12s ease-in-out infinite;
-    }
-
-    .animate-float-slower {
-        animation: float-slower 15s ease-in-out infinite;
-    }
-
-    .animate-gradient-shift {
-        background-size: 200% 200%;
-        animation: gradient-shift 6s ease infinite;
-    }
-
-    .animate-fade-in-up {
-        animation: fade-in-up 0.8s ease-out forwards;
-    }
-</style>
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH D:\Projects\SloDoks\resources\views/errors/404.blade.php ENDPATH**/ ?>

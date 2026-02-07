@@ -1,7 +1,9 @@
 {{--
+  blocks__category-card
+
   Category Card Component
 
-  Карточка категории со списком услуг
+  Category card with services list
 
   @param string $title - Название категории (required)
   @param array $services - Массив услуг в категории (required)
@@ -27,10 +29,10 @@
 
 <div class="category-card bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow border border-gray-100 overflow-hidden {{ $class }}">
   <!-- Card Header -->
-  <div class="bg-gradient-to-br from-gray-50 to-gray-100 px-6 py-5 border-b border-gray-200">
+  <div class="gradient-bg-gray-light px-6 py-5 border-b border-gray-200">
     <div class="flex items-center gap-3">
       @if($icon)
-        <div class="w-10 h-10 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl flex items-center justify-center flex-shrink-0">
+        <div class="w-10 h-10 gradient-brand-icon rounded-xl flex items-center justify-center flex-shrink-0">
           @if(str_starts_with($icon, '<'))
             {{-- SVG code --}}
             {!! $icon !!}
@@ -57,7 +59,7 @@
           <li>
             <a
               href="{{ route('services.show', $service->slug) }}"
-              class="group flex items-center justify-between p-3 rounded-lg hover:bg-gradient-to-r hover:from-amber-50 hover:to-orange-50 transition-all "
+              class="group flex items-center justify-between p-3 rounded-lg gradient-hover-brand transition-all "
             >
               <span class="text-gray-700 group-hover:text-amber-900 font-medium transition-colors">
                 {{ $service->title }}

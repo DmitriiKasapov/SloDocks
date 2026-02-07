@@ -1,7 +1,9 @@
 {{--
+  blocks__service-card
+
   Service Card Component
 
-  Карточка услуги для отображения в результатах поиска
+  Service card for search results display
 
   @param object $service - Объект услуги (required)
   @param string $class - Дополнительные CSS классы (optional)
@@ -20,10 +22,10 @@
   class="group block bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-200 border border-gray-100 overflow-hidden  {{ $class }}"
 >
   <!-- Card Header -->
-  <div class="bg-gradient-to-br from-gray-50 to-gray-100 px-6 py-4 border-b border-gray-200">
+  <div class="gradient-bg-gray-light px-6 py-4 border-b border-gray-200">
     <div class="flex items-center gap-3">
       @if($service->category)
-        <div class="w-10 h-10 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl flex items-center justify-center flex-shrink-0">
+        <div class="w-10 h-10 gradient-brand-icon rounded-xl flex items-center justify-center flex-shrink-0">
           @if($service->category->icon)
             {!! $service->category->icon !!}
           @else

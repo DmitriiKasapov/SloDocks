@@ -5,7 +5,7 @@
 
 @section('content')
 <!-- Search Banner -->
-<section class="bg-gradient-to-br from-amber-400 via-orange-400 to-amber-500 py-16">
+<section class="gradient-brand-vibrant py-16">
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-8">
       <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
@@ -39,7 +39,7 @@
         >
         <button
           type="submit"
-          class="absolute right-2 top-1/2 -translate-y-1/2 bg-gradient-to-br from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:shadow-lg transition-all duration-200"
+          class="absolute right-2 top-1/2 -translate-y-1/2 gradient-brand-primary hover:gradient-button-primary-hover text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:shadow-lg transition-all duration-200"
         >
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
@@ -130,7 +130,7 @@
     <div class="max-w-2xl mx-auto text-center py-12">
       <div class="bg-white rounded-2xl shadow-sm p-12 border border-gray-100">
         <!-- Icon -->
-        <div class="w-20 h-20 bg-gradient-to-br from-amber-100 to-orange-100 rounded-full flex items-center justify-center mx-auto mb-6">
+        <div class="w-20 h-20 gradient-brand-icon-light rounded-full flex items-center justify-center mx-auto mb-6">
           <svg class="w-10 h-10 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
           </svg>
