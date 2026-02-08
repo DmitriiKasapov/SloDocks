@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Category;
 use App\Models\MaterialBlock;
 use App\Models\Service;
+use App\Models\Tag;
 use Illuminate\Database\Seeder;
 
 class ServiceSeeder extends Seeder
@@ -19,6 +20,7 @@ class ServiceSeeder extends Seeder
         $service = Service::create([
             'slug' => 'school-enrollment',
             'title' => 'Оформление ребёнка в школу в Словении',
+            'intro_text' => '<p>Оформление ребёнка в словенскую школу — важный этап для семей, переехавших в Словению. Процесс может показаться сложным, но на самом деле он вполне понятен и доступен.</p><p>В этом материале мы подробно разобрали все этапы: от подготовки документов до первого дня в школе. Вы получите пошаговую инструкцию, список необходимых документов с пояснениями, заполненные образцы заявлений и практические советы из реального опыта.</p>',
             'category_id' => $category->id,
             'description_public' => 'Подробная инструкция по оформлению ребёнка в словенскую школу. Включает пошаговое руководство, список необходимых документов, заполненные образцы и практические советы.',
             'price' => 2900,
@@ -27,6 +29,10 @@ class ServiceSeeder extends Seeder
             'seo_description' => 'Полное руководство по зачислению ребёнка в школу в Словении. Документы, сроки, образцы заявлений.',
             'is_active' => true,
         ]);
+
+        // Attach tags to the service
+        $tags = Tag::whereIn('slug', ['shkola', 'dokumenty', 'roditelyam', 'instrukcii'])->pluck('id');
+        $service->tags()->attach($tags);
 
         // Process overview
         MaterialBlock::create([

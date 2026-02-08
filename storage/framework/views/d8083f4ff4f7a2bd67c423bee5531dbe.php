@@ -3,10 +3,10 @@
 
 <?php $__env->startSection('content'); ?>
     <!-- Hero Banner -->
-    <?php if (isset($component)) { $__componentOriginalb369f480df938bcd4c6a6e032c6e21e1 = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginalb369f480df938bcd4c6a6e032c6e21e1 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.blocks.banner','data' => ['title' => 'Всё для жизни в Словении','highlight' => 'на понятном языке','subtitle' => 'Пошаговые инструкции и готовые документы для самостоятельного оформления','searchPlaceholder' => 'Что вы ищете? Например: вид на жительство, школа, налоги...','searchHint' => 'Найдите нужную инструкцию среди ' . $services->count() . ' материалов']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('blocks.banner'); ?>
+    <?php if (isset($component)) { $__componentOriginalc32e6698e82bf20a3ba861fefd05818f = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginalc32e6698e82bf20a3ba861fefd05818f = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.banners.index','data' => ['title' => 'Всё для жизни в Словении','highlight' => 'на понятном языке','subtitle' => 'Пошаговые инструкции и готовые документы для самостоятельного оформления','searchPlaceholder' => 'Что вы ищете? Например: вид на жительство, школа, налоги...','searchHint' => 'Найдите нужную инструкцию среди ' . $services->count() . ' материалов']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('banners'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
@@ -17,13 +17,13 @@
 
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
-<?php if (isset($__attributesOriginalb369f480df938bcd4c6a6e032c6e21e1)): ?>
-<?php $attributes = $__attributesOriginalb369f480df938bcd4c6a6e032c6e21e1; ?>
-<?php unset($__attributesOriginalb369f480df938bcd4c6a6e032c6e21e1); ?>
+<?php if (isset($__attributesOriginalc32e6698e82bf20a3ba861fefd05818f)): ?>
+<?php $attributes = $__attributesOriginalc32e6698e82bf20a3ba861fefd05818f; ?>
+<?php unset($__attributesOriginalc32e6698e82bf20a3ba861fefd05818f); ?>
 <?php endif; ?>
-<?php if (isset($__componentOriginalb369f480df938bcd4c6a6e032c6e21e1)): ?>
-<?php $component = $__componentOriginalb369f480df938bcd4c6a6e032c6e21e1; ?>
-<?php unset($__componentOriginalb369f480df938bcd4c6a6e032c6e21e1); ?>
+<?php if (isset($__componentOriginalc32e6698e82bf20a3ba861fefd05818f)): ?>
+<?php $component = $__componentOriginalc32e6698e82bf20a3ba861fefd05818f; ?>
+<?php unset($__componentOriginalc32e6698e82bf20a3ba861fefd05818f); ?>
 <?php endif; ?>
 
     <!-- Services by Category Section -->

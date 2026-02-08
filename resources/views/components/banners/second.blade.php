@@ -52,11 +52,11 @@
                 </h1>
             </div>
             <!-- Row 2: description -->
-            @if ($description)
+            {{-- @if ($description)
                 <p class="text-lg md:text-xl text-indigo-100 leading-relaxed">
                     {{ $description }}
                 </p>
-            @endif
+            @endif --}}
         </div>
     </div>
 </section>

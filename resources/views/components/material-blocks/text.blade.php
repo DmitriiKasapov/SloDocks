@@ -1,13 +1,11 @@
-{{--
-  material-blocks__text
+{{-- material_blocks__text --}}
 
-  Text Block Component
+@props(['content', 'class' => ''])
 
-  Renders rich text content
---}}
-
-@props(['content'])
-
-<div class="material-blocks__text prose prose-lg max-w-none mb-10">
-    {!! $content['content'] ?? '' !!}
-</div>
+<section class="container-grid my-7.5 md:my-15 {{ $class }}">
+    <div class="content">
+        <div class="wysiwyg text-base">
+            {!! $content['content'] ?? '' !!}
+        </div>
+    </div>
+</section>

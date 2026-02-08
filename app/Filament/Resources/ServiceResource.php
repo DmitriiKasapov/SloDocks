@@ -114,6 +114,11 @@ class ServiceResource extends Resource
                                             ->rows(4)
                                             ->columnSpanFull(),
 
+                                        RichEditor::make('intro_text')
+                                            ->label('Полное описание')
+                                            ->helperText('Подробное описание услуги. Выводится под заголовком на странице')
+                                            ->columnSpanFull(),
+
                                         Section::make('Что входит в материалы')
                                             ->description('Отметьте элементы, которые включены в эту услугу')
                                             ->collapsed()

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="512" height="512"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="512" height="512"><svg width="512" height="512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:1"></stop>
+      <stop offset="100%" style="stop-color:#f97316;stop-opacity:1"></stop>
+    </linearGradient>
+  </defs>
+
+  <!-- Background with gradient and rounded corners -->
+  <rect width="512" height="512" rx="102.4" ry="102.4" fill="url(#logoGradient)"></rect>
+
+  <!-- SD Text -->
+  <text x="256" y="356" font-family="Arial, sans-serif" font-size="280" font-weight="bold" fill="white" text-anchor="middle">SD</text>
+</svg></svg><style>@media (prefers-color-scheme: light) { :root { filter: none; } }
+@media (prefers-color-scheme: dark) { :root { filter: none; } }
+</style></svg>

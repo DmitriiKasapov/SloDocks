@@ -62,12 +62,7 @@ unset($__defined_vars, $__key, $__value); ?>
                 </h1>
             </div>
             <!-- Row 2: description -->
-            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($description): ?>
-                <p class="text-lg md:text-xl text-indigo-100 leading-relaxed">
-                    <?php echo e($description); ?>
-
-                </p>
-            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+            
         </div>
     </div>
 </section>

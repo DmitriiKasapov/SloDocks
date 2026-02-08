@@ -28,6 +28,10 @@
     > li {
       @apply flex items-start gap-2;
 
+      p {
+        @apply m-0;
+      }
+
       &::before {
         content: '';
         @apply shrink-0 w-6 h-6 mt-0.5 bg-emerald-500 rounded-full;

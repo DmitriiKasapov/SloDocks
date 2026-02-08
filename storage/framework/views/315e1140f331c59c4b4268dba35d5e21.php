@@ -8,12 +8,11 @@
     <title><?php echo $__env->yieldContent('title', config('app.name', 'SloDocs')); ?></title>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="<?php echo e(asset('favicon.svg')); ?>">
-    <link rel="icon" type="image/x-icon" href="<?php echo e(asset('favicon.ico')); ?>">
-    <link rel="icon" type="image/png" sizes="32x32" href="<?php echo e(asset('favicon-32x32.png')); ?>">
-    <link rel="icon" type="image/png" sizes="16x16" href="<?php echo e(asset('favicon-16x16.png')); ?>">
-    <link rel="apple-touch-icon" sizes="180x180" href="<?php echo e(asset('apple-touch-icon.png')); ?>">
-    <link rel="manifest" href="<?php echo e(asset('site.webmanifest')); ?>">
+    <link rel="icon" type="image/png" href="<?php echo e(asset('favicons/favicon-96x96.png')); ?>" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="<?php echo e(asset('favicons/favicon.svg')); ?>" />
+    <link rel="shortcut icon" href="<?php echo e(asset('favicons/favicon.ico')); ?>" />
+    <link rel="apple-touch-icon" sizes="180x180" href="<?php echo e(asset('favicons/apple-touch-icon.png')); ?>" />
+    <link rel="manifest" href="<?php echo e(asset('favicons/site.webmanifest')); ?>" />
     <meta name="theme-color" content="#f97316">
 
     <!-- SEO Meta Tags -->
