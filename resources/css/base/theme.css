@@ -72,7 +72,7 @@
   --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
 
   /* Container */
-  --container-max-width: 1200px;
+  --container-max-width: 1080px;
 
   /* Responsive paddings and gaps */
   --gap: 0.5rem;

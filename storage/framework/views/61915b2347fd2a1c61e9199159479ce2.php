@@ -24,7 +24,7 @@
     ];
 ?>
 
-<nav class="flex items-center" role="navigation" aria-label="Основная навигация">
+<nav class="header__navigation flex items-center" role="navigation" aria-label="Основная навигация">
     <ul class="flex items-center space-x-1 list-none m-0 p-0">
         <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__currentLoopData = $navItems; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoop($loop->index); ?><?php endif; ?>
             <li itemscope itemtype="http://schema.org/SiteNavigationElement">

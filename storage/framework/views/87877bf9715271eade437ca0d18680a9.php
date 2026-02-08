@@ -71,7 +71,7 @@ unset($__defined_vars, $__key, $__value); ?>
 ?>
 
 <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($href): ?>
-  <a href="<?php echo e($href); ?>" class="<?php echo e($classes); ?>">
+  <a href="<?php echo e($href); ?>" class="elements__button__index <?php echo e($classes); ?>">
     <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($arrow === 'left'): ?>
       <?php echo $arrowLeft; ?>
 
@@ -83,7 +83,7 @@ unset($__defined_vars, $__key, $__value); ?>
     <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
   </a>
 <?php else: ?>
-  <button type="<?php echo e($submit ? 'submit' : 'button'); ?>" class="<?php echo e($classes); ?>">
+  <button type="<?php echo e($submit ? 'submit' : 'button'); ?>" class="elements__button__index <?php echo e($classes); ?>">
     <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($arrow === 'left'): ?>
       <?php echo $arrowLeft; ?>
 

@@ -1,6 +1,6 @@
 
 
-<header class="bg-white/80 backdrop-blur-md border-b border-indigo-100 sticky top-0 z-50" role="banner">
+<header class="header__index bg-white/80 backdrop-blur-md border-b border-indigo-100 sticky top-0 z-50" role="banner">
     <div class="container-grid">
         <div class="content flex justify-between items-center h-16">
             

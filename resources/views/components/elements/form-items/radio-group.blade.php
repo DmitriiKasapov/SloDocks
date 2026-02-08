@@ -1,6 +1,6 @@
 @props(['options', 'name'])
 
-<div class="radio-group">
+<div class="elements__form-items__radio-group radio-group">
   @foreach ($options as $option)
       <x-form-items.radio
         :name="$name"

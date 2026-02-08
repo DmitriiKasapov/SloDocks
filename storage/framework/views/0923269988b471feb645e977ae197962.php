@@ -7,37 +7,40 @@
 <?php $__env->stopPush(); ?>
 
 <?php $__env->startSection('content'); ?>
-<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <!-- Breadcrumb -->
-    <nav class="mb-6">
-        <ol class="flex items-center space-x-2 text-sm">
-            <li>
-                <a href="<?php echo e(route('home')); ?>" class="text-gray-600 hover:text-amber-600 transition-colors ">
-                    Главная
-                </a>
-            </li>
-            <li>
-                <svg class="w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
-                </svg>
-            </li>
-            <li>
-                <a href="<?php echo e(route('services.show', $service->slug)); ?>" class="text-gray-600 hover:text-amber-600 transition-colors ">
-                    <?php echo e($service->title); ?>
+<?php if (isset($component)) { $__componentOriginal769db0fcc5d885d6f967832f663df33b = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal769db0fcc5d885d6f967832f663df33b = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.blocks.breadcrumbs','data' => ['items' => [
+    ['label' => 'Главная', 'url' => route('home')],
+    ['label' => $service->title, 'url' => route('services.show', $service->slug)],
+    ['label' => 'Материалы'],
+],'class' => 'mt-6 mb-2']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('blocks.breadcrumbs'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['items' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute([
+    ['label' => 'Главная', 'url' => route('home')],
+    ['label' => $service->title, 'url' => route('services.show', $service->slug)],
+    ['label' => 'Материалы'],
+]),'class' => 'mt-6 mb-2']); ?>
+<?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::processComponentKey($component); ?>
 
-                </a>
-            </li>
-            <li>
-                <svg class="w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
-                </svg>
-            </li>
-            <li class="text-gray-900 font-medium">Материалы</li>
-        </ol>
-    </nav>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal769db0fcc5d885d6f967832f663df33b)): ?>
+<?php $attributes = $__attributesOriginal769db0fcc5d885d6f967832f663df33b; ?>
+<?php unset($__attributesOriginal769db0fcc5d885d6f967832f663df33b); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal769db0fcc5d885d6f967832f663df33b)): ?>
+<?php $component = $__componentOriginal769db0fcc5d885d6f967832f663df33b; ?>
+<?php unset($__componentOriginal769db0fcc5d885d6f967832f663df33b); ?>
+<?php endif; ?>
 
+<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
     <!-- Page Header -->
-    <div class="bg-gradient-to-br from-indigo-500 via-purple-500 to-violet-600 rounded-3xl p-8 md:p-12 mb-8 text-white shadow-xl">
+    <div class="gradient-header-purple rounded-3xl p-8 md:p-12 mb-8 text-white shadow-xl">
         <div class="flex items-start gap-6">
             <div class="flex-shrink-0">
                 <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center">
@@ -122,7 +125,7 @@
             <div class="flex flex-wrap gap-3">
                 <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__currentLoopData = $allSteps; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $step): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoop($loop->index); ?><?php endif; ?>
                     <a href="#step-<?php echo e($step['number']); ?>" class="w-full sm:w-auto inline-flex items-center gap-2 px-4 py-2.5 bg-white rounded-full shadow-sm border border-gray-200 hover:shadow-md hover:border-indigo-400 hover:bg-indigo-50 transition-all cursor-pointer group ">
-                        <span class="flex-shrink-0 w-6 h-6 bg-gradient-to-br from-indigo-400 to-purple-500 rounded-full flex items-center justify-center text-white text-sm font-bold group-hover:scale-110 transition-transform">
+                        <span class="flex-shrink-0 w-6 h-6 gradient-icon-indigo rounded-full flex items-center justify-center text-white text-sm font-bold group-hover:scale-110 transition-transform">
                             <?php echo e($step['number']); ?>
 
                         </span>
@@ -193,6 +196,30 @@
         </a>
     </div>
 </div>
+
+<?php if (isset($component)) { $__componentOriginal322274d2d69814555f084d6e7eb2a4be = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal322274d2d69814555f084d6e7eb2a4be = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.blocks.warning','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('blocks.warning'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes([]); ?>
+<?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::processComponentKey($component); ?>
+
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal322274d2d69814555f084d6e7eb2a4be)): ?>
+<?php $attributes = $__attributesOriginal322274d2d69814555f084d6e7eb2a4be; ?>
+<?php unset($__attributesOriginal322274d2d69814555f084d6e7eb2a4be); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal322274d2d69814555f084d6e7eb2a4be)): ?>
+<?php $component = $__componentOriginal322274d2d69814555f084d6e7eb2a4be; ?>
+<?php unset($__componentOriginal322274d2d69814555f084d6e7eb2a4be); ?>
+<?php endif; ?>
+
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH D:\Projects\SloDoks\resources\views/pages/services/content-blocks.blade.php ENDPATH**/ ?>

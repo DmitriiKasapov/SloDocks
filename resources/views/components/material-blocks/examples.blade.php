@@ -8,7 +8,7 @@
 
 @props(['content'])
 
-<div class="mb-10">
+<div class="material-blocks__examples mb-10">
     <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-6">Образцы заполнения</h2>
     <div class="grid sm:grid-cols-2 gap-4">
         @foreach($content['examples'] ?? [] as $example)

@@ -27,7 +27,7 @@
   'class' => '',
 ])
 
-<div class="category-card bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow border border-gray-100 overflow-hidden {{ $class }}">
+<div class="blocks__category-card bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow border border-gray-100 overflow-hidden {{ $class }}">
   <!-- Card Header -->
   <div class="gradient-bg-gray-light px-6 py-5 border-b border-gray-200">
     <div class="flex items-center gap-3">

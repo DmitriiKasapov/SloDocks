@@ -55,7 +55,7 @@
 @endphp
 
 @if ($href)
-  <a href="{{ $href }}" class="{{ $classes }}">
+  <a href="{{ $href }}" class="elements__button__index {{ $classes }}">
     @if($arrow === 'left')
       {!! $arrowLeft !!}
     @endif
@@ -65,7 +65,7 @@
     @endif
   </a>
 @else
-  <button type="{{ $submit ? 'submit' : 'button' }}" class="{{ $classes }}">
+  <button type="{{ $submit ? 'submit' : 'button' }}" class="elements__button__index {{ $classes }}">
     @if($arrow === 'left')
       {!! $arrowLeft !!}
     @endif

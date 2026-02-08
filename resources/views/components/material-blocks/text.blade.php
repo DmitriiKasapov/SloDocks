@@ -8,6 +8,6 @@
 
 @props(['content'])
 
-<div class="prose prose-lg max-w-none mb-10">
+<div class="material-blocks__text prose prose-lg max-w-none mb-10">
     {!! $content['content'] ?? '' !!}
 </div>

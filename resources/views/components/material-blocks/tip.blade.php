@@ -37,7 +37,7 @@
     $style = $colors[$level] ?? $colors['info'];
 @endphp
 
-<div class="{{ $style['bg'] }} border-l-4 {{ $style['border'] }} rounded-xl p-6 mb-8 shadow-sm">
+<div class="material-blocks__tip {{ $style['bg'] }} border-l-4 {{ $style['border'] }} rounded-xl p-6 mb-8 shadow-sm">
     <div class="flex items-start gap-4">
         <div class="flex-shrink-0">
             <div class="w-10 h-10 {{ $style['icon_bg'] }} rounded-full flex items-center justify-center">

@@ -1,3 +1,5 @@
+
+
 <?php $attributes ??= new \Illuminate\View\ComponentAttributeBag;
 
 $__newAttributes = [];
@@ -28,12 +30,12 @@ foreach ($attributes->all() as $__key => $__value) {
 
 unset($__defined_vars, $__key, $__value); ?>
 
-<div class="bg-white border-2 border-indigo-100 rounded-2xl p-8 mb-10 shadow-lg">
+<div class="material-blocks__steps bg-white border-2 border-indigo-100 rounded-2xl p-8 mb-10 shadow-lg">
     <div class="prose prose-lg max-w-none space-y-10">
         <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__currentLoopData = $content['steps'] ?? []; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $step): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoop($loop->index); ?><?php endif; ?>
             <div id="step-<?php echo e($step['number']); ?>" class="step-content">
                 <h3 class="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-3">
-                    <span class="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-amber-400 to-orange-500 text-white rounded-lg flex items-center justify-center font-bold">
+                    <span class="flex-shrink-0 w-10 h-10 gradient-brand-icon text-white rounded-lg flex items-center justify-center font-bold">
                         <?php echo e($step['number']); ?>
 
                     </span>

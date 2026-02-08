@@ -8,7 +8,7 @@
 
 @props(['content'])
 
-<div class="bg-white border-2 border-indigo-100 rounded-2xl p-8 mb-10 shadow-lg">
+<div class="material-blocks__steps bg-white border-2 border-indigo-100 rounded-2xl p-8 mb-10 shadow-lg">
     <div class="prose prose-lg max-w-none space-y-10">
         @foreach($content['steps'] ?? [] as $step)
             <div id="step-{{ $step['number'] }}" class="step-content">

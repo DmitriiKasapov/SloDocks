@@ -1,5 +1,5 @@
 {{--
-  Button with Arrow Icon
+  elements__button__button-icon
 
   Кнопка со встроенной стрелкой вправо. Использует основной компонент button/index.
 

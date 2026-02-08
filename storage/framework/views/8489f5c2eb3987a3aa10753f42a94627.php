@@ -34,7 +34,7 @@ foreach ($attributes->all() as $__key => $__value) {
 
 unset($__defined_vars, $__key, $__value); ?>
 
-<section class="container-grid my-7.5 md:my-15 <?php echo e($class); ?>" aria-label="Warning disclaimer">
+<section class="blocks__warning container-grid my-7.5 md:my-15 <?php echo e($class); ?>" aria-label="Warning disclaimer">
     <div class="content">
         <div class="gradient-brand-light border-l-4 border-amber-400 rounded-xl p-5 md:p-8 shadow-sm">
             <!-- Icon and Title in one row -->

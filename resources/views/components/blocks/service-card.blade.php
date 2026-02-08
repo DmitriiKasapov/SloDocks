@@ -19,7 +19,7 @@
 
 <a
   href="{{ route('services.show', $service->slug) }}"
-  class="group block bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-200 border border-gray-100 overflow-hidden  {{ $class }}"
+  class="blocks__service-card group block bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-200 border border-gray-100 overflow-hidden {{ $class }}"
 >
   <!-- Card Header -->
   <div class="gradient-bg-gray-light px-6 py-4 border-b border-gray-200">

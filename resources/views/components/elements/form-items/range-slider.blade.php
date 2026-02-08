@@ -1,6 +1,6 @@
 @props(['name'])
 
-<div class="range-slider form-item">
+<div class="elements__form-items__range-slider range-slider form-item">
   <div class="flex items-center justify-between gap-3 mt-2">
     <label class="w-full">
       min

@@ -6,7 +6,7 @@
   'round' => false,
   'disabled' => false])
 
-<div class="form-item checkbox relative {{ $class ?? '' }}">
+<div class="elements__form-items__checkbox form-item checkbox relative {{ $class ?? '' }}">
   <label @class(['checkbox-input pl-[30px] flex gap-2'])>
     <input type="checkbox" class="visually-hidden"
       id="{{ $name }}"

@@ -34,7 +34,7 @@
   $actionUrl = $formAction ?: route('search');
 @endphp
 
-<div class="search-input {{ $class }}">
+<div class="elements__form-items__search-input search-input {{ $class }}">
   <form method="GET" action="{{ $actionUrl }}" role="search">
     <div class="relative">
       <input

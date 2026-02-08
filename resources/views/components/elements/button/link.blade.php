@@ -34,7 +34,7 @@
 <a
   href="{{ $link }}"
   @if($target) target="{{ $target }}" @endif
-  class="inline-flex items-center gap-2 font-inter font-semibold transition-colors {{ $colorClasses }} {{ $class }}"
+  class="elements__button__link inline-flex items-center gap-2 font-inter font-semibold transition-colors {{ $colorClasses }} {{ $class }}"
 >
   {{ $slot }}
   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

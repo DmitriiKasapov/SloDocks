@@ -1,6 +1,6 @@
 @layer base {
     body {
-      @apply font-inter text-base text-gray-700;
+      @apply font-inter text-sm text-gray-700;
     }
 
     h1, .h1 {

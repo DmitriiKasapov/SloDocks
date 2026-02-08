@@ -59,7 +59,7 @@ unset($__defined_vars, $__key, $__value); ?>
   };
 ?>
 
-<section class="relative <?php echo e($gradientClasses); ?> overflow-hidden <?php echo e($class); ?>" aria-label="Главный баннер">
+<section class="blocks__banner relative <?php echo e($gradientClasses); ?> overflow-hidden <?php echo e($class); ?>" aria-label="Главный баннер">
   <!-- Decorative pattern background -->
   <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE2YzAgMi4yMTItMS43OSA0LTQgNHMtNC0xLjc4OC00LTQgMS43OS00IDQtNCA0IDEuNzg4IDQgNHoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-40" aria-hidden="true"></div>
 

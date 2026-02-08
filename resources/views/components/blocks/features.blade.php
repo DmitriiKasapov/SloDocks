@@ -24,16 +24,16 @@
   'class' => '',
 ])
 
-<section class="container-grid my-7.5 md:my-15 {{ $class }}">
+<section class="blocks__features container-grid my-7.5 md:my-15 {{ $class }}">
     <div class="content">
         <!-- Header -->
         <div class="text-center mb-12">
             <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                 {{ $title }}
             </h2>
-            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+            {{-- <p class="text-lg text-gray-600 max-w-2xl mx-auto">
                 {{ $subtitle }}
-            </p>
+            </p> --}}
         </div>
 
         <!-- Features Grid -->

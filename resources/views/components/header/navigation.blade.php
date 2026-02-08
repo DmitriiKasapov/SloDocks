@@ -39,7 +39,7 @@
     ];
 @endphp
 
-<nav class="flex items-center" role="navigation" aria-label="Основная навигация">
+<nav class="header__navigation flex items-center" role="navigation" aria-label="Основная навигация">
     <ul class="flex items-center space-x-1 list-none m-0 p-0">
         @foreach($navItems as $item)
             <li itemscope itemtype="http://schema.org/SiteNavigationElement">

@@ -1,3 +1,5 @@
+
+
 <?php $attributes ??= new \Illuminate\View\ComponentAttributeBag;
 
 $__newAttributes = [];
@@ -28,7 +30,7 @@ foreach ($attributes->all() as $__key => $__value) {
 
 unset($__defined_vars, $__key, $__value); ?>
 
-<div class="bg-gradient-to-r from-emerald-50 to-teal-50 border-l-4 border-emerald-500 rounded-xl p-6 mb-10 shadow-sm">
+<div class="material-blocks__help-cta gradient-tip-success border-l-4 border-emerald-500 rounded-xl p-6 mb-10 shadow-sm">
     <div class="flex items-start gap-4">
         <div class="flex-shrink-0">
             <div class="w-10 h-10 bg-emerald-500 rounded-full flex items-center justify-center">

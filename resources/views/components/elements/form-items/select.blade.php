@@ -24,7 +24,7 @@
   'disabled' => false
 ])
 
-<div @class(['form-item select relative', $class])
+<div @class(['elements__form-items__select form-item select relative', $class])
   {{ $duration ? 'data-duration='.$duration : '' }}
   {{ $opened ? 'data-opened='.$opened : '' }}
   {{ $closer ? 'data-closer='.$closer : '' }}

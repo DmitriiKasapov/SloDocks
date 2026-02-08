@@ -5,7 +5,7 @@
   'message' => '',
   'disabled' => false])
 
-<div @class(['text-input form-item flex flex-col'])>
+<div @class(['elements__form-items__textarea text-input form-item flex flex-col'])>
   @if ($slot->isNotEmpty())
     <label class="black" for={{ $name }}>{{ $slot }}</label>
   @endif

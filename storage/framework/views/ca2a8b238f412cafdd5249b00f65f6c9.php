@@ -53,7 +53,7 @@ unset($__defined_vars, $__key, $__value); ?>
   $actionUrl = $formAction ?: route('search');
 ?>
 
-<div class="search-input <?php echo e($class); ?>">
+<div class="elements__form-items__search-input search-input <?php echo e($class); ?>">
   <form method="GET" action="<?php echo e($actionUrl); ?>" role="search">
     <div class="relative">
       <input

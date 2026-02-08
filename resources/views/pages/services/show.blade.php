@@ -4,119 +4,98 @@
 @section('meta_description', $service->seo_description ?? $service->description_public)
 
 @section('content')
-<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <!-- Breadcrumb -->
-    <nav class="mb-6">
-        <ol class="flex items-center space-x-2 text-sm">
-            <li>
-                <a href="{{ route('home') }}" class="text-gray-600 hover:text-amber-600 transition-colors ">
-                    Главная
-                </a>
-            </li>
-            <li>
-                <svg class="w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
-                </svg>
-            </li>
-            <li class="text-gray-900 font-medium">{{ $service->title }}</li>
-        </ol>
-    </nav>
+<x-blocks.breadcrumbs
+    :items="[
+        ['label' => 'Главная', 'url' => route('home')],
+        ['label' => $service->title],
+    ]"
+/>
 
-    <!-- Service Header -->
-    <div class="gradient-header-purple rounded-3xl p-8 md:p-12 mb-8 text-white shadow-xl">
-        <div class="flex items-start gap-6">
-            <div class="flex-shrink-0">
-                <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center">
-                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                    </svg>
-                </div>
-            </div>
-            <div class="flex-grow">
-                <h1 class="text-3xl md:text-4xl font-bold mb-4 leading-tight">
-                    {{ $service->title }}
-                </h1>
-                <p class="text-lg md:text-xl text-indigo-100 leading-relaxed">
-                    {{ $service->description_public }}
-                </p>
-            </div>
-        </div>
-    </div>
+<x-banners.second title="{{ $service->title }}" description="" />
 
-    @if($hasAccess)
-        {{-- TEMPORARY: Access granted - show button to view content --}}
-        <div class="gradient-tip-success rounded-2xl p-6 md:p-8 mb-8 border-2 border-emerald-200 shadow-sm">
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-                <div class="flex items-center gap-4">
-                    <div class="flex-shrink-0">
-                        <div class="w-14 h-14 bg-emerald-500 rounded-full flex items-center justify-center">
-                            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                            </svg>
+@if($hasAccess)
+    {{-- TEMPORARY: Access granted - show button to view content --}}
+    <section class="container-grid my-7.5 md:my-15">
+        <div class="content">
+            <div class="gradient-tip-success rounded-2xl p-6 md:p-8 border-2 border-emerald-200 shadow-sm">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                    <div class="flex items-center gap-4">
+                        <div class="flex-shrink-0">
+                            <div class="w-14 h-14 bg-emerald-500 rounded-full flex items-center justify-center">
+                                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-900 mb-1">Доступ открыт</h3>
+                            <p class="text-gray-700">
+                                Вы можете перейти к материалам
+                            </p>
                         </div>
                     </div>
-                    <div>
-                        <h3 class="text-2xl font-bold text-gray-900 mb-1">Доступ открыт</h3>
+                    <div class="flex-shrink-0 flex flex-col sm:flex-row gap-3 items-center">
+                        {{-- TEMPORARY: Close access button for testing --}}
+                        <form action="{{ route('services.revoke-temp-access', $service->slug) }}" method="POST">
+                            @csrf
+                            <button
+                                type="submit"
+                                class="text-sm text-gray-600 hover:text-red-600 transition-colors flex items-center gap-2 whitespace-nowrap"
+                            >
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                </svg>
+                                Закрыть доступ (тест)
+                            </button>
+                        </form>
+                        <x-elements.button.index
+                            href="{{ route('services.content', $service->slug) }}"
+                            arrow="right"
+                            class="w-full sm:w-auto"
+                        >
+                            Перейти к материалам
+                        </x-elements.button.index>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+@else
+    {{-- TEMPORARY: Show "Get Access" button for frontend testing --}}
+    <section class="container-grid my-7.5 md:my-15">
+        <div class="content">
+            <div class="gradient-brand-lightest rounded-2xl p-6 md:p-8 border-2 border-amber-200 shadow-lg">
+                <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+                    <div class="flex-grow">
+                        <div class="inline-flex items-center px-3 py-1 bg-amber-200 text-amber-900 text-xs font-bold uppercase tracking-wide rounded-full mb-3">
+                            Получите доступ к материалам
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Полная инструкция и документы</h3>
                         <p class="text-gray-700">
-                            Вы можете перейти к материалам
+                            Пошаговое руководство, образцы документов и практические советы
                         </p>
                     </div>
-                </div>
-                <div class="flex-shrink-0 flex flex-col sm:flex-row gap-3 items-center">
-                    {{-- TEMPORARY: Close access button for testing --}}
-                    <form action="{{ route('services.revoke-temp-access', $service->slug) }}" method="POST">
-                        @csrf
-                        <button
-                            type="submit"
-                            class="text-sm text-gray-600 hover:text-red-600 transition-colors flex items-center gap-2 whitespace-nowrap"
-                        >
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                            </svg>
-                            Закрыть доступ (тест)
-                        </button>
-                    </form>
-                    <x-elements.button.index
-                        href="{{ route('services.content', $service->slug) }}"
-                        arrow="right"
-                        class="w-full sm:w-auto"
-                    >
-                        Перейти к материалам
-                    </x-elements.button.index>
-                </div>
-            </div>
-        </div>
-    @else
-        {{-- TEMPORARY: Show "Get Access" button for frontend testing --}}
-        <div class="gradient-brand-lightest rounded-2xl p-6 md:p-8 mb-8 border-2 border-amber-200 shadow-lg">
-            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-                <div class="flex-grow">
-                    <div class="inline-flex items-center px-3 py-1 bg-amber-200 text-amber-900 text-xs font-bold uppercase tracking-wide rounded-full mb-3">
-                        Получите доступ к материалам
+                    <div class="flex-shrink-0">
+                        <form action="{{ route('services.grant-temp-access', $service->slug) }}" method="POST">
+                            @csrf
+                            <x-elements.button.index
+                                submit="true"
+                                arrow="right"
+                                class="w-full lg:w-auto"
+                            >
+                                Получить
+                            </x-elements.button.index>
+                        </form>
                     </div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Полная инструкция и документы</h3>
-                    <p class="text-gray-700">
-                        Пошаговое руководство, образцы документов и практические советы
-                    </p>
-                </div>
-                <div class="flex-shrink-0">
-                    <form action="{{ route('services.grant-temp-access', $service->slug) }}" method="POST">
-                        @csrf
-                        <x-elements.button.index
-                            submit="true"
-                            arrow="right"
-                            class="w-full lg:w-auto"
-                        >
-                            Получить
-                        </x-elements.button.index>
-                    </form>
                 </div>
             </div>
         </div>
-    @endif
+    </section>
+@endif
 
-    <!-- What's Included -->
-    <div class="mb-10">
+<!-- What's Included -->
+<section class="container-grid my-7.5 md:my-15">
+    <div class="content">
         <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-6">Что входит в материалы</h2>
         <div class="grid sm:grid-cols-2 gap-4">
             <div class="flex items-start gap-4 p-5 bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
@@ -169,7 +148,7 @@
             </div>
         </div>
     </div>
-</div>
+</section>
 
 <x-blocks.warning />
 
