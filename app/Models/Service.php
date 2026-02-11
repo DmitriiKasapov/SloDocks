@@ -15,6 +15,7 @@ class Service extends Model
         'slug',
         'title',
         'intro_text',
+        'intro_blocks',
         'category_id',
         'description_public',
         'materials_included',
@@ -30,6 +31,7 @@ class Service extends Model
         'price' => 'integer',
         'access_duration_days' => 'integer',
         'materials_included' => 'array',
+        'intro_blocks' => 'array',
     ];
 
     public function category(): BelongsTo

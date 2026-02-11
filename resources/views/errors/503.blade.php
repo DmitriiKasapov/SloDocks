@@ -38,7 +38,7 @@
         {{-- Info box --}}
         <div class="inline-block bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg px-8 py-6 animate-fade-in-up" style="animation-delay: 0.1s;">
             <div class="flex items-center justify-center gap-3 text-gray-700">
-                <svg class="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                 </svg>
                 <p class="font-semibold">

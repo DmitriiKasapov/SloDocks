@@ -110,7 +110,6 @@ class ServiceResource extends Resource
 
                                         Textarea::make('description_public')
                                             ->label('Краткое описание')
-                                            ->required()
                                             ->rows(4)
                                             ->columnSpanFull(),
 
@@ -183,11 +182,57 @@ class ServiceResource extends Resource
 
                         Tabs\Tab::make('Материалы')
                             ->schema([
-                                Section::make('Блоки контента')
-                                    ->description('Перетаскивайте блоки для изменения порядка. Нажмите [+ Add] для добавления')
+                                Section::make('Секция 1')
+                                    ->description('Вводные блоки — выводятся перед навигацией по шагам')
+                                    ->collapsed()
+                                    ->schema([
+                                        Builder::make('intro_blocks')
+                                            ->label('')
+                                            ->addActionLabel('Добавить блок')
+                                            ->collapsed()
+                                            ->blocks([
+                                                // Text block
+                                                Builder\Block::make('text')
+                                                    ->label('Текст')
+                                                    ->icon('heroicon-o-document-text')
+                                                    ->schema([
+                                                        RichEditor::make('content')
+                                                            ->label('Содержание')
+                                                            ->required(),
+                                                    ]),
+
+                                                // Tip block
+                                                Builder\Block::make('tip')
+                                                    ->label('Полезный совет')
+                                                    ->icon('heroicon-o-light-bulb')
+                                                    ->schema([
+                                                        Select::make('level')
+                                                            ->label('Уровень')
+                                                            ->options([
+                                                                'info' => 'Info',
+                                                                'warning' => 'Warning',
+                                                                'success' => 'Success',
+                                                            ])
+                                                            ->default('info')
+                                                            ->required(),
+                                                        RichEditor::make('text')
+                                                            ->label('Текст')
+                                                            ->required(),
+                                                    ]),
+                                            ])
+                                            ->reorderableWithButtons()
+                                            ->collapsible()
+                                            ->cloneable(),
+                                    ]),
+
+                                Section::make('Секция 2')
+                                    ->description('Основные материалы — выводятся после навигации по шагам')
+                                    ->collapsed()
                                     ->schema([
                                         Builder::make('content_blocks')
                                             ->label('')
+                                            ->addActionLabel('Добавить блок')
+                                            ->collapsed()
                                             ->blocks([
                                                 // Text block
                                                 Builder\Block::make('text')
@@ -220,6 +265,7 @@ class ServiceResource extends Resource
                                                                     ->required(),
                                                             ])
                                                             ->defaultItems(1)
+                                                            ->reorderableWithButtons()
                                                             ->collapsible()
                                                             ->itemLabel(fn (array $state): ?string =>
                                                                 ($state['number'] ?? '') . '. ' . ($state['title'] ?? '')
@@ -265,6 +311,7 @@ class ServiceResource extends Resource
                                                             ])
                                                             ->defaultItems(1)
                                                             ->collapsible()
+                                                            ->reorderableWithButtons()
                                                             ->itemLabel(fn (array $state): ?string => $state['title'] ?? null),
                                                     ]),
 
@@ -288,6 +335,7 @@ class ServiceResource extends Resource
                                                             ])
                                                             ->defaultItems(1)
                                                             ->collapsible()
+                                                            ->reorderableWithButtons()
                                                             ->itemLabel(fn (array $state): ?string => $state['title'] ?? null),
                                                     ]),
 
@@ -309,6 +357,7 @@ class ServiceResource extends Resource
                                                             ])
                                                             ->defaultItems(1)
                                                             ->collapsible()
+                                                            ->reorderableWithButtons()
                                                             ->itemLabel(fn (array $state): ?string => $state['q'] ?? null),
                                                     ]),
 
@@ -326,9 +375,8 @@ class ServiceResource extends Resource
                                                             ->placeholder('/contact'),
                                                     ]),
                                             ])
+                                            ->reorderableWithButtons()
                                             ->collapsible()
-                                            ->blockNumbers(false)
-                                            ->reorderable()
                                             ->cloneable(),
                                     ]),
                             ]),

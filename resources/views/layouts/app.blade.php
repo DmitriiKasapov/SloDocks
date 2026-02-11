@@ -36,15 +36,22 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="font-sans antialiased gradient-bg-body">
+    <!-- Skip to main content link for keyboard users -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-white focus:text-gray-900 focus:rounded-lg focus:shadow-lg focus:ring-2 focus:ring-orange-500">
+        Перейти к содержимому
+    </a>
+
     <div class="min-h-screen flex flex-col">
         <x-header />
 
         <!-- Page Content -->
-        <main class="grow">
+        <main id="main-content" class="grow" tabindex="-1">
             @yield('content')
         </main>
 
         <x-footer />
     </div>
+
+    <x-elements.scroll-to-top />
 </body>
 </html>

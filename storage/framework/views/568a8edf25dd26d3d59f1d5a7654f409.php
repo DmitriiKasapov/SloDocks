@@ -28,10 +28,10 @@ foreach ($attributes->all() as $__key => $__value) {
 }
 
 unset($__defined_vars, $__key, $__value); ?>
-<?php if (isset($component)) { $__componentOriginal6717ba5353aae921ea1ee9edb928a555 = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginal6717ba5353aae921ea1ee9edb928a555 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.material-blocks.process-overview','data' => ['content' => $content]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('material-blocks.process-overview'); ?>
+<?php if (isset($component)) { $__componentOriginald21ae4cebb71ed0f271eafded7189678 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginald21ae4cebb71ed0f271eafded7189678 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.material-blocks.text','data' => ['content' => $content]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('material-blocks.text'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
@@ -45,11 +45,11 @@ unset($__defined_vars, $__key, $__value); ?>
 
  <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
-<?php if (isset($__attributesOriginal6717ba5353aae921ea1ee9edb928a555)): ?>
-<?php $attributes = $__attributesOriginal6717ba5353aae921ea1ee9edb928a555; ?>
-<?php unset($__attributesOriginal6717ba5353aae921ea1ee9edb928a555); ?>
+<?php if (isset($__attributesOriginald21ae4cebb71ed0f271eafded7189678)): ?>
+<?php $attributes = $__attributesOriginald21ae4cebb71ed0f271eafded7189678; ?>
+<?php unset($__attributesOriginald21ae4cebb71ed0f271eafded7189678); ?>
 <?php endif; ?>
-<?php if (isset($__componentOriginal6717ba5353aae921ea1ee9edb928a555)): ?>
-<?php $component = $__componentOriginal6717ba5353aae921ea1ee9edb928a555; ?>
-<?php unset($__componentOriginal6717ba5353aae921ea1ee9edb928a555); ?>
-<?php endif; ?><?php /**PATH D:\Projects\SloDoks\storage\framework\views/a364d6b94d9e8b6eda80c8fd578a8822.blade.php ENDPATH**/ ?>
+<?php if (isset($__componentOriginald21ae4cebb71ed0f271eafded7189678)): ?>
+<?php $component = $__componentOriginald21ae4cebb71ed0f271eafded7189678; ?>
+<?php unset($__componentOriginald21ae4cebb71ed0f271eafded7189678); ?>
+<?php endif; ?><?php /**PATH D:\Projects\SloDoks\storage\framework\views/8a36ca9999989e6953bedf10adf3262b.blade.php ENDPATH**/ ?>

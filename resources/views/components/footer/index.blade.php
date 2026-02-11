@@ -10,7 +10,7 @@
   <x-footer />
 --}}
 
-<footer class="footer__index gradient-bg-gray-dark text-gray-300 mt-20" role="contentinfo" aria-label="Основная информация сайта">
+<footer class="footer__index gradient-bg-gray-dark text-gray-300" role="contentinfo" aria-label="Основная информация сайта">
     <div class="container-grid py-12">
         <div class="content">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">

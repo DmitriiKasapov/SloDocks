@@ -50,8 +50,8 @@
   };
 
   // Arrow SVG - base arrow is left, right arrow is rotated 180deg
-  $arrowLeft = '<svg class="' . $arrowSize . ' btn-arrow btn-arrow-left" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>';
-  $arrowRight = '<svg class="' . $arrowSize . ' btn-arrow btn-arrow-right rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>';
+  $arrowLeft = '<svg class="' . $arrowSize . ' btn-arrow btn-arrow-left" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>';
+  $arrowRight = '<svg class="' . $arrowSize . ' btn-arrow btn-arrow-right rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>';
 @endphp
 
 @if ($href)

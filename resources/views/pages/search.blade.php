@@ -28,9 +28,11 @@
 
     <!-- Search Form -->
     <div class="max-w-2xl mx-auto">
-      <form method="GET" action="{{ route('search') }}" class="relative">
+      <form method="GET" action="{{ route('search') }}" class="relative" role="search">
+        <label for="search-input" class="sr-only">Поиск по материалам</label>
         <input
-          type="text"
+          type="search"
+          id="search-input"
           name="q"
           value="{{ $query }}"
           placeholder="Что вы ищете? Например: школа, вид на жительство, налоги..."
@@ -39,9 +41,10 @@
         >
         <button
           type="submit"
+          aria-label="Искать"
           class="absolute right-2 top-1/2 -translate-y-1/2 gradient-brand-primary hover:gradient-button-primary-hover text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:shadow-lg transition-all duration-200"
         >
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
           </svg>
         </button>
@@ -95,19 +98,19 @@
           <h3 class="font-semibold text-gray-900 mb-3">Попробуйте:</h3>
           <ul class="space-y-2 text-gray-700 text-sm">
             <li class="flex items-start">
-              <svg class="w-5 h-5 text-amber-600 mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+              <svg class="w-5 h-5 text-amber-600 mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
               </svg>
               Изменить запрос или использовать другие ключевые слова
             </li>
             <li class="flex items-start">
-              <svg class="w-5 h-5 text-amber-600 mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+              <svg class="w-5 h-5 text-amber-600 mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
               </svg>
               Проверить правильность написания
             </li>
             <li class="flex items-start">
-              <svg class="w-5 h-5 text-amber-600 mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+              <svg class="w-5 h-5 text-amber-600 mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
               </svg>
               Использовать более общие термины
@@ -131,7 +134,7 @@
       <div class="bg-white rounded-2xl shadow-sm p-12 border border-gray-100">
         <!-- Icon -->
         <div class="w-20 h-20 gradient-brand-icon-light rounded-full flex items-center justify-center mx-auto mb-6">
-          <svg class="w-10 h-10 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-10 h-10 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
           </svg>
         </div>
