@@ -34,7 +34,7 @@ foreach ($attributes->all() as $__key => $__value) {
 
 unset($__defined_vars, $__key, $__value); ?>
 
-<section class="blocks__seo-text container-grid my-7.5 md:my-15 <?php echo e($class); ?>">
+<section class="blocks__seo-text container-grid my-10 md:my-20 <?php echo e($class); ?>">
     <div class="content">
         <div class="wysiwyg">
             <h2 class="text-center">Практическая информация для иностранцев в Словении</h2>

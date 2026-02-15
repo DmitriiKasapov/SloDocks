@@ -92,7 +92,7 @@
 
 
 <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(!empty($service->intro_blocks)): ?>
-    <div class="container-grid my-7.5 md:my-15">
+    <div class="container-grid my-10 md:my-20">
         <div class="content flex flex-col gap-7.5">
             <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__currentLoopData = $service->intro_blocks; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $block): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoop($loop->index); ?><?php endif; ?>
                 <?php
@@ -150,17 +150,17 @@
 
 
 <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($allSteps->isNotEmpty()): ?>
-    <section class="container-grid my-7.5 md:my-15">
+    <section class="container-grid my-10 md:my-20">
         <div class="content">
             <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-6">Порядок действий</h2>
             <div class="flex flex-wrap gap-3">
                 <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__currentLoopData = $allSteps; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $step): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoop($loop->index); ?><?php endif; ?>
                     <a href="#step-<?php echo e($step['number']); ?>" class="w-full sm:w-auto inline-flex items-center gap-2 px-4 py-2.5 bg-white rounded-full shadow-sm border border-gray-200 hover:shadow-md hover:border-indigo-400 hover:bg-indigo-50 transition-all cursor-pointer group">
-                        <span class="flex-shrink-0 w-6 h-6 gradient-icon-indigo rounded-full flex items-center justify-center text-white text-sm font-bold group-hover:scale-110 transition-transform">
+                        <span class="shrink-0 w-6 h-6 gradient-icon-indigo rounded-full flex items-center justify-center text-white text-sm font-bold group-hover:scale-110 transition-transform">
                             <?php echo e($step['number']); ?>
 
                         </span>
-                        <span class="text-gray-700 text-sm font-medium group-hover:text-indigo-700 transition-colors">
+                        <span class="font-medium group-hover:text-indigo-700 transition-colors">
                             <?php echo e($step['title']); ?>
 
                         </span>
@@ -172,7 +172,7 @@
 <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
 
 
-<div class="container-grid my-7.5 md:my-15">
+<div class="container-grid my-10 md:my-20">
     <div class="content flex flex-col gap-7.5">
         <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__currentLoopData = $service->contentBlocks; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $block): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoop($loop->index); ?><?php endif; ?>
             

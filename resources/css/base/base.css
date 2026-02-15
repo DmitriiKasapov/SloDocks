@@ -1,4 +1,9 @@
 @layer base {
+  /* Hide Alpine x-cloak elements until Alpine initializes */
+  [x-cloak] {
+    display: none !important;
+  }
+
   html {
     overflow-x: hidden;
     scroll-behavior: smooth;

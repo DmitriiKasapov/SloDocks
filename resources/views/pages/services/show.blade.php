@@ -14,7 +14,7 @@
     <x-banners.second title="{{ $service->title }}" description="{{ $service->description_public ?? '' }}" />
 
     @if($service->intro_text)
-        <section class="container-grid my-7.5 md:my-15">
+        <section class="container-grid my-10 md:my-20">
             <div class="content">
                 <div class="wysiwyg text-base">
                     {!! $service->intro_text !!}
@@ -25,7 +25,7 @@
 
     @if($hasAccess)
         {{-- TEMPORARY: Access granted - show button to view content --}}
-        <section class="container-grid my-7.5 md:my-15">
+        <section class="container-grid my-10 md:my-20">
             <div class="content">
                 <div class="gradient-tip-success rounded-2xl p-6 md:p-8 border-2 border-emerald-200 shadow-sm">
                     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
@@ -72,7 +72,7 @@
         </section>
     @else
         {{-- TEMPORARY: Show "Get Access" button for frontend testing --}}
-        <section class="container-grid my-7.5 md:my-15">
+        <section class="container-grid my-10 md:my-20">
             <div class="content">
                 <div class="gradient-brand-lightest rounded-2xl p-6 md:p-8 border-2 border-amber-200 shadow-lg">
                     <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">

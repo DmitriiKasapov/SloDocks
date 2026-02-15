@@ -13,7 +13,7 @@
 </div>
 
 
-<section class="container-grid my-7.5 md:my-15">
+<section class="container-grid my-10 md:my-20">
     <div class="content">
         <div class="mb-4">
             <span class="px-3 py-1 bg-indigo-100 text-indigo-700 text-sm font-bold rounded-full">Вариант 1: Текущий (без фона)</span>
@@ -45,7 +45,7 @@
 </section>
 
 
-<section class="container-grid my-7.5 md:my-15">
+<section class="container-grid my-10 md:my-20">
     <div class="content">
         <div class="mb-4">
             <span class="px-3 py-1 bg-emerald-100 text-emerald-700 text-sm font-bold rounded-full">Вариант 2: С белой карточкой</span>
@@ -79,7 +79,7 @@
 </section>
 
 
-<section class="gradient-bg-blue-light my-7.5 md:my-15">
+<section class="gradient-bg-blue-light my-10 md:my-20">
     <div class="container-grid py-10 md:py-15">
         <div class="content">
             <div class="mb-4">
@@ -113,7 +113,7 @@
 </section>
 
 
-<section class="bg-rose-50 py-10 md:py-15 my-7.5 md:my-15">
+<section class="bg-rose-50 py-10 md:py-15 my-10 md:my-20">
     <div class="container-grid">
         <div class="content">
             <div class="mb-4">
@@ -147,13 +147,13 @@
 </section>
 
 
-<section class="container-grid my-7.5 md:my-15">
+<section class="container-grid my-10 md:my-20">
     <div class="content">
         <div class="mb-4">
             <span class="px-3 py-1 bg-orange-100 text-orange-700 text-sm font-bold rounded-full">Вариант 5: С декоративными элементами</span>
         </div>
         <div class="relative bg-white rounded-2xl p-6 md:p-10 shadow-xl border border-amber-200 overflow-hidden">
-            
+
             <div class="absolute top-0 right-0 w-32 h-32 gradient-blur-amber-light opacity-30 blur-3xl rounded-full"></div>
             <div class="absolute bottom-0 left-0 w-24 h-24 gradient-blur-orange-light opacity-20 blur-3xl rounded-full"></div>
 
@@ -185,7 +185,7 @@
 </section>
 
 
-<section class="bg-white py-10 md:py-15 my-7.5 md:my-15">
+<section class="bg-white py-10 md:py-15 my-10 md:my-20">
     <div class="container-grid">
         <div class="content">
             <div class="mb-4">
@@ -219,7 +219,7 @@
 </section>
 
 
-<section class="gradient-bg-emerald-light py-10 md:py-15 my-7.5 md:my-15">
+<section class="gradient-bg-emerald-light py-10 md:py-15 my-10 md:my-20">
     <div class="container-grid">
         <div class="content">
             <div class="mb-4">
@@ -253,7 +253,7 @@
 </section>
 
 
-<section class="gradient-bg-gray-light py-10 md:py-15 my-7.5 md:my-15">
+<section class="gradient-bg-gray-light py-10 md:py-15 my-10 md:my-20">
     <div class="container-grid">
         <div class="content">
             <div class="mb-4">
@@ -287,8 +287,8 @@
 </section>
 
 
-<section class="relative bg-white py-10 md:py-15 my-7.5 md:my-15 overflow-hidden">
-    
+<section class="relative bg-white py-10 md:py-15 my-10 md:my-20 overflow-hidden">
+
     <div class="absolute top-0 right-0 w-96 h-96 gradient-blur-amber-light opacity-20 blur-3xl"></div>
     <div class="absolute bottom-0 left-0 w-80 h-80 gradient-blur-orange-light opacity-15 blur-3xl"></div>
 
@@ -325,7 +325,7 @@
 </section>
 
 
-<section class="gradient-brand-lightest py-10 md:py-15 my-7.5 md:my-15">
+<section class="gradient-brand-lightest py-10 md:py-15 my-10 md:my-20">
     <div class="container-grid">
         <div class="content">
             <div class="mb-4">

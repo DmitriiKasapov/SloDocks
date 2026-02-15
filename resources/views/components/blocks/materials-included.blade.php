@@ -2,7 +2,7 @@
 
 @props(['service', 'class' => ''])
 
-<section class="container-grid my-7.5 md:my-15 {{ $class }}">
+<section class="container-grid my-10 md:my-20 {{ $class }}">
     <div class="content">
         <h2 class="mb-6 text-center">Что входит в материалы</h2>
         <div class="grid sm:grid-cols-2 gap-4">

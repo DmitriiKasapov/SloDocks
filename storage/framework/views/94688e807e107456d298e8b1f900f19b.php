@@ -30,7 +30,7 @@ foreach ($attributes->all() as $__key => $__value) {
 
 unset($__defined_vars, $__key, $__value); ?>
 
-<section class="container-grid my-7.5 md:my-15 <?php echo e($class); ?>">
+<section class="container-grid my-10 md:my-20 <?php echo e($class); ?>">
     <div class="content">
         <h2 class="mb-6 text-center">Что входит в материалы</h2>
         <div class="grid sm:grid-cols-2 gap-4">

@@ -19,10 +19,14 @@ Route::get('/', function () {
     ->orderBy('order', 'asc')
     ->get();
 
-    // Legacy variable for backward compatibility
-    $services = \App\Models\Service::where('is_active', true)->get();
+    $services = \App\Models\Service::where('is_active', true)
+        ->with('category')
+        ->get();
 
-    return view('pages.home', compact('categories', 'services'));
+    // key => label pairs for the category filter select
+    $categoryOptions = $categories->pluck('name', 'id')->toArray();
+
+    return view('pages.home', compact('categories', 'services', 'categoryOptions'));
 })->name('home');
 
 // Search page

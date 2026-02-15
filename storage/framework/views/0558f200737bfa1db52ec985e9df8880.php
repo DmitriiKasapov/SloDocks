@@ -55,7 +55,7 @@
 <?php endif; ?>
 
     <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($service->intro_text): ?>
-        <section class="container-grid my-7.5 md:my-15">
+        <section class="container-grid my-10 md:my-20">
             <div class="content">
                 <div class="wysiwyg text-base">
                     <?php echo $service->intro_text; ?>
@@ -67,7 +67,7 @@
 
     <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($hasAccess): ?>
         
-        <section class="container-grid my-7.5 md:my-15">
+        <section class="container-grid my-10 md:my-20">
             <div class="content">
                 <div class="gradient-tip-success rounded-2xl p-6 md:p-8 border-2 border-emerald-200 shadow-sm">
                     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
@@ -130,7 +130,7 @@
         </section>
     <?php else: ?>
         
-        <section class="container-grid my-7.5 md:my-15">
+        <section class="container-grid my-10 md:my-20">
             <div class="content">
                 <div class="gradient-brand-lightest rounded-2xl p-6 md:p-8 border-2 border-amber-200 shadow-lg">
                     <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">

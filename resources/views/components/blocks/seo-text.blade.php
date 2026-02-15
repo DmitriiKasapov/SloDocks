@@ -14,7 +14,7 @@
   'class' => '',
 ])
 
-<section class="blocks__seo-text container-grid my-7.5 md:my-15 {{ $class }}">
+<section class="blocks__seo-text container-grid my-10 md:my-20 {{ $class }}">
     <div class="content">
         <div class="wysiwyg">
             <h2 class="text-center">Практическая информация для иностранцев в Словении</h2>

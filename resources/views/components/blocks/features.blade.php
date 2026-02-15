@@ -24,7 +24,7 @@
   'class' => '',
 ])
 
-<section class="blocks__features container-grid my-7.5 md:my-15 {{ $class }}">
+<section class="blocks__features container-grid my-10 md:my-20 {{ $class }}">
     <div class="content">
         <!-- Header -->
         <div class="text-center mb-12">

@@ -26,45 +26,79 @@
 <?php unset($__componentOriginalc32e6698e82bf20a3ba861fefd05818f); ?>
 <?php endif; ?>
 
-    <!-- Services by Category Section -->
-    <section id="services" class="container-grid my-7.5 md:my-15">
-        <div class="content">
-            <div class="mb-12 text-center">
+    <!-- Services Catalog Section -->
+    <section id="services" class="container-grid my-10 md:my-20">
+        <div class="content" x-data="{ category: '' }" x-on:change="if ($event.detail && $event.detail.name === 'category') category = $event.detail.value">
+            <div class="mb-10 text-center">
                 <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                    Доступные материалы
+                    Материалы и инструкции
                 </h2>
-                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-                    Выберите тему и получите пошаговую инструкцию с готовыми документами
-                </p>
             </div>
 
-            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($categories->count() > 0): ?>
-                <!-- Categories Grid: 2 columns on desktop, 1 on mobile -->
-                <div class="grid md:grid-cols-2 gap-6">
-                    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoop($loop->index); ?><?php endif; ?>
-                        <?php if (isset($component)) { $__componentOriginal30f28fac987be2021da0a7e82e35d24a = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginal30f28fac987be2021da0a7e82e35d24a = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.blocks.category-card','data' => ['title' => $category->name,'services' => $category->services,'icon' => $category->icon ?? '']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('blocks.category-card'); ?>
+            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($services->count() > 0): ?>
+                
+                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(count($categoryOptions) > 1): ?>
+                    <div class="mb-8">
+                        <?php if (isset($component)) { $__componentOriginal293b887e98d4efd01c20292685a44750 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal293b887e98d4efd01c20292685a44750 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.elements.form-items.select','data' => ['name' => 'category','options' => $categoryOptions,'buttonText' => 'Все категории','deselect' => true,'class' => 'w-full sm:w-72']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('elements.form-items.select'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['title' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($category->name),'services' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($category->services),'icon' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($category->icon ?? '')]); ?>
+<?php $component->withAttributes(['name' => 'category','options' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($categoryOptions),'buttonText' => 'Все категории','deselect' => true,'class' => 'w-full sm:w-72']); ?>
 <?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::processComponentKey($component); ?>
 
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
-<?php if (isset($__attributesOriginal30f28fac987be2021da0a7e82e35d24a)): ?>
-<?php $attributes = $__attributesOriginal30f28fac987be2021da0a7e82e35d24a; ?>
-<?php unset($__attributesOriginal30f28fac987be2021da0a7e82e35d24a); ?>
+<?php if (isset($__attributesOriginal293b887e98d4efd01c20292685a44750)): ?>
+<?php $attributes = $__attributesOriginal293b887e98d4efd01c20292685a44750; ?>
+<?php unset($__attributesOriginal293b887e98d4efd01c20292685a44750); ?>
 <?php endif; ?>
-<?php if (isset($__componentOriginal30f28fac987be2021da0a7e82e35d24a)): ?>
-<?php $component = $__componentOriginal30f28fac987be2021da0a7e82e35d24a; ?>
-<?php unset($__componentOriginal30f28fac987be2021da0a7e82e35d24a); ?>
+<?php if (isset($__componentOriginal293b887e98d4efd01c20292685a44750)): ?>
+<?php $component = $__componentOriginal293b887e98d4efd01c20292685a44750; ?>
+<?php unset($__componentOriginal293b887e98d4efd01c20292685a44750); ?>
+<?php endif; ?>
+                    </div>
+                <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::openLoop(); ?><?php endif; ?><?php $__currentLoopData = $services; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $service): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::startLoop($loop->index); ?><?php endif; ?>
+                        <?php if (isset($component)) { $__componentOriginalc27bc1517659ca683b4c5e20506d0d80 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginalc27bc1517659ca683b4c5e20506d0d80 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.cards.service','data' => ['service' => $service,'xShow' => '!category || category == \''.e($service->category_id).'\'','xTransition.opacity.duration.200ms' => true]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('cards.service'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['service' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($service),'x-show' => '!category || category == \''.e($service->category_id).'\'','x-transition.opacity.duration.200ms' => true]); ?>
+<?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::processComponentKey($component); ?>
+
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginalc27bc1517659ca683b4c5e20506d0d80)): ?>
+<?php $attributes = $__attributesOriginalc27bc1517659ca683b4c5e20506d0d80; ?>
+<?php unset($__attributesOriginalc27bc1517659ca683b4c5e20506d0d80); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalc27bc1517659ca683b4c5e20506d0d80)): ?>
+<?php $component = $__componentOriginalc27bc1517659ca683b4c5e20506d0d80; ?>
+<?php unset($__componentOriginalc27bc1517659ca683b4c5e20506d0d80); ?>
 <?php endif; ?>
                     <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::endLoop(); ?><?php endif; ?><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::closeLoop(); ?><?php endif; ?>
+                </div>
+
+                
+                <div
+                    class="text-center py-12"
+                    x-show="category && !document.querySelector('[data-category=\'' + category + '\']')"
+                    x-cloak
+                >
+                    <p class="text-gray-500 text-lg">В этой категории пока нет материалов</p>
                 </div>
             <?php else: ?>
                 <div class="text-center py-12 bg-white rounded-2xl shadow-sm">

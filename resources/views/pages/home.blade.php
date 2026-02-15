@@ -13,28 +13,47 @@
         :searchHint="'Найдите нужную инструкцию среди ' . $services->count() . ' материалов'"
     />
 
-    <!-- Services by Category Section -->
-    <section id="services" class="container-grid my-7.5 md:my-15">
-        <div class="content">
-            <div class="mb-12 text-center">
+    <!-- Services Catalog Section -->
+    <section id="services" class="container-grid my-10 md:my-20">
+        <div class="content" x-data="{ category: '' }" x-on:change="if ($event.detail && $event.detail.name === 'category') category = $event.detail.value">
+            <div class="mb-10 text-center">
                 <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                    Доступные материалы
+                    Материалы и инструкции
                 </h2>
-                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-                    Выберите тему и получите пошаговую инструкцию с готовыми документами
-                </p>
             </div>
 
-            @if($categories->count() > 0)
-                <!-- Categories Grid: 2 columns on desktop, 1 on mobile -->
-                <div class="grid md:grid-cols-2 gap-6">
-                    @foreach($categories as $category)
-                        <x-blocks.category-card
-                            :title="$category->name"
-                            :services="$category->services"
-                            :icon="$category->icon ?? ''"
+            @if($services->count() > 0)
+                {{-- Category filter --}}
+                @if(count($categoryOptions) > 1)
+                    <div class="mb-8">
+                        <x-elements.form-items.select
+                            name="category"
+                            :options="$categoryOptions"
+                            buttonText="Все категории"
+                            :deselect="true"
+                            class="w-full sm:w-72"
+                        />
+                    </div>
+                @endif
+
+                {{-- Service cards grid --}}
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    @foreach($services as $service)
+                        <x-cards.service
+                            :service="$service"
+                            x-show="!category || category == '{{ $service->category_id }}'"
+                            x-transition.opacity.duration.200ms
                         />
                     @endforeach
+                </div>
+
+                {{-- Empty state when filter matches nothing --}}
+                <div
+                    class="text-center py-12"
+                    x-show="category && !document.querySelector('[data-category=\'' + category + '\']')"
+                    x-cloak
+                >
+                    <p class="text-gray-500 text-lg">В этой категории пока нет материалов</p>
                 </div>
             @else
                 <div class="text-center py-12 bg-white rounded-2xl shadow-sm">

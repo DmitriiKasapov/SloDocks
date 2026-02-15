@@ -44,7 +44,7 @@
 
 {{-- Секция 1: Intro Blocks (before navigation) --}}
 @if(!empty($service->intro_blocks))
-    <div class="container-grid my-7.5 md:my-15">
+    <div class="container-grid my-10 md:my-20">
         <div class="content flex flex-col gap-7.5">
             @foreach($service->intro_blocks as $block)
                 @php
@@ -81,13 +81,13 @@
 
 {{-- Auto-generated Process Overview (if there are any steps blocks) --}}
 @if($allSteps->isNotEmpty())
-    <section class="container-grid my-7.5 md:my-15">
+    <section class="container-grid my-10 md:my-20">
         <div class="content">
             <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-6">Порядок действий</h2>
             <div class="flex flex-wrap gap-3">
                 @foreach($allSteps as $step)
                     <a href="#step-{{ $step['number'] }}" class="w-full sm:w-auto inline-flex items-center gap-2 px-4 py-2.5 bg-white rounded-full shadow-sm border border-gray-200 hover:shadow-md hover:border-indigo-400 hover:bg-indigo-50 transition-all cursor-pointer group">
-                        <span class="flex-shrink-0 w-6 h-6 gradient-icon-indigo rounded-full flex items-center justify-center text-white text-sm font-bold group-hover:scale-110 transition-transform">
+                        <span class="shrink-0 w-6 h-6 gradient-icon-indigo rounded-full flex items-center justify-center text-white text-sm font-bold group-hover:scale-110 transition-transform">
                             {{ $step['number'] }}
                         </span>
                         <span class="font-medium group-hover:text-indigo-700 transition-colors">
@@ -101,7 +101,7 @@
 @endif
 
 {{-- Секция 2: Content Blocks (after navigation) --}}
-<div class="container-grid my-7.5 md:my-15">
+<div class="container-grid my-10 md:my-20">
     <div class="content flex flex-col gap-7.5">
         @foreach($service->contentBlocks as $block)
             {{-- Skip deprecated blocks (auto-generated or removed from admin) --}}
@@ -129,7 +129,7 @@
 
 
 <!-- Back to Service -->
-{{-- <section class="container-grid my-7.5 md:my-15 text-center">
+{{-- <section class="container-grid my-10 md:my-20 text-center">
     <div class="content">
         <x-elements.button.index
             href="{{ route('services.show', $service->slug) }}"

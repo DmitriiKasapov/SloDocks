@@ -38,7 +38,7 @@ foreach ($attributes->all() as $__key => $__value) {
 
 unset($__defined_vars, $__key, $__value); ?>
 
-<section class="blocks__features container-grid my-7.5 md:my-15 <?php echo e($class); ?>">
+<section class="blocks__features container-grid my-10 md:my-20 <?php echo e($class); ?>">
     <div class="content">
         <!-- Header -->
         <div class="text-center mb-12">

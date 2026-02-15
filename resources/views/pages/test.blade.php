@@ -15,7 +15,7 @@
 </div>
 
 {{-- Вариант 1: Текущий (без фона) --}}
-<section class="container-grid my-7.5 md:my-15">
+<section class="container-grid my-10 md:my-20">
     <div class="content">
         <div class="mb-4">
             <span class="px-3 py-1 bg-indigo-100 text-indigo-700 text-sm font-bold rounded-full">Вариант 1: Текущий (без фона)</span>
@@ -47,7 +47,7 @@
 </section>
 
 {{-- Вариант 2: С белым фоном-карточкой --}}
-<section class="container-grid my-7.5 md:my-15">
+<section class="container-grid my-10 md:my-20">
     <div class="content">
         <div class="mb-4">
             <span class="px-3 py-1 bg-emerald-100 text-emerald-700 text-sm font-bold rounded-full">Вариант 2: С белой карточкой</span>
@@ -81,7 +81,7 @@
 </section>
 
 {{-- Вариант 3: С градиентным фоном секции --}}
-<section class="gradient-bg-blue-light my-7.5 md:my-15">
+<section class="gradient-bg-blue-light my-10 md:my-20">
     <div class="container-grid py-10 md:py-15">
         <div class="content">
             <div class="mb-4">
@@ -115,7 +115,7 @@
 </section>
 
 {{-- Вариант 4: С усиленной рамкой и розовым фоном --}}
-<section class="bg-rose-50 py-10 md:py-15 my-7.5 md:my-15">
+<section class="bg-rose-50 py-10 md:py-15 my-10 md:my-20">
     <div class="container-grid">
         <div class="content">
             <div class="mb-4">
@@ -149,7 +149,7 @@
 </section>
 
 {{-- Вариант 5: В белой карточке с декоративными элементами --}}
-<section class="container-grid my-7.5 md:my-15">
+<section class="container-grid my-10 md:my-20">
     <div class="content">
         <div class="mb-4">
             <span class="px-3 py-1 bg-orange-100 text-orange-700 text-sm font-bold rounded-full">Вариант 5: С декоративными элементами</span>
@@ -187,7 +187,7 @@
 </section>
 
 {{-- Вариант 6: Белый фон на весь экран --}}
-<section class="bg-white py-10 md:py-15 my-7.5 md:my-15">
+<section class="bg-white py-10 md:py-15 my-10 md:my-20">
     <div class="container-grid">
         <div class="content">
             <div class="mb-4">
@@ -221,7 +221,7 @@
 </section>
 
 {{-- Вариант 7: Градиентный фон на весь экран (светлый) --}}
-<section class="gradient-bg-emerald-light py-10 md:py-15 my-7.5 md:my-15">
+<section class="gradient-bg-emerald-light py-10 md:py-15 my-10 md:my-20">
     <div class="container-grid">
         <div class="content">
             <div class="mb-4">
@@ -255,7 +255,7 @@
 </section>
 
 {{-- Вариант 8: Серый градиентный фон на весь экран --}}
-<section class="gradient-bg-gray-light py-10 md:py-15 my-7.5 md:my-15">
+<section class="gradient-bg-gray-light py-10 md:py-15 my-10 md:my-20">
     <div class="container-grid">
         <div class="content">
             <div class="mb-4">
@@ -289,7 +289,7 @@
 </section>
 
 {{-- Вариант 9: Фон с декоративными элементами на весь экран --}}
-<section class="relative bg-white py-10 md:py-15 my-7.5 md:my-15 overflow-hidden">
+<section class="relative bg-white py-10 md:py-15 my-10 md:my-20 overflow-hidden">
     {{-- Full-width decorative elements --}}
     <div class="absolute top-0 right-0 w-96 h-96 gradient-blur-amber-light opacity-20 blur-3xl"></div>
     <div class="absolute bottom-0 left-0 w-80 h-80 gradient-blur-orange-light opacity-15 blur-3xl"></div>
@@ -327,7 +327,7 @@
 </section>
 
 {{-- Вариант 10: Брендовый светлый фон на весь экран --}}
-<section class="gradient-brand-lightest py-10 md:py-15 my-7.5 md:my-15">
+<section class="gradient-brand-lightest py-10 md:py-15 my-10 md:my-20">
     <div class="container-grid">
         <div class="content">
             <div class="mb-4">
