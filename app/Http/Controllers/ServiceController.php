@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Access;
 use App\Models\Service;
 use Illuminate\Http\Request;
 
@@ -14,40 +15,28 @@ class ServiceController extends Controller
             ->where('is_active', true)
             ->firstOrFail();
 
-        // Try to get real access token first
-        $token = $request->query('token');
-        $access = null;
+        $access = $this->resolveAccess($request, $service);
+        $hasAccess = $access !== null;
 
-        if ($token) {
-            $access = \App\Models\Access::where('service_id', $service->id)
-                ->where('access_token', $token)
-                ->where('is_active', true)
-                ->where('expires_at', '>', now())
-                ->first();
+        $response = response(view('pages.services.show', compact('service', 'hasAccess', 'access')));
+
+        // Save token to cookie on first visit via link
+        if ($access && $request->query('token')) {
+            $minutes = (int) now()->diffInMinutes($access->expires_at);
+            $response->cookie(
+                "access_{$service->id}",
+                $access->access_token,
+                $minutes,
+                '/',
+                null,
+                true,  // secure
+                true   // httpOnly
+            );
         }
 
-        // TEMPORARY: Check for temporary session access (for frontend development)
-        $tempAccessKey = 'temp_access_' . $service->id;
-        $hasAccess = $request->session()->get($tempAccessKey, false) || $access !== null;
-
-        return view('pages.services.show', compact('service', 'hasAccess', 'access'));
+        return $response;
     }
 
-    // TEMPORARY: Grant temporary access for frontend testing
-    public function grantTempAccess(Request $request, string $slug)
-    {
-        abort_unless(app()->isLocal(), 404);
-        $service = Service::where('slug', $slug)
-            ->where('is_active', true)
-            ->firstOrFail();
-
-        $tempAccessKey = 'temp_access_' . $service->id;
-        $request->session()->put($tempAccessKey, true);
-
-        return redirect()->route('services.show', $slug);
-    }
-
-    // TEMPORARY: Show content page (will be protected by token later)
     public function showContent(Request $request, string $slug)
     {
         $service = Service::with('contentBlocks')
@@ -55,44 +44,47 @@ class ServiceController extends Controller
             ->where('is_active', true)
             ->firstOrFail();
 
-        // Try to get real access token first
-        $token = $request->query('token');
-        $access = null;
+        $access = $this->resolveAccess($request, $service);
 
-        if ($token) {
-            $access = \App\Models\Access::where('service_id', $service->id)
-                ->where('access_token', $token)
-                ->where('is_active', true)
-                ->where('expires_at', '>', now())
-                ->first();
-        }
-
-        // TEMPORARY: Fall back to session-based access for testing
         if (!$access) {
-            $tempAccessKey = 'temp_access_' . $service->id;
-            $hasAccess = $request->session()->get($tempAccessKey, false);
-
-            if (!$hasAccess) {
-                return redirect()->route('services.show', $slug)
-                    ->with('error', 'Доступ к материалам закрыт');
-            }
+            return redirect()->route('services.show', $slug)
+                ->with('error', 'Доступ к материалам закрыт');
         }
 
-        return view('pages.services.content-blocks', compact('service', 'access'));
+        $response = response(view('pages.services.content-blocks', compact('service', 'access')));
+
+        // Save token to cookie on first visit via link
+        if ($request->query('token')) {
+            $minutes = (int) now()->diffInMinutes($access->expires_at);
+            $response->cookie(
+                "access_{$service->id}",
+                $access->access_token,
+                $minutes,
+                '/',
+                null,
+                true,
+                true
+            );
+        }
+
+        return $response;
     }
 
-    // TEMPORARY: Revoke temporary access
-    public function revokeTempAccess(Request $request, string $slug)
+    /**
+     * Find valid access by query token or cookie token
+     */
+    private function resolveAccess(Request $request, Service $service): ?Access
     {
-        abort_unless(app()->isLocal(), 404);
-        $service = Service::where('slug', $slug)
+        $token = $request->query('token') ?? $request->cookie("access_{$service->id}");
+
+        if (!$token) {
+            return null;
+        }
+
+        return Access::where('service_id', $service->id)
+            ->where('access_token', $token)
             ->where('is_active', true)
-            ->firstOrFail();
-
-        $tempAccessKey = 'temp_access_' . $service->id;
-        $request->session()->forget($tempAccessKey);
-
-        return redirect()->route('services.show', $slug)
-            ->with('success', 'Доступ отозван');
+            ->where('expires_at', '>', now())
+            ->first();
     }
 }

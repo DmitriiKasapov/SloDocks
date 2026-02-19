@@ -30,7 +30,6 @@
             <x-elements.button.index
                 variant="secondary"
                 href="{{ route('home') }}"
-                arrow="left"
             >
                 Вернуться на главную
             </x-elements.button.index>

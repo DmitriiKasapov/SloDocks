@@ -37,7 +37,7 @@
 
         {{-- Actions --}}
         <div class="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up" style="animation-delay: 0.1s;">
-            <x-elements.button.index href="{{ route('home') }}" arrow="left">
+            <x-elements.button.index href="{{ route('home') }}">
                 На главную
             </x-elements.button.index>
 

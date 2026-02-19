@@ -65,54 +65,61 @@
         </section>
     <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
 
-    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($hasAccess): ?>
-        
-        <section class="container-grid my-10 md:my-20">
-            <div class="content">
-                <div class="gradient-tip-success rounded-2xl p-6 md:p-8 border-2 border-emerald-200 shadow-sm">
-                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-                        <div class="flex items-center gap-4">
-                            <div class="flex-shrink-0" aria-hidden="true">
-                                <div class="w-14 h-14 bg-emerald-500 rounded-full flex items-center justify-center">
-                                    <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                                    </svg>
-                                </div>
+    
+    <section class="container-grid my-10 md:my-20">
+        <div class="content">
+            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($hasAccess): ?>
+                <?php
+                    $daysRemaining = $access->daysRemaining();
+                    $timeMessage = $access->getTimeRemainingMessage();
+                    $borderColor = $daysRemaining <= 3 ? 'border-red-300' : ($daysRemaining <= 7 ? 'border-amber-300' : 'border-emerald-300');
+                    $badgeBg = $daysRemaining <= 3 ? 'bg-red-100 text-red-800' : ($daysRemaining <= 7 ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-800');
+                    $sideBg = $daysRemaining <= 3 ? 'bg-red-50' : ($daysRemaining <= 7 ? 'bg-amber-50' : 'bg-emerald-50');
+                    $sideBorder = $daysRemaining <= 3 ? 'border-red-300' : ($daysRemaining <= 7 ? 'border-amber-300' : 'border-emerald-300');
+                ?>
+                <div class="bg-white rounded-2xl border-2 <?php echo e($borderColor); ?> shadow-lg overflow-hidden">
+                    <div class="flex flex-col lg:flex-row">
+                        
+                        <div class="flex-1 p-6 md:p-8">
+                            <div class="inline-flex items-center px-3 py-1 <?php echo e($badgeBg); ?> text-xs font-bold uppercase tracking-wide rounded-full mb-4">
+                                Доступ открыт
                             </div>
-                            <div>
-                                <h3 class="text-2xl font-bold text-gray-900 mb-1">Доступ открыт</h3>
-                                <p class="text-gray-700">
-                                    Вы можете перейти к материалам
+                            <h3 class="text-xl font-bold text-gray-900 mb-2"><?php echo e($service->title); ?></h3>
+                            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($service->description_public): ?>
+                                <p class="text-gray-600 text-sm leading-relaxed">
+                                    <?php echo e($service->description_public); ?>
+
                                 </p>
+                            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                            <div class="mt-4 flex items-center gap-2 text-sm text-gray-500">
+                                <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                <span><?php echo e($timeMessage); ?></span>
                             </div>
                         </div>
-                        <div class="flex-shrink-0 flex flex-col sm:flex-row gap-3 items-center">
-                            
-                            <form action="<?php echo e(route('services.revoke-temp-access', $service->slug)); ?>" method="POST">
-                                <?php echo csrf_field(); ?>
-                                <button
-                                    type="submit"
-                                    class="text-sm text-gray-600 hover:text-red-600 transition-colors flex items-center gap-2 whitespace-nowrap"
-                                >
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                                    </svg>
-                                    Закрыть доступ (тест)
-                                </button>
-                            </form>
+                        
+                        <div class="lg:w-56 p-6 md:p-8 <?php echo e($sideBg); ?> border-t-2 lg:border-t-0 lg:border-l-2 <?php echo e($sideBorder); ?> flex flex-col items-center justify-center gap-4">
+                            <div class="text-center">
+                                <div class="text-sm text-gray-500">Доступ до</div>
+                                <div class="text-lg font-bold text-gray-900 mt-1">
+                                    <?php echo e($access->expires_at->format('d.m.Y')); ?>
+
+                                </div>
+                            </div>
                             <?php if (isset($component)) { $__componentOriginaldcb3663c16b8b77a072c1ccc9d7eb8ee = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginaldcb3663c16b8b77a072c1ccc9d7eb8ee = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.elements.button.index','data' => ['href' => ''.e(route('services.content', $service->slug)).'','arrow' => 'right','class' => 'w-full sm:w-auto']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.elements.button.index','data' => ['href' => ''.e(route('services.content', $service->slug)).'?token='.e($access->access_token).'','class' => 'w-full justify-center']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('elements.button.index'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['href' => ''.e(route('services.content', $service->slug)).'','arrow' => 'right','class' => 'w-full sm:w-auto']); ?>
+<?php $component->withAttributes(['href' => ''.e(route('services.content', $service->slug)).'?token='.e($access->access_token).'','class' => 'w-full justify-center']); ?>
 <?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::processComponentKey($component); ?>
 
-                                Перейти к материалам
+                                Читать
                              <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginaldcb3663c16b8b77a072c1ccc9d7eb8ee)): ?>
@@ -126,39 +133,53 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
-    <?php else: ?>
-        
-        <section class="container-grid my-10 md:my-20">
-            <div class="content">
-                <div class="gradient-brand-lightest rounded-2xl p-6 md:p-8 border-2 border-amber-200 shadow-lg">
-                    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-                        <div class="flex-grow">
-                            <div class="inline-flex items-center px-3 py-1 bg-amber-200 text-amber-900 text-xs font-bold uppercase tracking-wide rounded-full mb-3">
+            <?php else: ?>
+                <div class="gradient-brand-lightest rounded-2xl border-2 border-amber-200 shadow-lg overflow-hidden">
+                    <div class="flex flex-col lg:flex-row">
+                        
+                        <div class="flex-1 p-6 md:p-8">
+                            <div class="inline-flex items-center px-3 py-1 bg-amber-200 text-amber-900 text-xs font-bold uppercase tracking-wide rounded-full mb-4">
                                 Получите доступ к материалам
                             </div>
-                            <h3 class="text-2xl font-bold text-gray-900 mb-2">Полная инструкция и документы</h3>
-                            <p class="text-gray-700">
-                                Пошаговое руководство, образцы документов и практические советы
-                            </p>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2"><?php echo e($service->title); ?></h3>
+                            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($service->description_public): ?>
+                                <p class="text-gray-600 text-sm leading-relaxed">
+                                    <?php echo e($service->description_public); ?>
+
+                                </p>
+                            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                            <div class="mt-4 flex items-center gap-2 text-sm text-gray-500">
+                                <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                <span>Доступ на <?php echo e($service->access_duration_days); ?> дней</span>
+                            </div>
                         </div>
-                        <div class="flex-shrink-0">
-                            <form action="<?php echo e(route('services.grant-temp-access', $service->slug)); ?>" method="POST">
+                        
+                        <div class="lg:w-56 p-6 md:p-8 gradient-bg-gray-light border-t-2 lg:border-t-0 lg:border-l-2 border-amber-200 flex flex-col items-center justify-center gap-4">
+                            <div class="text-center">
+                                <div class="text-4xl font-bold text-gray-900">
+                                    €<?php echo e(number_format($service->price / 100, 0)); ?>
+
+                                </div>
+                                <div class="text-sm text-gray-500 mt-1">однократная оплата</div>
+                            </div>
+                            <form action="<?php echo e(route('payment.create')); ?>" method="POST" class="w-full">
                                 <?php echo csrf_field(); ?>
+                                <input type="hidden" name="service_id" value="<?php echo e($service->id); ?>">
                                 <?php if (isset($component)) { $__componentOriginaldcb3663c16b8b77a072c1ccc9d7eb8ee = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginaldcb3663c16b8b77a072c1ccc9d7eb8ee = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.elements.button.index','data' => ['submit' => 'true','arrow' => 'right','class' => 'w-full lg:w-auto']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.elements.button.index','data' => ['submit' => 'true','class' => 'w-full justify-center']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('elements.button.index'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['submit' => 'true','arrow' => 'right','class' => 'w-full lg:w-auto']); ?>
+<?php $component->withAttributes(['submit' => 'true','class' => 'w-full justify-center']); ?>
 <?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::processComponentKey($component); ?>
 
-                                    Получить
+                                    Купить
                                  <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginaldcb3663c16b8b77a072c1ccc9d7eb8ee)): ?>
@@ -173,9 +194,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
-    <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+        </div>
+    </section>
 
     <?php if (isset($component)) { $__componentOriginal7024a42c1d284199997b411c505155e6 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal7024a42c1d284199997b411c505155e6 = $attributes; } ?>

@@ -28,8 +28,7 @@ class PaymentController extends Controller
 
         try {
             $checkoutUrl = $this->paymentService->createCheckoutSession(
-                $service,
-                $request->email
+                $service
             );
 
             return redirect($checkoutUrl);
@@ -60,12 +59,14 @@ class PaymentController extends Controller
     /**
      * Process mock payment (simulate successful payment)
      */
-    public function mockPay(Purchase $purchase, AccessGrantService $accessGrantService)
+    public function mockPay(Request $request, Purchase $purchase, AccessGrantService $accessGrantService)
     {
         abort_unless(config('stripe.mock'), 404);
         abort_if($purchase->status !== 'pending', 410);
 
-        $purchase->update(['status' => 'paid']);
+        $request->validate(['email' => ['required', 'email:rfc,dns', 'max:255']]);
+
+        $purchase->update(['status' => 'paid', 'email' => $request->email]);
 
         activity_log('payment_success', $purchase->email, [
             'amount' => $purchase->amount,
@@ -86,9 +87,20 @@ class PaymentController extends Controller
     public function success(Request $request)
     {
         $sessionId = $request->query('session_id');
+        $token = $request->query('token');
+
+        // Try to find the access and related service for the "go to materials" link
+        $access = null;
+        if ($token) {
+            $access = \App\Models\Access::with('service')
+                ->where('access_token', $token)
+                ->where('is_active', true)
+                ->first();
+        }
 
         return view('pages.payment.success', [
             'sessionId' => $sessionId,
+            'access' => $access,
         ]);
     }
 

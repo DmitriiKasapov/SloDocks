@@ -110,6 +110,12 @@ class ProcessStripeWebhook implements ShouldQueue
             return;
         }
 
+        // Collect email from Stripe customer details
+        $email = $this->eventData['customer_details']['email'] ?? null;
+        if ($email) {
+            $purchase->update(['email' => $email]);
+        }
+
         // Verify payment amount matches expected amount
         $amountPaid = $this->eventData['amount_total'] ?? 0; // in cents
         $expectedAmount = $purchase->amount;

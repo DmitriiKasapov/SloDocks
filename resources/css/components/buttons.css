@@ -1,7 +1,7 @@
 @layer components {
   /* Base button - improved for Russian language */
   .btn {
-    @apply inline-flex items-center justify-center gap-2 px-6 py-3 font-semibold tracking-normal rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-xl;
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 font-bold uppercase tracking-normal rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-xl;
   }
 
   /* Primary button - orange gradient, lighter on hover */

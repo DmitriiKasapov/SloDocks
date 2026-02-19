@@ -1,166 +1,74 @@
 # Environment — SloDocs
 
-## Назначение документа
-Зафиксировать требования к окружению проекта и перечень
-ключевых переменных конфигурации.
-
-Документ:
-- не относится к бизнес-логике
-- может изменяться без пересмотра MVP
-- используется как чек-лист при деплое
-
----
-
 ## Окружения
+- `local` — локальная разработка
+- `staging` — закрытый тест-сервер (Basic Auth, noindex)
+- `production` — рабочее окружение
 
-Проект использует два окружения:
+## Environment Matrix
 
-- local — локальная разработка
-- production — рабочее окружение
+| Переменная | local | staging | production |
+|-----------|-------|---------|------------|
+| APP_ENV | local | staging | production |
+| APP_DEBUG | true | false | false |
+| APP_URL | http://localhost:8000 | https://staging.slodocs.si | https://slodocs.si |
+| DB_CONNECTION | pgsql | pgsql | pgsql |
+| MAIL_MAILER | log | smtp | smtp |
+| MAIL_HOST | — | smtp-relay.brevo.com | smtp-relay.brevo.com |
+| MAIL_PORT | — | 587 | 587 |
+| STRIPE_KEY | pk_test_... | pk_test_... | pk_live_... |
+| STRIPE_SECRET | sk_test_... | sk_test_... | sk_live_... |
+| STRIPE_WEBHOOK_SECRET | whsec_test_... | whsec_test_... | whsec_live_... |
+| PAYMENT_MOCK | true | false | false |
+| SESSION_SECURE_COOKIE | false | true | true |
+| QUEUE_CONNECTION | database | database | database |
+| CACHE_STORE | database | database | database |
+| LOG_LEVEL | debug | error | error |
+| SENTRY_LARAVEL_DSN | — | — | dsn_... |
 
-Дополнительные окружения (staging, preview) в MVP не используются.
+## Ключевые правила
+- `PAYMENT_MOCK=true` только в local, никогда в staging/production
+- `APP_DEBUG=false` на staging и production
+- Stripe test keys на local и staging, live keys только в production
+- Два отдельных webhook endpoint в Stripe: один для staging, один для production
+- `.env`, `.env.testing` в `.gitignore` — не коммитятся
 
----
+## Email по окружениям
+- **local**: `MAIL_MAILER=log` (письма в laravel.log) или Mailtrap
+- **staging**: Brevo SMTP, домен аутентифицирован (SPF/DKIM)
+- **production**: Brево SMTP, те же credentials
 
-## Базовая конфигурация приложения
+## Переменные (полный список)
 
-- APP_ENV
-- APP_URL
-- APP_DEBUG
-- APP_KEY
+### Приложение
+- APP_ENV, APP_URL, APP_DEBUG, APP_KEY
 
-Примечания:
-- APP_DEBUG всегда отключён в production
-- APP_KEY уникален для каждого окружения
+### База данных
+- DB_CONNECTION=pgsql
+- DB_HOST, DB_PORT, DB_DATABASE, DB_USERNAME, DB_PASSWORD
 
----
+### Stripe
+- STRIPE_KEY, STRIPE_SECRET, STRIPE_WEBHOOK_SECRET
+- STRIPE_CURRENCY=eur
+- PAYMENT_MOCK=false
 
-## Безопасность и сессии
+### Email (Brevo)
+- MAIL_MAILER, MAIL_HOST, MAIL_PORT, MAIL_ENCRYPTION=tls
+- MAIL_USERNAME, MAIL_PASSWORD
+- MAIL_FROM_ADDRESS, MAIL_FROM_NAME
 
-- SESSION_DRIVER
-- SESSION_LIFETIME
-- SESSION_SECURE_COOKIE (production)
-- TRUSTED_PROXIES (при использовании прокси / CDN)
+### Сессии и кеш
+- SESSION_DRIVER=database
+- SESSION_SECURE_COOKIE=true (staging, production)
+- CACHE_STORE=database
 
----
+### Хранилище
+- FILESYSTEM_DISK=local (файлы вне public/, через FileController)
 
-## База данных
+### Логирование
+- LOG_CHANNEL, LOG_LEVEL
+- SENTRY_LARAVEL_DSN (production)
+- SENTRY_TRACES_SAMPLE_RATE=0.2
 
-- DB_CONNECTION
-- DB_HOST
-- DB_PORT
-- DB_DATABASE
-- DB_USERNAME
-- DB_PASSWORD
-
-Примечания:
-- доступ к базе ограничен
-- резервное копирование на уровне хостинга
-
----
-
-## Платежи
-
-Платёжный провайдер: выбирается на этапе реализации.
-
-Переменные:
-- PAYMENT_PROVIDER
-- PAYMENT_PUBLIC_KEY
-- PAYMENT_SECRET_KEY
-- PAYMENT_WEBHOOK_SECRET
-- PAYMENT_MODE (test / live)
-
-Примечания:
-- ключи разделены по окружениям
-- webhook обрабатывается сервером
-
----
-
-## Email и уведомления
-
-Для проекта используется отдельный email-адрес.
-
-Переменные:
-- MAIL_MAILER
-- MAIL_HOST
-- MAIL_PORT
-- MAIL_USERNAME
-- MAIL_PASSWORD
-- MAIL_FROM_ADDRESS
-- MAIL_FROM_NAME
-
-Примечания:
-- email используется только для сервисных уведомлений
-- провайдер email может быть изменён без влияния на логику
-
----
-
-## Доступ к платному контенту
-
-- ACCESS_TOKEN_LENGTH
-- DEFAULT_ACCESS_DURATION_DAYS
-
-Примечания:
-- значения могут быть переопределены на уровне услуги
-- токены генерируются сервером
-
----
-
-## Хранилище файлов
-
-- FILESYSTEM_DISK
-
-При использовании S3-совместимого хранилища:
-- AWS_ACCESS_KEY_ID
-- AWS_SECRET_ACCESS_KEY
-- AWS_DEFAULT_REGION
-- AWS_BUCKET
-- AWS_ENDPOINT (если требуется)
-
-Примечания:
-- файлы не имеют публичных URL
-- доступ к файлам осуществляется через backend
-
----
-
-## Логирование и ошибки
-
-- LOG_CHANNEL
-- LOG_LEVEL
-
-Опционально:
-- SENTRY_DSN
-
-Примечания:
-- логируются только технические события
-- персональные данные не логируются
-
----
-
-## Ограничения и защита
-
-- RATE_LIMIT_PAYMENT
-- RATE_LIMIT_EMAIL
-
-Примечания:
-- значения подбираются эмпирически
-- используются для базовой защиты от злоупотреблений
-
----
-
-## Что осознанно не используется
-
-- секрет-менеджеры
-- очереди и воркеры
-- отдельные окружения staging
-- сложная инфраструктура
-
----
-
-## Итог
-
-Окружение проекта:
-- минимальное
-- изолированное
-- легко изменяемое
-- достаточное для MVP
+### Доступ к контенту
+- ACCESS_TOKEN_LENGTH=64 (длина токена, генерируется в AccessGrantService)

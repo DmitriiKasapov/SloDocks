@@ -23,7 +23,6 @@ class CreatePaymentRequest extends FormRequest
     {
         return [
             'service_id' => ['required', 'exists:services,id'],
-            'email' => ['required', 'email:rfc,dns', 'max:255'],
         ];
     }
 
@@ -35,9 +34,6 @@ class CreatePaymentRequest extends FormRequest
         return [
             'service_id.required' => 'Не указана услуга',
             'service_id.exists' => 'Услуга не найдена',
-            'email.required' => 'Укажите email',
-            'email.email' => 'Укажите корректный email',
-            'email.max' => 'Email слишком длинный',
         ];
     }
 }

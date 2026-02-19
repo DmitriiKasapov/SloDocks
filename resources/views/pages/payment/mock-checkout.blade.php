@@ -18,11 +18,6 @@
             <h1 class="text-xl font-bold text-gray-900">{{ $service->title }}</h1>
 
             <div class="flex justify-between items-center text-sm text-gray-600">
-                <span>Email</span>
-                <span class="font-medium text-gray-900">{{ $purchase->email }}</span>
-            </div>
-
-            <div class="flex justify-between items-center text-sm text-gray-600">
                 <span>Доступ</span>
                 <span class="font-medium text-gray-900">{{ $service->access_duration_days }} дней</span>
             </div>
@@ -37,8 +32,15 @@
 
         {{-- Actions --}}
         <div class="px-6 pb-6 space-y-3">
-            <form action="{{ route('payment.mock.pay', $purchase) }}" method="POST">
+            <form action="{{ route('payment.mock.pay', $purchase) }}" method="POST" class="space-y-3">
                 @csrf
+                <input
+                    type="email"
+                    name="email"
+                    required
+                    placeholder="Email для получения доступа"
+                    class="w-full px-4 py-3 rounded-xl border border-gray-300 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent"
+                >
                 <x-elements.button.index
                     variant="primary"
                     submit="true"

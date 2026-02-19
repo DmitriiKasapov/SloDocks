@@ -1,26 +1,32 @@
 # Tech Stack — SloDocs
 
 ## Backend
-- Laravel
+- Laravel 12
 
 ## Frontend
-- Blade
-- Tailwind CSS
+- Blade (SSR, без SPA)
+- Tailwind CSS 4
+- Alpine.js — только для интерактивных UI элементов (модалки, меню)
+- Vite — сборка assets
 
-## Client-side JS
-- минимальный JavaScript
-- Alpine.js при необходимости
+## Admin
+- Filament v5 — /admin (guard: admin, модель: AdminUser)
 
 ## Database
-- MySQL или PostgreSQL
+- PostgreSQL (dev + production)
 
 ## Payments
-- Stripe
+- Stripe (Checkout Session + webhooks)
+- Mock режим: PAYMENT_MOCK=true (только local, не production)
 
 ## Email
-- SMTP
+- Brevo SMTP (staging + production)
+- Mailtrap или log driver (local)
+
+## Queue
+- Database driver
 
 ## Hosting
-- VPS (Hetzner или DigitalOcean)
+- VPS: Hetzner или DigitalOcean
 
-Документ зафиксирован для MVP.
+Зафиксировано для MVP.

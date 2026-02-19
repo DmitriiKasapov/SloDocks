@@ -38,6 +38,31 @@
 <?php unset($__componentOriginal769db0fcc5d885d6f967832f663df33b); ?>
 <?php endif; ?>
 
+<?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(isset($access)): ?>
+    <?php if (isset($component)) { $__componentOriginald49094b869d1f9df3e79f1c8d5171068 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginald49094b869d1f9df3e79f1c8d5171068 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.blocks.access-timer','data' => ['access' => $access]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('blocks.access-timer'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['access' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($access)]); ?>
+<?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::processComponentKey($component); ?>
+
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginald49094b869d1f9df3e79f1c8d5171068)): ?>
+<?php $attributes = $__attributesOriginald49094b869d1f9df3e79f1c8d5171068; ?>
+<?php unset($__attributesOriginald49094b869d1f9df3e79f1c8d5171068); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginald49094b869d1f9df3e79f1c8d5171068)): ?>
+<?php $component = $__componentOriginald49094b869d1f9df3e79f1c8d5171068; ?>
+<?php unset($__componentOriginald49094b869d1f9df3e79f1c8d5171068); ?>
+<?php endif; ?>
+<?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+
 <?php if (isset($component)) { $__componentOriginal15ced5233cf101022e65b7aa5906629f = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal15ced5233cf101022e65b7aa5906629f = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.banners.second','data' => ['title' => ''.e($service->title).'','description' => '']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
@@ -60,35 +85,6 @@
 <?php $component = $__componentOriginal15ced5233cf101022e65b7aa5906629f; ?>
 <?php unset($__componentOriginal15ced5233cf101022e65b7aa5906629f); ?>
 <?php endif; ?>
-
-<!-- Access Timer -->
-<?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(isset($access)): ?>
-    <?php if (isset($component)) { $__componentOriginalfe6336c0756ae95b14af2476b2df24d5 = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginalfe6336c0756ae95b14af2476b2df24d5 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.access-timer','data' => ['access' => $access]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('access-timer'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes(['access' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($access)]); ?>
-<?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::processComponentKey($component); ?>
-
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginalfe6336c0756ae95b14af2476b2df24d5)): ?>
-<?php $attributes = $__attributesOriginalfe6336c0756ae95b14af2476b2df24d5; ?>
-<?php unset($__attributesOriginalfe6336c0756ae95b14af2476b2df24d5); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginalfe6336c0756ae95b14af2476b2df24d5)): ?>
-<?php $component = $__componentOriginalfe6336c0756ae95b14af2476b2df24d5; ?>
-<?php unset($__componentOriginalfe6336c0756ae95b14af2476b2df24d5); ?>
-<?php endif; ?>
-<?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
-
-
-
 
 
 <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(!empty($service->intro_blocks)): ?>

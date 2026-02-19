@@ -121,7 +121,6 @@
         <!-- Action Button -->
         <x-elements.button.index
           href="{{ route('home') }}"
-          arrow="left"
         >
           На главную
         </x-elements.button.index>

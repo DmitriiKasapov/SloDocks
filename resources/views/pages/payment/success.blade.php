@@ -40,15 +40,15 @@
             Если письмо не пришло в течение 5 минут, проверьте папку "Спам"
         </p>
 
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <x-elements.button.index
-                variant="secondary"
-                href="{{ route('home') }}"
-                arrow="left"
-            >
-                Вернуться на главную
-            </x-elements.button.index>
-        </div>
+        @if($access && $access->service)
+            <div class="flex justify-center">
+                <x-elements.button.index
+                    href="{{ route('services.content', $access->service->slug) }}?token={{ $access->access_token }}"
+                >
+                    Перейти к материалам
+                </x-elements.button.index>
+            </div>
+        @endif
 
         @if($sessionId)
             <p class="text-xs text-gray-400 mt-8">

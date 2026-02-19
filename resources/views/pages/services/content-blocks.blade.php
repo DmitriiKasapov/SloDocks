@@ -15,32 +15,11 @@
     ['label' => 'Материалы'],
 ]" class="mt-6 mb-2" />
 
-<x-banners.second title="{{ $service->title }}" description="" />
-
-<!-- Access Timer -->
 @isset($access)
-    <x-access-timer :access="$access" />
+    <x-blocks.access-timer :access="$access" />
 @endisset
 
-{{-- TEMPORARY: Revoke access button for testing --}}
-{{-- @if(app()->isLocal())
-<section class="container-grid">
-    <div class="content">
-        <form action="{{ route('services.revoke-temp-access', $service->slug) }}" method="POST" class="inline-block">
-            @csrf
-            <button
-                type="submit"
-                class="text-sm text-gray-600 hover:text-red-600 transition-colors flex items-center gap-2"
-            >
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                </svg>
-                Отказаться от доступа (тест)
-            </button>
-        </form>
-    </div>
-</section>
-@endif --}}
+<x-banners.second title="{{ $service->title }}" description="" />
 
 {{-- Секция 1: Intro Blocks (before navigation) --}}
 @if(!empty($service->intro_blocks))
@@ -134,7 +113,6 @@
         <x-elements.button.index
             href="{{ route('services.show', $service->slug) }}"
             variant="secondary"
-            arrow="left"
         >
             Вернуться к описанию услуги
         </x-elements.button.index>

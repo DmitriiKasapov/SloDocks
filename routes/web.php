@@ -37,17 +37,9 @@ Route::get('/search', [App\Http\Controllers\SearchController::class, 'index'])
 Route::get('/services/{slug}', [App\Http\Controllers\ServiceController::class, 'show'])
     ->name('services.show');
 
-// TEMPORARY: Grant temporary access for frontend testing
-Route::post('/services/{slug}/grant-temp-access', [App\Http\Controllers\ServiceController::class, 'grantTempAccess'])
-    ->name('services.grant-temp-access');
-
-// TEMPORARY: Content page (will be protected by token later)
+// Content page (protected by access token)
 Route::get('/services/{slug}/content', [App\Http\Controllers\ServiceController::class, 'showContent'])
     ->name('services.content');
-
-// TEMPORARY: Revoke temporary access
-Route::post('/services/{slug}/revoke-temp-access', [App\Http\Controllers\ServiceController::class, 'revokeTempAccess'])
-    ->name('services.revoke-temp-access');
 
 // Protected file download (requires valid access token)
 Route::get('/services/{slug}/file/{blockId}/{fileIndex}', [App\Http\Controllers\FileController::class, 'download'])
