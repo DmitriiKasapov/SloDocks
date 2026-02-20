@@ -24,8 +24,8 @@
     </div>
   </label>
   @error ($name)
-    <x-form-items.error-message :id="$name">
+    <x-elements.form-items.error-message :id="$name">
       {{ $message }}
-    </x-form-items.error-message>
+    </x-elements.form-items.error-message>
   @enderror
 </div>
