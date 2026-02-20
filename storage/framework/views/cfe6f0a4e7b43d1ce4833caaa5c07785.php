@@ -106,13 +106,13 @@
             <p>Спасибо за покупку! Ваш доступ к материалам успешно активирован.</p>
 
             <div class="service-info">
-                <h2>{{ $service->title }}</h2>
-                <p><strong>Срок доступа:</strong> до {{ $expiresAt }}</p>
-                <p><strong>Ваш email:</strong> {{ $access->email }}</p>
+                <h2><?php echo e($service->title); ?></h2>
+                <p><strong>Срок доступа:</strong> до <?php echo e($expiresAt); ?></p>
+                <p><strong>Ваш email:</strong> <?php echo e($access->email); ?></p>
             </div>
 
             <div style="text-align: center;">
-                <a href="{{ $accessUrl }}" class="button">
+                <a href="<?php echo e($accessUrl); ?>" class="button">
                     Перейти к материалам
                 </a>
             </div>
@@ -120,13 +120,14 @@
             <div class="warning">
                 <p><strong>⚠️ Важно:</strong></p>
                 <p>• Сохраните это письмо — в нём содержится ссылка для доступа к материалам</p>
-                <p>• Ссылка действительна до {{ $expiresAt }}</p>
+                <p>• Ссылка действительна до <?php echo e($expiresAt); ?></p>
                 <p>• Не передавайте ссылку третьим лицам</p>
             </div>
 
             <p>Если ссылка не работает, скопируйте и вставьте её в адресную строку браузера:</p>
             <div class="token-info">
-                {{ $accessUrl }}
+                <?php echo e($accessUrl); ?>
+
             </div>
         </div>
 
@@ -134,10 +135,11 @@
             <p>Это письмо отправлено автоматически. Пожалуйста, не отвечайте на него.</p>
             <p>Если у вас возникли вопросы, свяжитесь с нами через сайт.</p>
             <p style="margin-top: 20px;">
-                <a href="{{ route('legal.terms') }}" style="color: #64748b; text-decoration: none;">Условия использования</a> •
-                <a href="{{ route('legal.privacy') }}" style="color: #64748b; text-decoration: none;">Политика конфиденциальности</a>
+                <a href="<?php echo e(route('legal.terms')); ?>" style="color: #64748b; text-decoration: none;">Условия использования</a> •
+                <a href="<?php echo e(route('legal.privacy')); ?>" style="color: #64748b; text-decoration: none;">Политика конфиденциальности</a>
             </p>
         </div>
     </div>
 </body>
 </html>
+<?php /**PATH D:\Projects\SloDoks\resources\views/emails/access-granted.blade.php ENDPATH**/ ?>

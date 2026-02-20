@@ -64,7 +64,8 @@ class PaymentController extends Controller
         abort_unless(config('stripe.mock'), 404);
         abort_if($purchase->status !== 'pending', 410);
 
-        $request->validate(['email' => ['required', 'email:rfc,dns', 'max:255']]);
+        // Use rfc-only validation for mock endpoint (dns check can fail in non-production envs)
+        $request->validate(['email' => ['required', 'email:rfc', 'max:255']]);
 
         $purchase->update(['status' => 'paid', 'email' => $request->email]);
 

@@ -1,12 +1,18 @@
 {{-- material_blocks__examples --}}
 
-@props(['content', 'class' => ''])
+@props(['content', 'block' => null, 'service' => null, 'access' => null, 'class' => ''])
 
 <div class="{{ $class }}">
     <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-6">Образцы заполнения</h2>
     <div class="grid sm:grid-cols-2 gap-4">
-        @foreach($content['examples'] ?? [] as $example)
-            <a href="{{ route('material.download', ['file' => $example['file']]) }}"
+        @foreach($content['examples'] ?? [] as $fileIndex => $example)
+            @php
+                $downloadUrl = ($block && $service)
+                    ? route('services.file', ['slug' => $service->slug, 'blockId' => $block->id, 'fileIndex' => $fileIndex])
+                      . ($access ? '?token=' . $access->access_token : '')
+                    : '#';
+            @endphp
+            <a href="{{ $downloadUrl }}"
                class="flex items-center gap-4 p-5 bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md hover:border-purple-300 transition-all group">
                 <div class="shrink-0 w-12 h-12 gradient-icon-violet rounded-lg flex items-center justify-center">
                     <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">

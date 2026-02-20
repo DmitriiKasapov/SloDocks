@@ -139,8 +139,6 @@ class ProcessStripeWebhook implements ShouldQueue
             return;
         }
 
-        $purchase->update(['status' => 'paid']);
-
         activity_log('payment_success', $purchase->email, [
             'amount' => $purchase->amount,
             'session_id' => $sessionId,
@@ -148,6 +146,10 @@ class ProcessStripeWebhook implements ShouldQueue
 
         $accessGrantService = app(AccessGrantService::class);
         $accessGrantService->grantAccess($purchase);
+
+        // Mark as paid only after access is successfully granted
+        // This ensures job retry can re-grant access if it failed mid-process
+        $purchase->update(['status' => 'paid']);
 
         Log::info('Checkout completed, access granted', [
             'purchase_id' => $purchase->id,

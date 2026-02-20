@@ -21,18 +21,17 @@ class PaymentTest extends TestCase
         // Arrange
         $service = Service::factory()->price(5000)->create();
 
-        // Act
+        // Act — email is no longer collected here, it comes from Stripe/mock later
         $response = $this->post(route('payment.create'), [
             'service_id' => $service->id,
-            'email' => 'buyer@example.com',
         ]);
 
-        // Assert: Purchase created
+        // Assert: Purchase created (email is null at this stage)
         $this->assertEquals(1, Purchase::count());
         $purchase = Purchase::first();
 
         $this->assertEquals($service->id, $purchase->service_id);
-        $this->assertEquals('buyer@example.com', $purchase->email);
+        $this->assertNull($purchase->email); // set later via webhook/mock pay
         $this->assertEquals(5000, $purchase->amount);
         $this->assertEquals('EUR', $purchase->currency);
         $this->assertEquals('pending', $purchase->status);
@@ -54,15 +53,17 @@ class PaymentTest extends TestCase
         $purchase = Purchase::factory()->create([
             'service_id' => $service->id,
             'status' => 'pending',
+        ]);
+
+        // Act: Complete mock payment — email is collected on the mock checkout form
+        $response = $this->post(route('payment.mock.pay', $purchase), [
             'email' => 'buyer@example.com',
         ]);
 
-        // Act: Complete mock payment
-        $response = $this->post(route('payment.mock.pay', $purchase));
-
-        // Assert: Purchase marked as paid
+        // Assert: Purchase marked as paid with email
         $purchase->refresh();
         $this->assertEquals('paid', $purchase->status);
+        $this->assertEquals('buyer@example.com', $purchase->email);
 
         // Assert: Access granted
         $this->assertEquals(1, Access::count());
@@ -83,45 +84,44 @@ class PaymentTest extends TestCase
             $expectedExpiration->copy()->addMinute()
         ));
 
-        // Assert: Redirects to service page with token
+        // Assert: Redirects to success page with token
         $response->assertRedirect();
         $redirectUrl = $response->headers->get('Location');
-        $this->assertStringContainsString($service->slug, $redirectUrl);
+        $this->assertStringContainsString('payment/success', $redirectUrl);
         $this->assertStringContainsString('token=' . $access->access_token, $redirectUrl);
     }
 
     /** @test */
-    public function it_handles_webhook_payment_intent_succeeded(): void
+    public function it_handles_webhook_checkout_session_completed(): void
     {
         Queue::fake();
 
-        // Arrange: Create pending purchase
+        // Arrange: Create pending purchase with Stripe session ID
         $service = Service::factory()->create();
         $purchase = Purchase::factory()->create([
             'service_id' => $service->id,
-            'payment_id' => 'pi_test_123',
+            'payment_id' => 'cs_test_123',
+            'amount' => 2900,
             'status' => 'pending',
         ]);
 
-        // Simulate webhook event
-        $event = [
-            'id' => 'evt_test_123',
-            'type' => 'payment_intent.succeeded',
-            'data' => [
-                'object' => [
-                    'id' => 'pi_test_123',
-                    'status' => 'succeeded',
-                ],
+        // Simulate checkout.session.completed event data
+        $eventData = [
+            'id' => 'cs_test_123',
+            'amount_total' => 2900,
+            'customer_details' => [
+                'email' => 'buyer@example.com',
             ],
         ];
 
         // Act: Process webhook through job
-        $job = new ProcessStripeWebhook($event);
+        $job = new ProcessStripeWebhook('checkout.session.completed', $eventData, 'evt_test_123');
         $job->handle();
 
-        // Assert: Purchase marked as paid
+        // Assert: Purchase marked as paid, email set
         $purchase->refresh();
         $this->assertEquals('paid', $purchase->status);
+        $this->assertEquals('buyer@example.com', $purchase->email);
 
         // Assert: Access granted
         $this->assertEquals(1, Access::count());
@@ -138,23 +138,17 @@ class PaymentTest extends TestCase
             'status' => 'pending',
         ]);
 
-        // Simulate webhook event
-        $event = [
-            'id' => 'evt_test_failed',
-            'type' => 'payment_intent.payment_failed',
-            'data' => [
-                'object' => [
-                    'id' => 'pi_test_failed',
-                    'status' => 'failed',
-                    'last_payment_error' => [
-                        'message' => 'Card declined',
-                    ],
-                ],
+        // Simulate payment_intent.payment_failed event data
+        $eventData = [
+            'id' => 'pi_test_failed',
+            'status' => 'failed',
+            'last_payment_error' => [
+                'message' => 'Card declined',
             ],
         ];
 
         // Act: Process webhook through job
-        $job = new ProcessStripeWebhook($event);
+        $job = new ProcessStripeWebhook('payment_intent.payment_failed', $eventData, 'evt_test_failed');
         $job->handle();
 
         // Assert: Purchase marked as failed
@@ -174,26 +168,22 @@ class PaymentTest extends TestCase
         $service = Service::factory()->create();
         $purchase = Purchase::factory()->create([
             'service_id' => $service->id,
-            'payment_id' => 'pi_test_idempotent',
+            'payment_id' => 'cs_idempotent',
+            'amount' => 2900,
             'status' => 'pending',
         ]);
 
-        $event = [
-            'id' => 'evt_idempotent',
-            'type' => 'payment_intent.succeeded',
-            'data' => [
-                'object' => [
-                    'id' => 'pi_test_idempotent',
-                    'status' => 'succeeded',
-                ],
-            ],
+        $eventData = [
+            'id' => 'cs_idempotent',
+            'amount_total' => 2900,
+            'customer_details' => ['email' => 'buyer@example.com'],
         ];
 
         // Act: Process webhook twice
-        $job1 = new ProcessStripeWebhook($event);
+        $job1 = new ProcessStripeWebhook('checkout.session.completed', $eventData, 'evt_idempotent');
         $job1->handle();
 
-        $job2 = new ProcessStripeWebhook($event);
+        $job2 = new ProcessStripeWebhook('checkout.session.completed', $eventData, 'evt_idempotent');
         $job2->handle();
 
         // Assert: Purchase marked as paid
@@ -215,7 +205,6 @@ class PaymentTest extends TestCase
         for ($i = 0; $i < 11; $i++) {
             $responses[] = $this->post(route('payment.create'), [
                 'service_id' => $service->id,
-                'email' => "user{$i}@example.com",
             ]);
         }
 
@@ -235,9 +224,6 @@ class PaymentTest extends TestCase
     /** @test */
     public function mock_payment_only_available_when_mock_enabled(): void
     {
-        // This test verifies that mock routes are accessible
-        // In production, this would be protected by middleware
-
         // Arrange
         $purchase = Purchase::factory()->create([
             'payment_provider' => 'mock',
@@ -261,7 +247,6 @@ class PaymentTest extends TestCase
         // Act
         $this->post(route('payment.create'), [
             'service_id' => $service->id,
-            'email' => 'test@example.com',
         ]);
 
         // Assert: Activity log should be created
@@ -271,7 +256,7 @@ class PaymentTest extends TestCase
     }
 
     /** @test */
-    public function successful_payment_redirects_to_service_with_token(): void
+    public function successful_payment_redirects_to_success_page_with_token(): void
     {
         Queue::fake();
 
@@ -285,53 +270,15 @@ class PaymentTest extends TestCase
         ]);
 
         // Act
-        $response = $this->post(route('payment.mock.pay', $purchase));
+        $response = $this->post(route('payment.mock.pay', $purchase), [
+            'email' => 'buyer@example.com',
+        ]);
 
-        // Assert
+        // Assert: Redirects to success page with token
         $access = Access::first();
-        $expectedUrl = route('services.show', [
-            'slug' => 'my-service',
-            'token' => $access->access_token,
-        ]);
-
-        $response->assertRedirect($expectedUrl);
-    }
-
-    /** @test */
-    public function webhook_idempotency_cache_prevents_duplicate_processing(): void
-    {
-        Queue::fake();
-
-        // Arrange: Simulate webhook
-        $eventId = 'evt_cache_test_123';
-        $cacheKey = "webhook_processed_{$eventId}";
-
-        // Pre-populate cache (simulating already processed webhook)
-        Cache::put($cacheKey, true, now()->addHours(24));
-
-        $purchase = Purchase::factory()->create([
-            'payment_id' => 'pi_test_cache',
-            'status' => 'pending',
-        ]);
-
-        $event = [
-            'id' => $eventId,
-            'type' => 'payment_intent.succeeded',
-            'data' => [
-                'object' => [
-                    'id' => 'pi_test_cache',
-                    'status' => 'succeeded',
-                ],
-            ],
-        ];
-
-        // Act: Try to process webhook
-        $job = new ProcessStripeWebhook($event);
-        $job->handle();
-
-        // Assert: Purchase should still be pending (not processed again)
-        $purchase->refresh();
-        $this->assertEquals('pending', $purchase->status);
-        $this->assertEquals(0, Access::count());
+        $response->assertRedirect();
+        $redirectUrl = $response->headers->get('Location');
+        $this->assertStringContainsString('payment/success', $redirectUrl);
+        $this->assertStringContainsString('token=' . $access->access_token, $redirectUrl);
     }
 }

@@ -93,7 +93,13 @@
             @endphp
 
             @if(view()->exists("components.{$componentName}"))
-                <x-dynamic-component :component="$componentName" :content="$block->content" />
+                <x-dynamic-component
+                    :component="$componentName"
+                    :content="$block->content"
+                    :block="$block"
+                    :service="$service"
+                    :access="$access ?? null"
+                />
             @else
                 <!-- Fallback for unknown block types -->
                 <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">

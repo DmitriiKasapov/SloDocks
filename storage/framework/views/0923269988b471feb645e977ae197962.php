@@ -190,7 +190,7 @@
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\DynamicComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['content' => $block->content]); ?>
+<?php $component->withAttributes(['content' => $block->content,'block' => $block,'service' => $service,'access' => $access ?? null]); ?>
 <?php \Livewire\Features\SupportCompiledWireKeys\SupportCompiledWireKeys::processComponentKey($component); ?>
 
 <?php echo $__env->renderComponent(); ?>

@@ -95,8 +95,9 @@ Route::get('/privacy', function () {
     return view('pages.legal.privacy');
 })->name('legal.privacy');
 
-// Test page for button comparison
+// Test page — local/staging only, blocked in production
 Route::get('/test', function () {
+    abort_if(app()->isProduction(), 404);
     return view('pages.test');
 })->name('test');
 
@@ -108,5 +109,13 @@ Route::get('/test', function () {
 
 Route::get('/sitemap.xml', [App\Http\Controllers\SitemapController::class, 'index'])
     ->name('sitemap');
+
+// robots.txt — blocks all crawlers on staging/testing, allows on production
+Route::get('/robots.txt', function () {
+    $content = app()->isProduction()
+        ? "User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /payment\nDisallow: /webhooks\n\nSitemap: " . url('/sitemap.xml')
+        : "User-agent: *\nDisallow: /";
+    return response($content, 200)->header('Content-Type', 'text/plain');
+});
 
 // Admin panel handled by Filament at /admin

@@ -51,7 +51,7 @@ class AccessGrantedMail extends Mailable
      */
     private function getAccessUrl(): string
     {
-        return route('services.show', [
+        return route('services.content', [
             'slug' => $this->access->service->slug,
             'token' => $this->access->access_token,
         ]);

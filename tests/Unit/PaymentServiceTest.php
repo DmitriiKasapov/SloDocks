@@ -30,15 +30,15 @@ class PaymentServiceTest extends TestCase
         // Arrange
         $service = Service::factory()->price(5000)->create();
 
-        // Act
-        $this->service->createCheckoutSession($service, 'test@example.com');
+        // Act — email is no longer collected upfront, it comes from Stripe webhook
+        $this->service->createCheckoutSession($service);
 
         // Assert: Purchase was created
         $this->assertEquals(1, Purchase::count());
 
         $purchase = Purchase::first();
         $this->assertEquals($service->id, $purchase->service_id);
-        $this->assertEquals('test@example.com', $purchase->email);
+        $this->assertNull($purchase->email); // email set later via webhook
         $this->assertEquals(5000, $purchase->amount);
         $this->assertEquals('EUR', $purchase->currency);
         $this->assertEquals('pending', $purchase->status);
@@ -52,7 +52,7 @@ class PaymentServiceTest extends TestCase
         $service = Service::factory()->create();
 
         // Act
-        $this->service->createCheckoutSession($service, 'test@example.com');
+        $this->service->createCheckoutSession($service);
 
         // Assert
         $purchase = Purchase::first();
@@ -68,7 +68,7 @@ class PaymentServiceTest extends TestCase
         $service = Service::factory()->create();
 
         // Act
-        $url = $this->service->createCheckoutSession($service, 'test@example.com');
+        $url = $this->service->createCheckoutSession($service);
 
         // Assert: Should return mock checkout route
         $purchase = Purchase::first();
@@ -83,7 +83,7 @@ class PaymentServiceTest extends TestCase
         $service = Service::factory()->price(12500)->create(); // 125 EUR
 
         // Act
-        $this->service->createCheckoutSession($service, 'buyer@example.com');
+        $this->service->createCheckoutSession($service);
 
         // Assert
         $purchase = Purchase::first();
@@ -98,7 +98,7 @@ class PaymentServiceTest extends TestCase
         $service2 = Service::factory()->create();
 
         // Act: Create checkout for service2
-        $this->service->createCheckoutSession($service2, 'user@example.com');
+        $this->service->createCheckoutSession($service2);
 
         // Assert: Purchase should be associated with service2
         $purchase = Purchase::first();
@@ -112,15 +112,15 @@ class PaymentServiceTest extends TestCase
         // Arrange
         $service = Service::factory()->create();
 
-        // Act: Create two checkouts
-        $this->service->createCheckoutSession($service, 'user1@example.com');
-        $this->service->createCheckoutSession($service, 'user2@example.com');
+        // Act: Create two checkouts — email arrives later via webhook, not during checkout
+        $this->service->createCheckoutSession($service);
+        $this->service->createCheckoutSession($service);
 
         // Assert: Should have 2 separate purchases
         $this->assertEquals(2, Purchase::count());
 
         $purchases = Purchase::all();
-        $this->assertEquals('user1@example.com', $purchases[0]->email);
-        $this->assertEquals('user2@example.com', $purchases[1]->email);
+        $this->assertNull($purchases[0]->email);
+        $this->assertNull($purchases[1]->email);
     }
 }

@@ -15,7 +15,10 @@ class CheckServiceAccess
     public function handle(Request $request, Closure $next): Response
     {
         $slug = $request->route('slug');
-        $token = $request->query('token');
+
+        // Resolve token from query param or cookie (cookie is set on first visit via link)
+        $serviceId = \App\Models\Service::where('slug', $slug)->value('id');
+        $token = $request->query('token') ?? ($serviceId ? $request->cookie("access_{$serviceId}") : null);
 
         // If no token provided, continue (will show public version)
         if (!$token) {

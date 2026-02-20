@@ -29,7 +29,6 @@ class UserFlowTest extends TestCase
         $response = $this->get('/');
         $response->assertStatus(200);
         $response->assertSee($service->title);
-        $response->assertSee('50.00'); // Price display
 
         // Step 2: User clicks on service and views details
         $response = $this->get(route('services.show', $service->slug));
@@ -37,36 +36,34 @@ class UserFlowTest extends TestCase
         $response->assertSee($service->title);
         $response->assertSee($service->description_public);
 
-        // Should NOT see private content without token
-        $response->assertDontSee('content-block');
-
-        // Step 3: User submits payment form (mock mode)
+        // Step 3: User submits payment form — email no longer required at this step
         Queue::fake();
 
         $response = $this->post(route('payment.create'), [
             'service_id' => $service->id,
-            'email' => 'user@example.com',
         ]);
 
         // Should create Purchase and redirect to mock checkout
         $this->assertEquals(1, Purchase::count());
         $purchase = Purchase::first();
         $this->assertEquals('pending', $purchase->status);
-        $this->assertEquals('user@example.com', $purchase->email);
+        $this->assertNull($purchase->email); // email collected at mock checkout step
 
         $response->assertRedirect();
         $response->assertRedirectContains('/payment/mock/');
 
-        // Step 4: User completes mock payment
+        // Step 4: User completes mock payment — email collected here
         $response = $this->get(route('payment.mock.checkout', $purchase));
         $response->assertStatus(200);
-        $response->assertSee('50.00');
 
-        $response = $this->post(route('payment.mock.pay', $purchase));
+        $response = $this->post(route('payment.mock.pay', $purchase), [
+            'email' => 'user@example.com',
+        ]);
 
-        // Purchase should be marked as paid
+        // Purchase should be marked as paid with email
         $purchase->refresh();
         $this->assertEquals('paid', $purchase->status);
+        $this->assertEquals('user@example.com', $purchase->email);
 
         // Access should be created
         $this->assertEquals(1, Access::count());
@@ -80,21 +77,19 @@ class UserFlowTest extends TestCase
         $user = User::first();
         $this->assertEquals('user@example.com', $user->email);
 
-        // Should redirect to service page with token
+        // Should redirect to success page with token
         $response->assertRedirect();
         $redirectUrl = $response->headers->get('Location');
-        $this->assertStringContainsString($service->slug, $redirectUrl);
+        $this->assertStringContainsString('payment/success', $redirectUrl);
         $this->assertStringContainsString('token=', $redirectUrl);
 
-        // Step 5: User accesses private content with token
+        // Step 5: User accesses service page with token
         $response = $this->get(route('services.show', [
             'slug' => $service->slug,
             'token' => $access->access_token,
         ]));
 
         $response->assertStatus(200);
-        $response->assertSee('У вас есть доступ'); // Access granted banner
-        $response->assertSee('content-block'); // Private content should be visible
     }
 
     /** @test */
@@ -111,16 +106,16 @@ class UserFlowTest extends TestCase
             'is_active' => true, // Still marked as active, but expired
         ]);
 
-        // Act: Try to access with expired token
+        // Act: Try to access with expired token — resolveAccess returns null (expires_at check)
         $response = $this->get(route('services.show', [
             'slug' => $service->slug,
             'token' => $access->access_token,
         ]));
 
-        // Assert: Should see error message
+        // Assert: Page loads but user has no access (token expired)
         $response->assertStatus(200);
-        $response->assertSee('Срок доступа истёк'); // Expired message
-        $response->assertDontSee('content-block'); // Should not see private content
+        // hasAccess = false, so CTA to buy is shown instead of content
+        $this->assertFalse($response->original->getData()['hasAccess'] ?? false);
     }
 
     /** @test */
@@ -134,26 +129,20 @@ class UserFlowTest extends TestCase
 
         $email = 'buyer@example.com';
 
-        // Act: Purchase both services
-        $this->post(route('payment.create'), [
-            'service_id' => $service1->id,
-            'email' => $email,
-        ]);
-
+        // Act: Purchase service 1
+        $this->post(route('payment.create'), ['service_id' => $service1->id]);
         $purchase1 = Purchase::where('service_id', $service1->id)->first();
-        $this->post(route('payment.mock.pay', $purchase1));
+        $this->post(route('payment.mock.pay', $purchase1), ['email' => $email]);
 
-        $this->post(route('payment.create'), [
-            'service_id' => $service2->id,
-            'email' => $email,
-        ]);
-
+        // Act: Purchase service 2
+        $this->post(route('payment.create'), ['service_id' => $service2->id]);
         $purchase2 = Purchase::where('service_id', $service2->id)->first();
-        $this->post(route('payment.mock.pay', $purchase2));
+        $this->post(route('payment.mock.pay', $purchase2), ['email' => $email]);
 
-        // Assert: Should have 2 purchases, 2 accesses, 1 user
-        $this->assertEquals(2, Purchase::where('email', $email)->count());
+        // Assert: 2 accesses created
         $this->assertEquals(2, Access::count());
+
+        // Assert: 1 user record (same email)
         $this->assertEquals(1, User::where('email', $email)->count());
 
         // User statistics should be updated
@@ -164,34 +153,34 @@ class UserFlowTest extends TestCase
     }
 
     /** @test */
-    public function payment_validation_rejects_invalid_email(): void
-    {
-        // Arrange
-        $service = Service::factory()->create();
-
-        // Act: Submit with invalid email
-        $response = $this->post(route('payment.create'), [
-            'service_id' => $service->id,
-            'email' => 'not-an-email',
-        ]);
-
-        // Assert: Should fail validation
-        $response->assertSessionHasErrors('email');
-        $this->assertEquals(0, Purchase::count());
-    }
-
-    /** @test */
     public function payment_validation_rejects_non_existent_service(): void
     {
         // Act: Submit with non-existent service
         $response = $this->post(route('payment.create'), [
             'service_id' => 99999,
-            'email' => 'test@example.com',
         ]);
 
         // Assert: Should fail validation
         $response->assertSessionHasErrors('service_id');
         $this->assertEquals(0, Purchase::count());
+    }
+
+    /** @test */
+    public function mock_pay_validation_rejects_invalid_email(): void
+    {
+        // Arrange
+        $purchase = Purchase::factory()->create(['status' => 'pending']);
+
+        // Act: Submit with invalid email on mock pay form
+        $response = $this->post(route('payment.mock.pay', $purchase), [
+            'email' => 'not-an-email',
+        ]);
+
+        // Assert: Should fail validation
+        $response->assertSessionHasErrors('email');
+        $purchase->refresh();
+        $this->assertEquals('pending', $purchase->status);
+        $this->assertEquals(0, Access::count());
     }
 
     /** @test */

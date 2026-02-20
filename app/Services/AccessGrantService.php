@@ -85,19 +85,18 @@ class AccessGrantService
      */
     private function updateUserStatistics(string $email): void
     {
-        $user = User::firstOrNew(['email' => $email]);
+        // Atomic upsert: create new record or increment existing atomically
+        $affected = User::where('email', $email)
+            ->increment('purchases_count', 1, ['last_purchase_at' => now()]);
 
-        if ($user->exists) {
-            // Update existing user
-            $user->increment('purchases_count');
-            $user->last_purchase_at = now();
-        } else {
-            // Create new user record
-            $user->first_purchase_at = now();
-            $user->last_purchase_at = now();
-            $user->purchases_count = 1;
+        if ($affected === 0) {
+            // User does not exist — insert, ignoring duplicate if concurrent insert races us
+            User::insertOrIgnore([
+                'email' => $email,
+                'purchases_count' => 1,
+                'first_purchase_at' => now(),
+                'last_purchase_at' => now(),
+            ]);
         }
-
-        $user->save();
     }
 }

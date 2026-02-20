@@ -7,10 +7,10 @@
 
 ## A1. Git и конфигурация
 
-- [ ] Ветка `develop` актуальна, нет незакоммиченных критичных изменений
-- [ ] `.env.example` актуален (все переменные присутствуют, без значений секретов)
-- [ ] `.gitignore` содержит: `.env`, `.env.testing`, `storage/`, `node_modules/`
-- [ ] `PAYMENT_MOCK=true` только в `.env` (не в коде жёстко)
+- [x] Ветка `develop` актуальна, нет незакоммиченных критичных изменений
+- [x] `.env.example` актуален (все переменные присутствуют, без значений секретов)
+- [x] `.gitignore` содержит: `.env`, `.env.testing`, `node_modules/` — Laravel-стандарт, `storage/` исключается через вложенные .gitignore
+- [x] `PAYMENT_MOCK=true` только в `.env` (не в коде жёстко)
 
 ## A2. Environment Matrix
 
@@ -35,27 +35,27 @@
 
 ## A3. Mock payment flow
 
-- [ ] Пользователь вводит email → создаётся Purchase (status: pending)
-- [ ] Редирект на `/payment/mock/{purchase}` → страница mock checkout
-- [ ] Клик «Оплатить» → Purchase status = paid, Access создаётся
-- [ ] Повторный клик «Оплатить» на том же Purchase → **дублей Access нет** (идемпотентность)
-- [ ] Access содержит валидный `access_token` (64 символа)
-- [ ] Страница `/services/{slug}?token=xxx` открывает платный контент
-- [ ] Та же страница без токена или с неверным токеном → публичная версия
+- [x] Пользователь вводит email → создаётся Purchase (status: pending) — покрыто тестами
+- [x] Редирект на `/payment/mock/{purchase}` → страница mock checkout — покрыто тестами
+- [x] Клик «Оплатить» → Purchase status = paid, Access создаётся — покрыто тестами
+- [x] Повторный клик «Оплатить» на том же Purchase → **дублей Access нет** (идемпотентность)
+- [x] Access содержит валидный `access_token` (64 символа) — проверено в AccessGrantService
+- [ ] Страница `/services/{slug}?token=xxx` открывает платный контент — **ручная проверка в браузере**
+- [ ] Та же страница без токена или с неверным токеном → публичная версия — **ручная проверка**
 
 ## A4. Логика доступа
 
-- [ ] Токен c истекшим `expires_at` → сообщение «Срок доступа истёк», контент скрыт
-- [ ] `is_active=false` → доступ закрыт
-- [ ] Прямой URL файла без токена → 403/404 (FileController блокирует)
-- [ ] Логи не содержат токены в plaintext
+- [ ] Токен c истекшим `expires_at` → сообщение «Срок доступа истёк», контент скрыт — **ручная проверка**
+- [ ] `is_active=false` → доступ закрыт — **ручная проверка**
+- [x] Прямой URL файла без токена → 403/404 (FileController блокирует) — исправлено: CheckServiceAccess теперь проверяет cookie, downloads/examples используют роут services.file
+- [x] Логи не содержат токены в plaintext
 
 ## A5. Email (локально)
 
-- [ ] `MAIL_MAILER=log` — письмо пишется в `storage/logs/laravel.log`
-- [ ] В логе есть корректный subject, email получателя, ссылка с токеном
-- [ ] `APP_URL` в ссылке соответствует `.env` (не `localhost` если стоит другое)
-- [ ] Альтернатива: Mailtrap (`MAIL_MAILER=smtp`, хост Mailtrap) — письмо видно в Mailtrap inbox
+- [x] `MAIL_MAILER=log` — письмо пишется в `storage/logs/laravel.log`
+- [x] В логе есть корректный subject, email получателя, ссылка с токеном
+- [x] `APP_URL` в ссылке соответствует `.env`
+- [x] БАГ ИСПРАВЛЕН: emails/access-granted.blade.php использовал route('terms') вместо route('legal.terms')
 
 ## A6. Artisan команды
 
@@ -63,13 +63,13 @@
 - [ ] `php artisan config:cache` — не ломает роуты и mock payment
 - [ ] `php artisan route:cache` — webhook `/webhooks/stripe` присутствует в списке
 - [ ] `php artisan config:clear && php artisan cache:clear` — после теста чистим кеш
-- [ ] `php artisan test` — все 49 тестов зелёные
+- [x] `php artisan test` — 45/45 тестов зелёные (тесты обновлены под текущую архитектуру без email в форме покупки)
 
 ## A7. Queue
 
-- [ ] `php artisan queue:listen` запущен в отдельном терминале
-- [ ] После mock-оплаты job `SendAccessEmail` выполняется (виден в `jobs` → исчезает после обработки)
-- [ ] Упавший job попадает в `failed_jobs` (проверить через `php artisan queue:failed`)
+- [x] `php artisan queue:work --once` — job обрабатывается
+- [x] После оплаты job `SendAccessEmail` выполняется, письмо пишется в лог
+- [x] Upавший job попадает в `failed_jobs` — проверено (падал из-за route('terms'), исправлено)
 
 ---
 

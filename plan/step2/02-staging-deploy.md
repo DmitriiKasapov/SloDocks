@@ -1,235 +1,192 @@
-# 02 — Staging Deploy (Фаза B)
+# 02 — Staging Deploy (Фаза B) — Railway
 
 ## Цель
-Поднять рабочий сервер на VPS, закрыть от публики, убедиться что сайт живой.
+Развернуть рабочий staging на Railway без ручной настройки серверов.
+Сайт доступен по HTTPS, база работает, очередь крутится, логи чистые.
 
 ---
 
-## B1. VPS и домен
+## Обзор архитектуры
 
-- [ ] VPS создан (Hetzner CX22 или DigitalOcean Basic $6/мес — Ubuntu 22.04)
-- [ ] SSH-ключ добавлен, вход по ключу работает
-- [ ] Субдомен `staging.slodocs.si` (или техдомен) настроен → DNS A-запись на IP сервера
-- [ ] DNS propagation проверен (`dig staging.slodocs.si` возвращает правильный IP)
-
-## B2. Установка сервера
-
-```bash
-# Обновление
-apt update && apt upgrade -y
-
-# Nginx
-apt install -y nginx
-
-# PHP 8.2 + расширения
-apt install -y php8.2-fpm php8.2-pgsql php8.2-mbstring php8.2-xml \
-  php8.2-curl php8.2-zip php8.2-bcmath php8.2-intl
-
-# Composer
-curl -sS https://getcomposer.org/installer | php
-mv composer.phar /usr/local/bin/composer
-
-# Node.js 20
-curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
-apt install -y nodejs
-
-# PostgreSQL
-apt install -y postgresql postgresql-contrib
+```
+Railway Project: slodocs
+├── Web Service       (Laravel — PHP 8.2)
+├── Worker Service    (queue:work — тот же код, другая команда)
+└── PostgreSQL        (managed DB от Railway)
 ```
 
-- [ ] PHP 8.2 установлен (`php -v`)
-- [ ] Composer установлен (`composer -V`)
-- [ ] Nginx запущен (`systemctl status nginx`)
-- [ ] PostgreSQL запущен (`systemctl status postgresql`)
+Все три сервиса в одном Railway-проекте. Общаются через внутренние переменные.
 
-## B3. PostgreSQL на staging
+---
 
-```bash
-sudo -u postgres psql
-CREATE DATABASE slodocs_staging;
-CREATE USER slodocs WITH PASSWORD 'strong_password';
-GRANT ALL PRIVILEGES ON DATABASE slodocs_staging TO slodocs;
-\q
+## B1. Подготовка репозитория
+
+### Нужные файлы (Claude создаёт)
+
+- [x] `nixpacks.toml` — инструкции сборки для Railway
+- [x] `Procfile` — команды запуска web и worker
+- [ ] `robots.txt` — `Disallow: /` (закрыть staging от индексации)
+
+### nixpacks.toml
+```toml
+[phases.setup]
+nixPkgs = ["php82", "php82Extensions.pgsql", "php82Extensions.mbstring",
+           "php82Extensions.xml", "php82Extensions.curl", "php82Extensions.zip",
+           "php82Extensions.bcmath", "php82Extensions.intl", "composer", "nodejs_20"]
+
+[phases.build]
+cmds = [
+    "composer install --no-dev --optimize-autoloader",
+    "npm install && npm run build",
+    "php artisan config:cache",
+    "php artisan route:cache",
+    "php artisan view:cache"
+]
+
+[start]
+cmd = "php artisan serve --host=0.0.0.0 --port=$PORT"
 ```
 
-- [ ] База `slodocs_staging` создана
-- [ ] Пользователь создан, права выданы
-
-## B4. Код на сервере
-
-```bash
-# Создать директорию
-mkdir -p /var/www/slodocs
-cd /var/www/slodocs
-
-# Клонировать репозиторий
-git clone git@github.com:user/slodocs.git .
-
-# Зависимости
-composer install --no-dev --optimize-autoloader
-npm install && npm run build
-
-# Права
-chown -R www-data:www-data /var/www/slodocs
-chmod -R 755 /var/www/slodocs/storage
-chmod -R 755 /var/www/slodocs/bootstrap/cache
+### Procfile
+```
+web: php artisan serve --host=0.0.0.0 --port=$PORT
+worker: php artisan queue:work --sleep=3 --tries=3 --timeout=60
 ```
 
-- [ ] Репозиторий склонирован
-- [ ] `composer install --no-dev` выполнен
-- [ ] `npm run build` выполнен (assets в `public/build/`)
-- [ ] Права на `storage/` и `bootstrap/cache/` выставлены
+---
 
-## B5. .env на staging
+## B2. Создание Railway-проекта
 
-```bash
-cp .env.example .env
-php artisan key:generate
+- [ ] Зарегистрироваться / войти на railway.app
+- [ ] New Project → Deploy from GitHub repo → выбрать репозиторий SloDocs
+- [ ] Railway автоматически определяет PHP-проект
+
+---
+
+## B3. PostgreSQL
+
+- [ ] В Railway-проекте: Add Service → Database → PostgreSQL
+- [ ] После создания: в настройках БД скопировать `DATABASE_URL`
+- [ ] Добавить переменную в Web Service:
+  ```
+  DATABASE_URL = (скопированный url)
+  ```
+  Laravel читает `DATABASE_URL` автоматически через `config/database.php`
+
+---
+
+## B4. Переменные окружения (Web Service)
+
+В Railway → Web Service → Variables добавить:
+
+```env
+APP_NAME=SloDocs
+APP_ENV=staging
+APP_DEBUG=false
+APP_URL=https://<generated>.railway.app    # после первого деплоя
+
+APP_KEY=                                    # сгенерировать: php artisan key:generate --show
+
+DB_CONNECTION=pgsql
+# DB_* не нужны — Railway подставляет DATABASE_URL автоматически
+
+MAIL_MAILER=log                             # пока; Brevo в фазе D
+QUEUE_CONNECTION=database
+SESSION_SECURE_COOKIE=true
+CACHE_STORE=database
+
+PAYMENT_MOCK=false
+STRIPE_KEY=pk_test_...                      # фаза C
+STRIPE_SECRET=sk_test_...                   # фаза C
+STRIPE_WEBHOOK_SECRET=whsec_...             # фаза C
+STRIPE_CURRENCY=EUR
+
+LOG_LEVEL=error
 ```
 
-Заполнить:
-- [ ] `APP_ENV=staging`
-- [ ] `APP_DEBUG=false`
-- [ ] `APP_URL=https://staging.slodocs.si`
-- [ ] `DB_*` — данные PostgreSQL staging
-- [ ] `MAIL_MAILER=log` (пока, до настройки Brevo в фазе D)
-- [ ] `PAYMENT_MOCK=false`
-- [ ] `STRIPE_*` — test keys (фаза C)
-- [ ] `SESSION_SECURE_COOKIE=true`
-- [ ] `QUEUE_CONNECTION=database`
+- [ ] `APP_KEY` добавлен (сгенерировать командой выше)
+- [ ] `DATABASE_URL` добавлен
+- [ ] Все обязательные переменные заполнены
 
-## B6. Миграции и seed
+---
 
-```bash
-php artisan migrate --force
-php artisan db:seed --class=AdminUserSeeder
+## B5. Worker Service
+
+- [ ] В Railway-проекте: Add Service → GitHub repo (тот же репозиторий)
+- [ ] В настройках сервиса: Start Command → `php artisan queue:work --sleep=3 --tries=3 --timeout=60`
+- [ ] Скопировать все переменные из Web Service в Worker Service
+  (Railway позволяет "Share variables" между сервисами)
+- [ ] Убедиться что Worker видит тот же `DATABASE_URL`
+
+---
+
+## B6. Миграции
+
+Railway не запускает миграции автоматически. Два варианта:
+
+**Вариант A — через Railway Shell (рекомендую)**
+- Web Service → Settings → Open Shell
+- Ввести: `php artisan migrate --force`
+
+**Вариант B — добавить в nixpacks.toml в build-фазу**
+```toml
+[phases.release]
+cmds = ["php artisan migrate --force"]
 ```
 
-- [ ] Миграции прошли без ошибок
-- [ ] Таблицы созданы (проверить `psql` → `\dt`)
-- [ ] Администратор создан
+- [ ] `php artisan migrate --force` выполнена без ошибок
+- [ ] `php artisan db:seed --class=AdminUserSeeder` выполнена
+- [ ] Администратор создан (проверить вход в /admin)
 
-## B7. Nginx конфигурация
+---
 
-```nginx
-server {
-    listen 80;
-    server_name staging.slodocs.si;
-    return 301 https://$host$request_uri;
-}
+## B7. Домен и HTTPS
 
-server {
-    listen 443 ssl;
-    server_name staging.slodocs.si;
-    root /var/www/slodocs/public;
-    index index.php;
+Railway даёт домен автоматически: `<name>.up.railway.app`
 
-    ssl_certificate /etc/letsencrypt/live/staging.slodocs.si/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/staging.slodocs.si/privkey.pem;
+Для staging это достаточно — HTTPS уже есть.
 
-    # Basic Auth — закрыть staging от публики
-    auth_basic "Staging";
-    auth_basic_user_file /etc/nginx/.htpasswd;
+Кастомный домен (`staging.slodocs.si`) опционально:
+- [ ] Railway → Web Service → Settings → Custom Domain
+- [ ] Добавить CNAME-запись в DNS-панели домена
+- [ ] Railway выпустит SSL автоматически
 
-    # Stripe webhook — без Basic Auth
-    location /webhooks/stripe {
-        auth_basic off;
-        try_files $uri $uri/ /index.php?$query_string;
-    }
+---
 
-    location / {
-        try_files $uri $uri/ /index.php?$query_string;
-    }
+## B8. Проверка "сайт живой"
 
-    location ~ \.php$ {
-        fastcgi_pass unix:/var/run/php/php8.2-fpm.sock;
-        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
-        include fastcgi_params;
-    }
-
-    location ~ /\.(?!well-known).* {
-        deny all;
-    }
-}
-```
-
-```bash
-# SSL
-apt install -y certbot python3-certbot-nginx
-certbot --nginx -d staging.slodocs.si
-
-# Basic Auth пароль
-apt install -y apache2-utils
-htpasswd -c /etc/nginx/.htpasswd admin
-
-# Применить конфиг
-nginx -t && systemctl reload nginx
-```
-
-- [ ] SSL сертификат получен (Let's Encrypt)
-- [ ] Basic Auth настроен (логин/пароль для команды)
-- [ ] `/webhooks/stripe` исключён из Basic Auth
-- [ ] Nginx конфиг прошёл `nginx -t`
-
-## B8. Кеширование
-
-```bash
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
-```
-
-- [ ] Команды выполнены без ошибок
-- [ ] `php artisan route:list` показывает `/webhooks/stripe`
-
-## B9. Queue Worker (systemd)
-
-```ini
-# /etc/systemd/system/slodocs-worker.service
-[Unit]
-Description=SloDocs Queue Worker
-After=network.target
-
-[Service]
-User=www-data
-WorkingDirectory=/var/www/slodocs
-ExecStart=/usr/bin/php artisan queue:work --sleep=3 --tries=3 --timeout=60
-Restart=always
-RestartSec=5
-
-[Install]
-WantedBy=multi-user.target
-```
-
-```bash
-systemctl enable slodocs-worker
-systemctl start slodocs-worker
-systemctl status slodocs-worker
-```
-
-- [ ] Воркер запущен и активен
-
-## B10. Scheduler (cron)
-
-```bash
-crontab -e
-# Добавить:
-* * * * * cd /var/www/slodocs && php artisan schedule:run >> /dev/null 2>&1
-```
-
-- [ ] Cron добавлен
-
-## B11. Проверка "сайт живой"
-
-- [ ] `https://staging.slodocs.si` открывается (после Basic Auth)
-- [ ] Главная страница загружается
+- [ ] `https://<name>.up.railway.app` открывается
+- [ ] Главная страница загружается, услуги видны
 - [ ] `/services/{slug}` открывается
 - [ ] `/admin` → экран логина Filament
-- [ ] Логи чистые: `tail -f storage/logs/laravel.log`
-- [ ] `robots.txt` содержит `Disallow: /` (staging закрыт от индексации)
+- [ ] Worker Service в Railway — статус Running (не Crashed)
+- [ ] Логи Web Service чистые (Railway → Logs)
+
+---
+
+## B9. Защита staging от индексации
+
+`public/robots.txt`:
+```
+User-agent: *
+Disallow: /
+```
+
+- [ ] `robots.txt` создан и задеплоен
 
 ---
 
 ## ✅ Критерий завершения Фазы B
 
-Сайт открывается на staging URL, Basic Auth защищает, логи без ошибок, воркер работает.
+Сайт открывается на Railway URL, `/admin` работает, Worker — Running,
+логи без критических ошибок. Готово к Фазе C (Stripe Test Mode).
+
+---
+
+## Что НЕ нужно делать (в отличие от VPS)
+
+- Устанавливать PHP, Nginx, PostgreSQL — Railway делает сам
+- Настраивать SSL — Railway делает сам
+- Писать systemd для воркера — Railway держит процессы сам
+- Заходить по SSH — не нужно (есть Shell в UI)
+- Настраивать cron — scheduler через Railway Cron Service если понадобится
